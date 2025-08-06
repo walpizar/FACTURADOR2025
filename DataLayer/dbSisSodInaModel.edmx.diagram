@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ada7a4eaead04a319ffd5bc4f7eae1a7" Name="Diagram1">
+        <EntityTypeShape EntityType="dbSISSODINAModel.sysdiagrams" Width="1.5" PointX="13.75" PointY="11.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbAcompanamiento" Width="1.5" PointX="3.75" PointY="41.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbActividades" Width="1.5" PointX="0.75" PointY="25.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbBarrios" Width="1.5" PointX="1.5" PointY="6.625" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCajasMovimientos" Width="1.5" PointX="13.75" PointY="14.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCanton" Width="1.5" PointX="1.5" PointY="33.5" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria1Cabys" Width="1.5" PointX="13.75" PointY="3.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria9Cabys" Width="1.5" PointX="15.75" PointY="11.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoriaProducto" Width="1.5" PointX="3.75" PointY="37.625" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoriaRequerimiento" Width="1.5" PointX="4.25" PointY="53.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbClientes" Width="1.5" PointX="6.75" PointY="45.25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCompras" Width="1.5" PointX="3" PointY="21.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleCompras" Width="1.5" PointX="5.25" PointY="29.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleDocumento" Width="1.5" PointX="11.25" PointY="21.25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleDocumentoPendiente" Width="1.5" PointX="8.25" PointY="11.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleOrdenCompra" Width="1.5" PointX="11.25" PointY="17.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDistrito" Width="1.5" PointX="1.5" PointY="2.625" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDocumento" Width="1.5" PointX="9" PointY="21.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbDocumentosPendiente" Width="1.5" PointX="6" PointY="11" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbEmpleado" Width="1.5" PointX="11.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbEmpresa" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbEmpresaActividades" Width="1.5" PointX="6" PointY="25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbExoneraciones" Width="1.5" PointX="4.5" PointY="45.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbImpuestos" Width="1.5" PointX="3.75" PointY="5.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbInventario" Width="1.5" PointX="8.25" PointY="34.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbMovimientos" Width="1.5" PointX="16" PointY="7.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbOrdenCompra" Width="1.5" PointX="9" PointY="3.25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbPagos" Width="1.5" PointX="11.25" PointY="27" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbParametrosEmpresa" Width="1.5" PointX="9" PointY="38.625" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbPersona" Width="1.5" PointX="1.5" PointY="12.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbProducto" Width="1.5" PointX="6" PointY="14.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbPromociones" Width="1.5" PointX="8.25" PointY="17.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbProveedores" Width="1.5" PointX="3.75" PointY="13.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbProvincia" Width="1.5" PointX="1.5" PointY="36.625" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbReporteHacienda" Width="1.5" PointX="0.75" PointY="40" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbRequerimientos" Width="1.5" PointX="6.5" PointY="53" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbRoles" Width="1.5" PointX="8.75" PointY="53.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoClientes" Width="1.5" PointX="4.5" PointY="48.5" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoDocumento" Width="1.5" PointX="6.75" PointY="38" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoId" Width="1.5" PointX="1.5" PointY="10.25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoMedidas" Width="1.5" PointX="3.75" PointY="8.75" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoMoneda" Width="1.5" PointX="6.75" PointY="40.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoMovimiento" Width="1.5" PointX="13.75" PointY="7.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoPago" Width="1.5" PointX="6.75" PointY="7.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoPuesto" Width="1.5" PointX="9.5" PointY="47" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbTipoVenta" Width="1.5" PointX="0.75" PointY="30.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbUsuarios" Width="1.5" PointX="11" PointY="9.5" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbActividad" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbActividad" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbEmpresaActividades_tbActividades" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbActividad" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbBarrios_tbDistrito" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbPersona_tbBarrios" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCanton_tbProvincia" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDistrito_tbCanton" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbCategoriaProducto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbRequerimientos_tbCategoriaRequerimiento" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbFactura_tbClientes" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbReporteHacienda" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbTipoPago" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbTipoVenta" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleCompras_tbCompras" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleCompras_tbTipoMedidas1" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleDocumento_tbDocumento" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleFactura_tbProducto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleDocumentoPendiente_tbDocumentosPendiente" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleDocumentoPendiente_tbProducto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleOrdenCompra_tbOrdenCompra" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleOrdenCompra_tbProducto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDetalleOrdenCompra_tbTipoMedidas" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbAbonos_tbDocumento" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbTipoDocumento" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbTipoMoneda" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbTipoPago" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbDocumento_tbTipoVenta" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbEmpleado_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbEmpleado_tbTipoPuesto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbEmpresa_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbEmpresaActividades_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbOrdenCompra_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbParametrosEmpresa_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbReporteHacienda_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbUsuarios_tbEmpresa" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbImpuestos" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbInventario_tbProducto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbMovimientos_tbTipoMovimiento" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbOrdenCompra_tbProveedores" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbOrdenCompra_tbTipoPago" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbAbonos_tbTipoPago" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbPersona_tbTipoId" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProveedores_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbUsuarios_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.fk_promociones_producto" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbProveedores" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbTipoMedidas" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbUsuarios_tbRoles" />
+        <AssociationConnector Association="dbSISSODINAModel.tbPermisos" />
+        <AssociationConnector Association="dbSISSODINAModel.tbProdutoAcompa" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria2Cabys" Width="1.5" PointX="16" PointY="3.5" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria3Cabys" Width="1.5" PointX="18.25" PointY="3.5" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria4Cabys" Width="1.5" PointX="20.5" PointY="3.375" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria5Cabys" Width="1.5" PointX="22.75" PointY="3.25" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoria6Cabys" Width="1.5" PointX="25" PointY="3.125" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbPersonasTribunalS" Width="1.5" PointX="11.375" PointY="0.75" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria2Cabys_tbCategoria1Cabys" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria3Cabys_tbCategoria2Cabys" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria4Cabys_tbCategoria3Cabys" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria5Cabys_tbCategoria4Cabys" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria6Cabys_tbCategoria5Cabys" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

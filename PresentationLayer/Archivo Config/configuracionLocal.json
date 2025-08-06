@@ -1,0 +1,23 @@
+{
+  "server": ".",
+  "instance": "", 
+  "tipoEstacion": "1", /*1- SERVIDOR 2-CLIENTE obligatorio*/
+  "sucursal": "1", /*#SUCURSAL obligatorio*/
+  "caja": "1", /*# CAJA obligatorio*/
+  "imprime": "1", /*# imprime 1-si 0-no,obligatorio si impime algun tipo de documento*/
+  "imprimeDoc": "1", /*0-NO IMPRIME 1-PUNTO DE VENTA 2- MEDIA CARTA 3-CARTA NORMAL obligatorio*/
+  "imprimeTiquete": "1", /*0-NO IMPRIME 1-PUNTO DE VENTA 2- MEDIA CARTA 3-CARTA NORMAL obligatorio*/
+  "imprimeAbonos": "1", /*0-NO IMPRIME 1-PUNTO DE VENTA 2- MEDIA CARTA 3-CARTA NORMAL obligatorio*/
+  "imprimeProformas": "2", /*0-NO IMPRIME 1-PUNTO DE VENTA 2- MEDIA CARTA 3-CARTA NORMAL obligatorio*/
+  "rutaImpresoraPuntoVenta": "Microsoft Print to PDF", /*RUTA DE IMPRESION obligatorio si se imprime*/
+  "rutaImpresoraMediaCarta": "Microsoft Print to PDF", /*RUTA DE IMPRESION obligatorio si se imprime*/
+  "rutaImpresoraNormal": "Microsoft Print to PDF", /*RUTA DE IMPRESION obligatorio si se imprime*/
+  "pantallaFacturacion": "2", /*1-AMPLIA(BARES-RESTAURANTES-SODA) 2-REDUCIDA (FERRETERIA,MINISUPER) obligatorio*/
+  "respaldo": "1", /*0-no 1-si obligatorio*/
+  "aperturaCierre": "0", /*0-no 1-si obligatorio*/
+  "enviaCorreos": "1", /*0-no 1-si obligatorio*/
+  "actualizaciones":"1",/*0-no 1-si obligatorio*/
+  "logoRuta":"C:\\Windows\\EspartanoSolutions\\logo.jpg", /*RUTA DE de logo de la empresa*/
+  "imprimeExtra":"0",/*0-o 1-si obligatorio*/
+  "rutaImpresoraExtra":"1" /*RUTA DE IMPRESION obligatorio si se imprime*/
+}

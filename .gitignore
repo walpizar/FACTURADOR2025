@@ -1,0 +1,90 @@
+# Carpetas de Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+Releases/
+
+# Artefactos de compilación
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+PresentationLayer/bin/
+PresentationLayer/obj/
+PresentationLayer/[Bb]in/
+PresentationLayer/[Oo]bj/
+PresentationLayer/.vs/
+
+FacturacionElectronicaLayer/bin/
+FacturacionElectronicaLayer/obj/
+FacturacionElectronicaLayer/[Bb]in/
+FacturacionElectronicaLayer/[Oo]bj/
+FacturacionElectronicaLayer/.vs/
+
+EntityLayer/bin/
+EntityLayer/obj/
+EntityLayer/[Bb]in/
+EntityLayer/[Oo]bj/
+EntityLayer/.vs/
+
+DataLayer/bin/
+DataLayer/obj/
+DataLayer/[Bb]in/
+DataLayer/[Oo]bj/
+DataLayer/.vs/
+
+CommonLayer/bin/
+CommonLayer/obj/
+CommonLayer/[Bb]in/
+CommonLayer/[Oo]bj/
+CommonLayer/.vs/
+
+BusisnessLayer/bin/
+BusisnessLayer/obj/
+BusisnessLayer/[Bb]in/
+BusisnessLayer/[Oo]bj/
+BusisnessLayer/.vs/
+
+Archivos de copia de seguridad de Crystal Reports/
+
+# Paquetes NuGet
+packages/
+*.nupkg
+# Evitar versionar el directorio global de paquetes
+# (alternativa: configurar nuget.config)
+~/.nuget/packages/
+
+# Resultados de pruebas
+TestResults/
+*.trx
+
+# Archivos de Visual Studio Code (si coexisten)
+.vscode/
+
+# Archivos de cobertura de código
+coverage/
+
+# Archivos de ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# Archivos de TeamCity
+*.teamcity
+
+# Logs y bases de datos temporales
+*.log
+*.mdf
+*.ldf
+
+# Otros archivos de usuario / OS
+*.psess
+*.vsp
+*.vspx
+Thumbs.db
+.DS_Store
