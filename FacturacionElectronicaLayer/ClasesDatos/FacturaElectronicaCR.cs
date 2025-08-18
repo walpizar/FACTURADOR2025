@@ -9,6 +9,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
     public class FacturaElectronicaCR
     {
@@ -159,7 +160,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                     //if (_doc.idCliente !=null && (bool)_doc.clienteContribuyente)
                     //{
                     //genera factura al contribuyente
-                    GeneraXMLFacturaElectronica4_3(writer);
+                    GeneraXMLFacturaElectronica4_4(writer);
                     //}
                     //else
                     //{
@@ -176,7 +177,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 }
                 else if (_doc.tipoDocumento == (int)Enums.TipoDocumento.TiqueteElectronico)
                 {
-                    GeneraXMLTiqueteElectronico4_3(writer);
+                    GeneraXMLTiqueteElectronico4_4(writer);
                 }
 
 
@@ -219,6 +220,32 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        private void GeneraXMLTiqueteElectronico4_4(XmlTextWriter writer)
+        {
+            try
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("TiqueteElectronico");
+
+                // Namespaces actualizados para versión 4.4
+                writer.WriteAttributeString("xmlns", "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/tiqueteElectronico");
+                writer.WriteAttributeString("xmlns:ds", "http://www.w3.org/2000/09/xmldsig#");
+                writer.WriteAttributeString("xmlns:vc", "http://www.w3.org/2007/XMLSchema-versioning");
+                writer.WriteAttributeString("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
+
+                CuerpoDocumento4_4(ref writer);
+
+                // 'Aqui va la firma, despues la agregamos.
+
+                writer.WriteEndElement(); // </TiqueteElectronico>
+                writer.WriteEndDocument();
+                writer.Flush();
+            }
+            catch (Exception)
+            {
+                throw; // conserva el stack trace original
             }
         }
 
@@ -342,54 +369,41 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
 
          
-                // Impuesto o ImpuestoAsumidoEmisorFabrica
-                var netoImp = detalle.montoTotalImp - detalle.montoTotalExo;
+               
+         
+               writer.WriteElementString("BaseImponible", (detalle.montoTotal - detalle.montoTotalDesc)
+                    .ToString("F5", CultureInfo.InvariantCulture));
 
-                if (detalle.montoTotalImp >0) {
-
-
-                //    writer.WriteElementString("BaseImponible", String.Format("{0:F5}", ((detalle.montoTotal - detalle.montoTotalDesc))+ detalle.montoTotalImp
-                //));
-
-                    writer.WriteStartElement("Impuesto");
-                    writer.WriteElementString("Codigo", "01");
-                    //writer.WriteElementString("CodigoTarifaIVA", detalle.tbProducto.tbImpuestos.id.ToString().PadLeft(2, '0'));
-                    writer.WriteElementString("Tarifa", (detalle.porcImp ?? 0m).ToString("F5", CultureInfo.InvariantCulture));
-                    writer.WriteElementString("Monto", netoImp.ToString("F5", CultureInfo.InvariantCulture));
-                    if (detalle.montoTotalExo != 0)
-                    {
-                        writer.WriteStartElement("Exoneracion");
-                            writer.WriteElementString("TipoDocumento", _receptor.tipoExoneracion.PadLeft(2, '0'));
-                            writer.WriteElementString("NumeroDocumento", _receptor.docExoneracion.Trim());
-                            writer.WriteElementString("NombreInstitucion", _receptor.institucionExo.Trim());
-                            writer.WriteElementString("FechaEmision", _receptor.fechaEmisionExo.ToString("yyyy-MM-ddTHH:mm:sszzz"));
-                            writer.WriteElementString("PorcentajeExoneracion", (detalle.porcExo ?? 0m).ToString("F5", CultureInfo.InvariantCulture));
-                            writer.WriteElementString("MontoExoneracion", detalle.montoTotalExo.ToString("F5", CultureInfo.InvariantCulture));
-                        writer.WriteEndElement();
-                    }
+                writer.WriteStartElement("Impuesto");
+                writer.WriteElementString("Codigo", "01");
+                writer.WriteElementString("CodigoTarifaIVA", detalle.tbProducto.tbImpuestos.id.ToString().PadLeft(2, '0'));
+                writer.WriteElementString("Tarifa", (detalle.porcImp ?? 0m).ToString("F2", CultureInfo.InvariantCulture));
+                writer.WriteElementString("Monto", detalle.montoTotalImp.ToString("F5", CultureInfo.InvariantCulture));
+                if (detalle.montoTotalExo != 0)
+                {
+                    writer.WriteStartElement("Exoneracion");
+                        writer.WriteElementString("TipoDocumento", _receptor.tipoExoneracion.PadLeft(2, '0'));
+                        writer.WriteElementString("NumeroDocumento", _receptor.docExoneracion.Trim());
+                        writer.WriteElementString("NombreInstitucion", _receptor.institucionExo.Trim());
+                        writer.WriteElementString("FechaEmision", _receptor.fechaEmisionExo.ToString("yyyy-MM-ddTHH:mm:sszzz"));
+                        writer.WriteElementString("PorcentajeExoneracion", (detalle.porcExo ?? 0m).ToString("F5", CultureInfo.InvariantCulture));
+                        writer.WriteElementString("MontoExoneracion", detalle.montoTotalExo.ToString("F5", CultureInfo.InvariantCulture));
                     writer.WriteEndElement();
-
-
                 }
+                writer.WriteEndElement();
+                //0 xq no se fabrica
+                writer.WriteElementString("ImpuestoAsumidoEmisorFabrica", 0.ToString("F5", CultureInfo.InvariantCulture));
+                writer.WriteElementString("ImpuestoNeto", detalle.montoTotalImp.ToString("F5", CultureInfo.InvariantCulture));
 
-                //if (netoImp>0)
-                //{
 
-                //}
-                //else
-                //{
-                //    writer.WriteStartElement("ImpuestoAsumidoEmisorFabrica");
-                //        writer.WriteElementString("Codigo", "01");
-                //        writer.WriteElementString("Monto", "0.00000");
-                //    writer.WriteEndElement();
 
-                //}
+
 
 
 
 
                 writer.WriteElementString("MontoTotalLinea", detalle.totalLinea.ToString("F5", CultureInfo.InvariantCulture));
-                writer.WriteEndElement();
+            writer.WriteEndElement();
             }
             writer.WriteEndElement(); // DetalleServicio
 
@@ -436,21 +450,101 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             decimal totalVentaNeta = totalVenta   - totalDescuento;
 
             writer.WriteStartElement("ResumenFactura");
-            writer.WriteElementString("IVACobradoFabrica", 0.ToString("F5", CultureInfo.InvariantCulture));
-            writer.WriteElementString("BaseImponible", String.Format("{0:F5}", totalGravado));
+            
+            writer.WriteStartElement("CodigoTipoMoneda");
+            writer.WriteElementString("CodigoMoneda", "CRC");
+            writer.WriteElementString("TipoCambio", 1.ToString());
+            writer.WriteEndElement();
+
+           
             writer.WriteElementString("TotalServGravados", String.Format("{0:F5}", totalServGrav));
             writer.WriteElementString("TotalServExentos", String.Format("{0:F5}", totalServExc));
-            writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExo));
+
+
+            if (totalServExo!=0)
+            {
+                writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExo));
+            }
+           
             writer.WriteElementString("TotalMercanciasGravadas", String.Format("{0:F5}", totalProdGrav));
             writer.WriteElementString("TotalMercanciasExentas", String.Format("{0:F5}", totalProdExc));
-            writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExo));
+            if (totalProdExo != 0)
+            {
+                writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExo));
+            }
+
+      
             writer.WriteElementString("TotalGravado", String.Format("{0:F5}", totalGravado));
             writer.WriteElementString("TotalExento", String.Format("{0:F5}", totalExento));
-            writer.WriteElementString("TotalExonerado", String.Format("{0:F5}", totalExonerado));
+
+            if (totalExonerado != 0)
+            {
+                writer.WriteElementString("TotalExonerado", String.Format("{0:F5}", totalExonerado));
+            }
+            
             writer.WriteElementString("TotalVenta", String.Format("{0:F5}", totalVenta));
-            writer.WriteElementString("TotalDescuentos", String.Format("{0:F5}", totalDescuento));
+            
+            if (totalDescuento != 0)
+            {
+                writer.WriteElementString("TotalDescuentos", String.Format("{0:F5}", totalDescuento));
+            }
+            
             writer.WriteElementString("TotalVentaNeta", String.Format("{0:F5}", totalVentaNeta));
+
+
+
+
+            var impuestosAgrupados = _listaDetalle
+            .GroupBy(d => d.tbProducto.tbImpuestos.valor)
+            .Select(g => new
+            {
+                id = g.Key,
+                Total = g.Sum(x => x.montoTotalImp),
+                Impuestos = g.Select(x => x.tbProducto.tbImpuestos.id).Distinct().ToList()
+            })
+            .ToList();
+
+
+        
+            foreach (var d in impuestosAgrupados)
+            {
+
+                writer.WriteStartElement("TotalDesgloseImpuesto");
+                writer.WriteElementString("Codigo", 01.ToString().PadLeft(2, '0'));
+                writer.WriteElementString("CodigoTarifaIVA", d.Impuestos[0].ToString().PadLeft(2, '0'));
+                writer.WriteElementString("TotalMontoImpuesto", String.Format("{0:F5}", d.Total));
+                writer.WriteEndElement();
+
+            }
+        
+
+
             writer.WriteElementString("TotalImpuesto", String.Format("{0:F5}", impuestosTotal));
+
+            writer.WriteStartElement("MedioPago");
+
+            //agrupa tipos de pago y los suma
+            var pagosAgrupados = _doc.tbPagos
+            .GroupBy(p => p.tipoPago)
+            .Select(g => new
+            {
+                TipoPago = g.Key,
+                Total = g.Sum(x => x.monto)
+            })
+            .ToList();
+            foreach (var p in pagosAgrupados)
+            {
+                
+
+               
+                writer.WriteElementString("TipoMedioPago", p.TipoPago.ToString().PadLeft(2, '0'));
+                writer.WriteElementString("TotalMedioPago", String.Format("{0:F5}", p.Total));
+
+            }
+                     
+
+            writer.WriteEndElement(); // fin MedioPago
+
             writer.WriteElementString("TotalComprobante", String.Format("{0:F5}", totalComprobante));
             writer.WriteEndElement(); // ResumenFactura
 

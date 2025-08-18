@@ -104,6 +104,7 @@
             Cheque = 3,
             Transferencia = 4,
             RecaudadoTerceros = 5,
+            sinpe=6,
             Otros = 99
         }
 

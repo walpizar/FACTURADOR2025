@@ -967,8 +967,16 @@ namespace PresentationLayer
             if ((int)cbotipoId.SelectedValue == (int)Enums.TipoId.Fisica)
             {
                 ClienteResponseDTO cliente = await ConsultasAPI.ObtenerCliente(mskidentificacion.Text);
-                var (nombre, apellido1, apellido2) = Utility.ObtenerNombreYApellidos(cliente.Nombre);
 
+
+
+                if( cliente == null)
+                {
+                    MessageBox.Show("No se encontraron datos del cliente en el Tribunal, verifique la identificación.", "Cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                var (nombre, apellido1, apellido2) = Utility.ObtenerNombreYApellidos(cliente.Nombre);
+               
 
                 if (cliente != null)
                 {

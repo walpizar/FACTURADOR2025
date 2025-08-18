@@ -289,6 +289,7 @@ namespace PresentationLayer
                 btnTarjeta.Enabled = true;
                 btnCredito.Enabled = true;
                 btnTransferencia.Enabled = true;
+                btnSinpe.Enabled = true;
 
                 txtCodTarjeta.Enabled = false;
                 txtCodTarjeta.Text = string.Empty;
@@ -299,9 +300,10 @@ namespace PresentationLayer
                 txtPlazo.Enabled = false;
 
                 btnContado.BackColor = Color.DarkGray;
+                btnSinpe.BackColor = Color.White;
                 btnTarjeta.BackColor = Color.White;
                 btnCredito.BackColor = Color.White;
-                btnTransferencia.BackColor = Color.White;
+   
                 if (facturaGlobal != null)
                 {
                     facturaGlobal.tipoVenta = (int)Enums.tipoVenta.Contado;
@@ -311,6 +313,45 @@ namespace PresentationLayer
 
                 }
                 txtTipoPago.Text = "Contado";
+
+                txtPago.Focus();
+
+
+            }
+
+            if (tipoPago == (int)Enums.TipoPago.sinpe)
+            {
+                banderaTipoPago = (int)Enums.TipoPago.sinpe;
+                gbxBillete.Enabled = true;
+                btnContado.Enabled = true;
+                btnSinpe.Enabled = false;
+                btnTarjeta.Enabled = true;
+                btnCredito.Enabled = true;
+                btnTransferencia.Enabled = true;
+                btnSinpe.Enabled = true;
+
+                txtCodTarjeta.Enabled = false;
+                txtCodTarjeta.Text = string.Empty;
+                txtPago.Text = "0";
+                txtVuelto.Text = "0";
+                txtPago.Enabled = true;
+                txtPlazo.Text = string.Empty;
+                txtPlazo.Enabled = false;
+
+                btnSinpe.BackColor = Color.DarkGray;
+                btnContado.BackColor = Color.White;
+                btnTarjeta.BackColor = Color.White;
+                btnCredito.BackColor = Color.White;
+
+                if (facturaGlobal != null)
+                {
+                    facturaGlobal.tipoVenta = (int)Enums.tipoVenta.Contado;
+                    facturaGlobal.tipoPago = (int)Enums.TipoPago.sinpe;
+                    facturaGlobal.estadoFactura = (int)Enums.EstadoFactura.Cancelada;
+
+
+                }
+                txtTipoPago.Text = "SINPE";
 
                 txtPago.Focus();
 
@@ -483,7 +524,31 @@ namespace PresentationLayer
                 //}
 
             }
+            if (!btnSinpe.Enabled)
+            {
+                if (txtPago.Text == string.Empty)
+                {
 
+                    MessageBox.Show("Digite el monto SINPE con que paga", "Monto de Pago necesario", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    txtPago.Focus();
+                    return false;
+                }
+               
+                if (!Utility.isNumeroDecimal(txtPago.Text))
+                {
+
+                    MessageBox.Show("Dato incorrecto", "Monto de Pago necesario", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    txtPago.Focus();
+                    return false;
+                }
+                //if (decimal.Parse(txtVuelto.Text) < 0)
+                //{
+                //    MessageBox.Show("Monto incorrecto", "Error al procesar solicitud", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                //    txtPago.Focus();
+                //    return false;
+                //}
+
+            }
             else if (!btnTarjeta.Enabled)
             {
                 if (txtPago.Text == string.Empty)
@@ -891,6 +956,13 @@ namespace PresentationLayer
                 }
             }
         }
+
+        private void btnSinpe_Click(object sender, EventArgs e)
+        {
+            botonesTipoPagoEstado((int)Enums.TipoPago.sinpe);
+        }
+
+
 
         //private void frmCobrar_KeyUp(object sender, KeyEventArgs e)
         //{

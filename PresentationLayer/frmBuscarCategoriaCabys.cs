@@ -142,5 +142,24 @@ namespace PresentationLayer
             }
 
         }
+
+        private async void txtbusqueda_MouseEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtbusqueda.Text != string.Empty)
+                {
+
+                    List<CabysDTO> lista = await ConsultasAPI.obtenerCABYS(txtbusqueda.Text);
+                    cargarlista(lista);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Error al buscar el Bien/Servicio", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

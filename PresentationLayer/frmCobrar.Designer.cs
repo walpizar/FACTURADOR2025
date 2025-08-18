@@ -63,6 +63,8 @@
             this.txtCodTarjeta = new System.Windows.Forms.TextBox();
             this.lblMonto = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnSinpe = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnTransferencia = new System.Windows.Forms.Button();
             this.lblCredito = new System.Windows.Forms.Label();
@@ -89,7 +91,7 @@
             this.lblRefPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRefPago.Location = new System.Drawing.Point(3, 304);
             this.lblRefPago.Name = "lblRefPago";
-            this.lblRefPago.Size = new System.Drawing.Size(186, 16);
+            this.lblRefPago.Size = new System.Drawing.Size(185, 16);
             this.lblRefPago.TabIndex = 47;
             this.lblRefPago.Text = "Referencia/Comprobante:";
             // 
@@ -320,7 +322,7 @@
             this.btnContado.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnContado.Location = new System.Drawing.Point(16, 18);
             this.btnContado.Name = "btnContado";
-            this.btnContado.Size = new System.Drawing.Size(93, 74);
+            this.btnContado.Size = new System.Drawing.Size(73, 50);
             this.btnContado.TabIndex = 3;
             this.btnContado.UseVisualStyleBackColor = false;
             this.btnContado.Click += new System.EventHandler(this.btnContado_Click);
@@ -331,9 +333,9 @@
             this.btnCredito.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCredito.BackgroundImage")));
             this.btnCredito.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCredito.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCredito.Location = new System.Drawing.Point(318, 18);
+            this.btnCredito.Location = new System.Drawing.Point(335, 21);
             this.btnCredito.Name = "btnCredito";
-            this.btnCredito.Size = new System.Drawing.Size(95, 74);
+            this.btnCredito.Size = new System.Drawing.Size(75, 50);
             this.btnCredito.TabIndex = 2;
             this.btnCredito.UseVisualStyleBackColor = false;
             this.btnCredito.Click += new System.EventHandler(this.btnCredito_Click);
@@ -344,9 +346,9 @@
             this.btnTarjeta.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnTarjeta.BackgroundImage")));
             this.btnTarjeta.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTarjeta.Location = new System.Drawing.Point(115, 18);
+            this.btnTarjeta.Location = new System.Drawing.Point(172, 20);
             this.btnTarjeta.Name = "btnTarjeta";
-            this.btnTarjeta.Size = new System.Drawing.Size(96, 74);
+            this.btnTarjeta.Size = new System.Drawing.Size(76, 50);
             this.btnTarjeta.TabIndex = 4;
             this.btnTarjeta.UseVisualStyleBackColor = false;
             this.btnTarjeta.Click += new System.EventHandler(this.btnTarjeta_Click);
@@ -506,6 +508,8 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.btnSinpe);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.btnTransferencia);
             this.groupBox3.Controls.Add(this.lblCredito);
@@ -521,13 +525,36 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Formas de pago";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(104, 71);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 18);
+            this.label9.TabIndex = 81;
+            this.label9.Text = "SINPE";
+            // 
+            // btnSinpe
+            // 
+            this.btnSinpe.BackColor = System.Drawing.Color.White;
+            this.btnSinpe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSinpe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSinpe.Image = ((System.Drawing.Image)(resources.GetObject("btnSinpe.Image")));
+            this.btnSinpe.Location = new System.Drawing.Point(93, 20);
+            this.btnSinpe.Name = "btnSinpe";
+            this.btnSinpe.Size = new System.Drawing.Size(75, 50);
+            this.btnSinpe.TabIndex = 80;
+            this.btnSinpe.UseVisualStyleBackColor = false;
+            this.btnSinpe.Click += new System.EventHandler(this.btnSinpe_Click);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(214, 97);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(244, 72);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 16);
+            this.label6.Size = new System.Drawing.Size(98, 18);
             this.label6.TabIndex = 79;
             this.label6.Text = "Transferencia";
             // 
@@ -537,9 +564,9 @@
             this.btnTransferencia.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnTransferencia.BackgroundImage")));
             this.btnTransferencia.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnTransferencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTransferencia.Location = new System.Drawing.Point(217, 19);
+            this.btnTransferencia.Location = new System.Drawing.Point(254, 21);
             this.btnTransferencia.Name = "btnTransferencia";
-            this.btnTransferencia.Size = new System.Drawing.Size(95, 74);
+            this.btnTransferencia.Size = new System.Drawing.Size(75, 50);
             this.btnTransferencia.TabIndex = 78;
             this.btnTransferencia.UseVisualStyleBackColor = false;
             this.btnTransferencia.Click += new System.EventHandler(this.btnTransferencia_Click);
@@ -547,30 +574,30 @@
             // lblCredito
             // 
             this.lblCredito.AutoSize = true;
-            this.lblCredito.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCredito.Location = new System.Drawing.Point(336, 93);
+            this.lblCredito.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCredito.Location = new System.Drawing.Point(343, 74);
             this.lblCredito.Name = "lblCredito";
-            this.lblCredito.Size = new System.Drawing.Size(67, 20);
+            this.lblCredito.Size = new System.Drawing.Size(56, 18);
             this.lblCredito.TabIndex = 77;
             this.lblCredito.Text = "Crédito";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(128, 93);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(181, 72);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 20);
+            this.label3.Size = new System.Drawing.Size(53, 18);
             this.label3.TabIndex = 76;
             this.label3.Text = "Tarjeta";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(29, 93);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(26, 71);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 20);
+            this.label2.Size = new System.Drawing.Size(61, 18);
             this.label2.TabIndex = 75;
             this.label2.Text = "Efectivo";
             // 
@@ -730,7 +757,6 @@
             this.Text = "frmCobrar";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCobrar_FormClosing);
             this.Load += new System.EventHandler(this.frmCobrar_Load);
-         
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -791,5 +817,7 @@
         private System.Windows.Forms.GroupBox gbxBillete;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnTransferencia;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnSinpe;
     }
 }

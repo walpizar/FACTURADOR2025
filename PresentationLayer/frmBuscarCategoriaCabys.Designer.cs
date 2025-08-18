@@ -79,6 +79,7 @@
             this.txtbusqueda.Name = "txtbusqueda";
             this.txtbusqueda.Size = new System.Drawing.Size(406, 20);
             this.txtbusqueda.TabIndex = 13;
+            this.txtbusqueda.MouseEnter += new System.EventHandler(this.txtbusqueda_MouseEnter);
             // 
             // lblNombreProducto
             // 
