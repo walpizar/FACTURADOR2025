@@ -122,7 +122,7 @@ namespace PresentationLayer
                 IEnumerable<tbMovimientos> listaMov = new List<tbMovimientos>();
           
                 decimal inicioCaja = 0, entradaDinero = 0, salidaDinero = 0, notasCredito = 0, notasCreditoContado = 0, notasCreditoTransf = 0, notasCreditoTarjeta = 0,
-                    contado = 0, tarjeta = 0, credito = 0, transf = 0;
+                    contado = 0, tarjeta = 0, credito = 0, transf = 0, sinpe=0;
 
                 #region ELIMINADO
                 /*  return list.Where(x => (x.tipoDocumento == (int)Enums.TipoDocumento.Factura || x.tipoDocumento == (int)Enums.TipoDocumento.FacturaElectronica
@@ -173,6 +173,7 @@ namespace PresentationLayer
 
             
                 contado = (decimal)listaPagos.Where(x=> x.tipoPago == (int)Enums.TipoPago.Efectivo).Sum(x => x.monto);
+                sinpe= (decimal)listaPagos.Where(x => x.tipoPago == (int)Enums.TipoPago.sinpe).Sum(x => x.monto);
                 tarjeta = (decimal)listaPagos.Where(x => x.tipoPago == (int)Enums.TipoPago.Tarjeta).Sum(x => x.monto);
                 transf = (decimal)listaPagos.Where(x => x.tipoPago == (int)Enums.TipoPago.Transferencia).Sum(x => x.monto);
           
@@ -218,6 +219,7 @@ namespace PresentationLayer
                 txtIncioCaja.Text = Utility.priceFormat(inicioCaja);
 
                 txtContado.Text = Utility.priceFormat(contado);
+                txtSinpe.Text = Utility.priceFormat(sinpe);
                 txtTarjeta.Text = Utility.priceFormat(tarjeta);
                 txtCredito.Text = Utility.priceFormat(credito);
                 txtTransf.Text = Utility.priceFormat(transf);
@@ -231,13 +233,13 @@ namespace PresentationLayer
                 txtSalidaDinero.Text = Utility.priceFormat(salidaDinero);
 
 
-                txtTotalVentas.Text = Utility.priceFormat((contado + tarjeta + credito + transf));
+                txtTotalVentas.Text = Utility.priceFormat((contado + tarjeta + credito + transf+ sinpe));
                 txtTotalNC.Text = Utility.priceFormat(notasCredito);
                 txtEntradaSalida.Text = Utility.priceFormat((entradaDinero - salidaDinero));
 
 
-                txtTotalNeto.Text = Utility.priceFormat(((contado + tarjeta + credito + transf + entradaDinero+ inicioCaja) - (salidaDinero + notasCredito)));
-                txtTotalBanco.Text = Utility.priceFormat(((tarjeta + transf) - (notasCreditoTransf + notasCreditoTarjeta)));
+                txtTotalNeto.Text = Utility.priceFormat(((contado + tarjeta + credito + transf + sinpe + entradaDinero+ inicioCaja) - (salidaDinero + notasCredito)));
+                txtTotalBanco.Text = Utility.priceFormat(((tarjeta + transf + sinpe) - (notasCreditoTransf + notasCreditoTarjeta)));
                 txtTotalCaja.Text = Utility.priceFormat(((contado + entradaDinero+ inicioCaja) - (salidaDinero + notasCreditoContado)));
 
 
@@ -260,6 +262,7 @@ namespace PresentationLayer
             List<string> lista = new List<string>();
             lista.Add("VENTAS");
             lista.Add("Efectivo: " + txtContado.Text.Trim());
+            lista.Add("SINPE: " + txtSinpe.Text.Trim());
             lista.Add("Tarjeta: " + txtTarjeta.Text.Trim());
             lista.Add("Créditos: " + txtCredito.Text.Trim());
             lista.Add("Transferencia: " + txtTransf.Text.Trim());
@@ -336,7 +339,7 @@ namespace PresentationLayer
 
                         if ((bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().correoCierre)
                         {
-                            String mensaje = string.Format("Empresa:{18}{0}Fecha:{17}{0}Sucursal:{19}{0}Caja:{20}{0}Usuario:{21}{0}{0}VENTAS:{0}Contado: {1}{0}Tarjeta: {2}{0}Créditos: {3}{0}Transferencia:{4}{0}{0}ENTRADA/SALIDA CAJA:{0}" +
+                            String mensaje = string.Format("Empresa:{18}{0}Fecha:{17}{0}Sucursal:{19}{0}Caja:{20}{0}Usuario:{21}{0}{0}VENTAS:{0}Contado: {1}{0}SINPE: {22}{0}Tarjeta: {2}{0}Créditos: {3}{0}Transferencia:{4}{0}{0}ENTRADA/SALIDA CAJA:{0}" +
                                 "Entrada Dinero: {5}{0}Salida Dinero: {6}{0}{0}" +
                                 "NOTAS DE CRÉDITO:{0}Efectivo: {7}{0}Tarjeta: {8}{0}Transferencia: {9}{0}{0}GENERAL{0}Inicio de Caja: {10}{0}Total de Ventas: {11}{0}" +
                                 "Total Notas de Crédito: {12}{0}Total Entrada/Salida: {13}{0}Total Neto: {14}{0}Total Banco: {15}{0}Total Caja: {16}{0}",
@@ -344,7 +347,7 @@ namespace PresentationLayer
                                 , txtEntradaDinero.Text.Trim(), txtSalidaDinero.Text.Trim(), txtNCContado.Text.Trim(), txtNCTarjeta.Text.Trim(), txtNCTransf.Text.Trim()
                                 , txtIncioCaja.Text.Trim(), txtTotalVentas.Text.Trim(), txtTotalNC.Text.Trim(), txtEntradaSalida.Text.Trim(), txtTotalNeto.Text.Trim()
                                 , txtTotalBanco.Text.Trim(), txtTotalCaja.Text.Trim(), Utility.getDate(), Global.actividadEconomic.nombreComercial.Trim().ToUpper(),
-                                Global.Configuracion.sucursal.ToString(), Global.Configuracion.caja.ToString(), Global.Usuario.nombreUsuario);
+                                Global.Configuracion.sucursal.ToString(), Global.Configuracion.caja.ToString(), Global.Usuario.nombreUsuario, txtSinpe.Text);
 
                             List<string> correos = new List<string>();
                             correos.Add(Global.actividadEconomic.correoCompras.Trim());

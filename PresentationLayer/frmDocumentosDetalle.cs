@@ -325,7 +325,8 @@ namespace PresentationLayer
                         if (_detalleNC != null)
                         {
                             var doc = eliminarFactura();
-                            _doc = doc;
+                            //doc.tbPagos = _doc.tbPagos;
+                   
 
                             MessageBox.Show("Se ha generado la Nota de Crédito Correctamente.", "Guardar Nota de Crédito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

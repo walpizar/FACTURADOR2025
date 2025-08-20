@@ -173,7 +173,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 }
                 else if (_doc.tipoDocumento == (int)Enums.TipoDocumento.NotaCreditoElectronica)
                 {
-                    GeneraXMLNotaCredito4_3(writer);
+                    GeneraXMLNotaCredito4_4(writer);
                 }
                 else if (_doc.tipoDocumento == (int)Enums.TipoDocumento.TiqueteElectronico)
                 {
@@ -327,11 +327,25 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             }
 
             // Condición de venta
-            writer.WriteElementString("CondicionVenta", _condicionVenta);
+            
+            if(_doc.tipoDocumento == (int)Enums.TipoDocumento.NotaCreditoElectronica)
+            {
+                writer.WriteElementString("CondicionVenta", "02");
+                writer.WriteElementString("PlazoCredito", "30");
+
+            }
+            else
+            {
+                writer.WriteElementString("CondicionVenta", _condicionVenta);
+
+                if (_condicionVenta == "02")
+                    writer.WriteElementString("PlazoCredito", _plazoCredito);
+            }
+                
             //if (_condicionVenta == "99")
             //    writer.WriteElementString("CondicionVentaOtros", "Se debe describir puntualmente la condición de la venta");
-            if (_condicionVenta == "02")
-                writer.WriteElementString("PlazoCredito", _plazoCredito);
+            
+
 
             // DETALLE SERVICIO
             writer.WriteStartElement("DetalleServicio");
@@ -359,6 +373,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 {
                     writer.WriteStartElement("Descuento");
                     writer.WriteElementString("MontoDescuento", detalle.montoTotalDesc.ToString("F5", CultureInfo.InvariantCulture));
+                    writer.WriteElementString("CodigoDescuento", "08");// siempre difinido con el codigo descuento 08 que es descuento comercial
                     writer.WriteElementString("NaturalezaDescuento", "Descuento aplicado al cliente");
                     writer.WriteEndElement();
                 }
@@ -521,7 +536,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
             writer.WriteElementString("TotalImpuesto", String.Format("{0:F5}", impuestosTotal));
 
-            writer.WriteStartElement("MedioPago");
+           
 
             //agrupa tipos de pago y los suma
             var pagosAgrupados = _doc.tbPagos
@@ -532,18 +547,22 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 Total = g.Sum(x => x.monto)
             })
             .ToList();
-            foreach (var p in pagosAgrupados)
+
+           
+            if (pagosAgrupados.Count > 0)
             {
-                
-
                
-                writer.WriteElementString("TipoMedioPago", p.TipoPago.ToString().PadLeft(2, '0'));
-                writer.WriteElementString("TotalMedioPago", String.Format("{0:F5}", p.Total));
-
+                foreach (var p in pagosAgrupados)
+                {
+                    writer.WriteStartElement("MedioPago");
+                        writer.WriteElementString("TipoMedioPago", p.TipoPago.ToString().PadLeft(2, '0'));
+                        writer.WriteElementString("TotalMedioPago", String.Format("{0:F5}", p.Total));
+                    writer.WriteEndElement(); // fin MedioPago
+                }
+                
             }
-                     
 
-            writer.WriteEndElement(); // fin MedioPago
+
 
             writer.WriteElementString("TotalComprobante", String.Format("{0:F5}", totalComprobante));
             writer.WriteEndElement(); // ResumenFactura
@@ -553,9 +572,9 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 _doc.tipoDocumento == (int)Enums.TipoDocumento.NotaDebitoElectronica)
             {
                 writer.WriteStartElement("InformacionReferencia");
-                writer.WriteElementString("TipoDoc", _doc.tipoDocRef.ToString().PadLeft(2, '0'));
+                writer.WriteElementString("TipoDocIR", _doc.tipoDocRef.ToString().PadLeft(2, '0'));
                 writer.WriteElementString("Numero", _doc.claveRef);
-                writer.WriteElementString("FechaEmision", _doc.fechaRef.Value.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
+                writer.WriteElementString("FechaEmisionIR", _doc.fechaRef.Value.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
                 writer.WriteElementString("Codigo", _doc.codigoRef.ToString().PadLeft(2, '0'));
                 writer.WriteElementString("Razon", _doc.razon.ToUpper().Substring(0, 180).Trim());
                 writer.WriteEndElement();
@@ -648,6 +667,41 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
 
                 CuerpoDocumento4_3(ref writer);
+
+
+
+                // 'Aqui va la firma, despues la agregamos.
+
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Flush();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void GeneraXMLNotaCredito4_4(System.Xml.XmlTextWriter writer) // As System.Xml.XmlTextWriter
+        {
+            try
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("NotaCreditoElectronica");
+                writer.WriteAttributeString("xmlns",
+                    "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/notaCreditoElectronica");
+                writer.WriteAttributeString("xmlns", "ds", null,
+                    "http://www.w3.org/2000/09/xmldsig#");
+                writer.WriteAttributeString("xmlns", "vc", null,
+                    "http://www.w3.org/2007/XMLSchema-versioning");
+                writer.WriteAttributeString("xmlns", "xsi", null,
+                    "http://www.w3.org/2001/XMLSchema-instance");
+                writer.WriteAttributeString("xsi", "schemaLocation",
+                    "http://www.w3.org/2001/XMLSchema-instance",
+                    "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/notaCreditoElectronica " +
+                    @"C:\PCCentral\MinisterioHacienda\mhcr-xml-schemas\jaxb\NotaCreditoElectronica\v4.4\NotaCreditoElectronica.xsd");
+
+
+                CuerpoDocumento4_4(ref writer);
 
 
 
