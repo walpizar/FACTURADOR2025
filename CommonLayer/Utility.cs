@@ -1,12 +1,17 @@
-﻿using MailKit;
+﻿using CommonLayer.DTO;
+using MailKit;
 using MailKit.Net.Imap;
 using MailKit.Search;
 using MimeKit;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Net.Http;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -271,6 +276,62 @@ namespace CommonLayer
         public static DateTime GetDateByDay()
         {
             return DateTime.Today;
+        }
+        public static DateTime ParseFechaHacienda(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+                return Utility.getDate(); // o lanzar una excepción si lo prefiere
+
+            // Formatos típicos en comprobantes de CR:
+            // - 2025-08-22T14:13:35-06:00
+            // - 2025-08-22T14:13:35.123-06:00
+            // - 2025-08-22T14:13:35Z
+            // - 2025-08-22T14:13:35
+            var formatos = new[]
+            {
+        "yyyy-MM-dd'T'HH:mm:sszzz",
+        "yyyy-MM-dd'T'HH:mm:ss.fffzzz",
+        "yyyy-MM-dd'T'HH:mm:ss.ffffzzz",
+        "yyyy-MM-dd'T'HH:mm:ss'Z'",
+        "yyyy-MM-dd'T'HH:mm:ss",
+        "yyyy-MM-dd"
+    };
+
+            // 1) Intento exacto con offset
+            if (DateTimeOffset.TryParseExact(
+                    raw,
+                    formatos,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out var dto))
+            {
+                // OPCIÓN A: conservar la "hora local" del XML (recomendada si el sistema opera en CR)
+                return dto.LocalDateTime;      // convierte respetando la zona local del servidor
+
+                // OPCIÓN B: mantener en UTC (descomente si prefiere UTC)
+                // return dto.UtcDateTime;
+
+                // OPCIÓN C: mantener la hora tal cual aparece (sin zona, Kind=Unspecified)
+                // return dto.DateTime;
+            }
+
+            // 2) Intento genérico
+            if (DateTimeOffset.TryParse(raw, CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out dto))
+            {
+                return dto.LocalDateTime;
+            }
+
+            // 3) Último intento con utilidades XML (admite varios sabores de ISO 8601)
+            try
+            {
+                return XmlConvert.ToDateTime(raw, XmlDateTimeSerializationMode.Utc);
+            }
+            catch
+            {
+                // Fallback seguro para no romper el flujo
+                return Utility.getDate();
+            }
         }
 
         public static byte[] UrlImageToByteArray(string imagenUrl)
@@ -628,6 +689,45 @@ namespace CommonLayer
             {
                 return "https://idp.comprobanteselectronicos.go.cr/auth/realms/rut/protocol/openid-connect/token";
             }
+        }
+
+        public static async Task<List<Actividad>> obtnerActividadesPorCliente(string idCliente)
+        {
+
+            List<String> actividades = new List<string>();
+
+            var identificacion = idCliente; // Reemplaza con la cédula que necesites
+            var url = $"https://api.hacienda.go.cr/fe/ae?identificacion={identificacion.Trim()}";
+
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    var response =   await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    var json = await response.Content.ReadAsStringAsync();
+                    var opciones = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var data = JsonSerializer.Deserialize<ActividadEconomicaResponse>(json, opciones);
+
+                    if(data != null && data.actividades != null)
+                    {
+                        return data.actividades;
+                    }
+
+
+                }
+                catch (HttpRequestException ex)
+                {
+                    Console.WriteLine($"Error en la petición HTTP: {ex.Message}");
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"Error en deserialización JSON: {ex.Message}");
+                }
+            }
+
+            return null;
         }
     }
 }

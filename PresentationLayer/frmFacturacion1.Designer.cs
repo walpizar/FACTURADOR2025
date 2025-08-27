@@ -104,9 +104,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.btnProductos = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
-            this.txtCorreo2 = new System.Windows.Forms.TextBox();
             this.chkEnviar = new System.Windows.Forms.CheckBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.chkTiqueteElectronico = new System.Windows.Forms.CheckBox();
             this.contextPrecios = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.precio1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +112,9 @@
             this.precio3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnsalir = new System.Windows.Forms.PictureBox();
             this.chkFacturaElectronica = new System.Windows.Forms.CheckBox();
+            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.btnActividadesCarga = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvDetalleFactura)).BeginInit();
             this.gbxMontos.SuspendLayout();
@@ -633,12 +634,12 @@
             // txtDireccion
             // 
             this.txtDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDireccion.Location = new System.Drawing.Point(79, 102);
+            this.txtDireccion.Location = new System.Drawing.Point(79, 78);
             this.txtDireccion.MaxLength = 500;
             this.txtDireccion.Multiline = true;
             this.txtDireccion.Name = "txtDireccion";
             this.txtDireccion.ReadOnly = true;
-            this.txtDireccion.Size = new System.Drawing.Size(449, 38);
+            this.txtDireccion.Size = new System.Drawing.Size(449, 37);
             this.txtDireccion.TabIndex = 39;
             // 
             // label1
@@ -646,7 +647,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(6, 102);
+            this.label1.Location = new System.Drawing.Point(5, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 17);
             this.label1.TabIndex = 40;
@@ -957,15 +958,6 @@
             this.btnClientes.UseVisualStyleBackColor = true;
             this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
             // 
-            // txtCorreo2
-            // 
-            this.txtCorreo2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCorreo2.Location = new System.Drawing.Point(79, 78);
-            this.txtCorreo2.MaxLength = 50;
-            this.txtCorreo2.Name = "txtCorreo2";
-            this.txtCorreo2.Size = new System.Drawing.Size(449, 23);
-            this.txtCorreo2.TabIndex = 51;
-            // 
             // chkEnviar
             // 
             this.chkEnviar.AutoSize = true;
@@ -980,17 +972,6 @@
             this.chkEnviar.Text = "Correo Electrónico";
             this.chkEnviar.UseVisualStyleBackColor = true;
             this.chkEnviar.CheckedChanged += new System.EventHandler(this.chkEnviar_CheckedChanged);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label19.Location = new System.Drawing.Point(10, 78);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(67, 17);
-            this.label19.TabIndex = 53;
-            this.label19.Text = "Correo 2:";
             // 
             // chkTiqueteElectronico
             // 
@@ -1052,10 +1033,40 @@
             this.chkFacturaElectronica.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkFacturaElectronica.Location = new System.Drawing.Point(358, 32);
             this.chkFacturaElectronica.Name = "chkFacturaElectronica";
-            this.chkFacturaElectronica.Size = new System.Drawing.Size(167, 20);
+            this.chkFacturaElectronica.Size = new System.Drawing.Size(166, 20);
             this.chkFacturaElectronica.TabIndex = 97;
             this.chkFacturaElectronica.Text = "Facturación Electrónica";
             this.chkFacturaElectronica.UseVisualStyleBackColor = true;
+            // 
+            // cboActividadEconomica
+            // 
+            this.cboActividadEconomica.FormattingEnabled = true;
+            this.cboActividadEconomica.Location = new System.Drawing.Point(79, 119);
+            this.cboActividadEconomica.Name = "cboActividadEconomica";
+            this.cboActividadEconomica.Size = new System.Drawing.Size(414, 21);
+            this.cboActividadEconomica.TabIndex = 98;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label18.Location = new System.Drawing.Point(10, 119);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(69, 17);
+            this.label18.TabIndex = 99;
+            this.label18.Text = "Actividad:";
+            // 
+            // btnActividadesCarga
+            // 
+            this.btnActividadesCarga.Image = ((System.Drawing.Image)(resources.GetObject("btnActividadesCarga.Image")));
+            this.btnActividadesCarga.Location = new System.Drawing.Point(497, 117);
+            this.btnActividadesCarga.Margin = new System.Windows.Forms.Padding(2);
+            this.btnActividadesCarga.Name = "btnActividadesCarga";
+            this.btnActividadesCarga.Size = new System.Drawing.Size(29, 27);
+            this.btnActividadesCarga.TabIndex = 73;
+            this.btnActividadesCarga.UseVisualStyleBackColor = true;
+            this.btnActividadesCarga.Click += new System.EventHandler(this.btnActividadesCarga_Click);
             // 
             // frmFacturacion1
             // 
@@ -1065,12 +1076,13 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1250, 673);
+            this.Controls.Add(this.btnActividadesCarga);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.cboActividadEconomica);
             this.Controls.Add(this.chkFacturaElectronica);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.chkTiqueteElectronico);
-            this.Controls.Add(this.label19);
             this.Controls.Add(this.chkEnviar);
-            this.Controls.Add(this.txtCorreo2);
             this.Controls.Add(this.gbxAcciones);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtCorreo);
@@ -1141,7 +1153,6 @@
         private System.Windows.Forms.TextBox txtCorreo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox gbxAcciones;
-        private System.Windows.Forms.TextBox txtCorreo2;
         private System.Windows.Forms.CheckBox chkEnviar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtObservaciones;
@@ -1155,7 +1166,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnProductos;
         private System.Windows.Forms.Button btnClientes;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button btnBuscarProforma;
         private System.Windows.Forms.Button btnBuscar;
@@ -1187,5 +1197,8 @@
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btnValidacion;
+        private System.Windows.Forms.ComboBox cboActividadEconomica;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button btnActividadesCarga;
     }
 }

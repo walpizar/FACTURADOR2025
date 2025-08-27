@@ -1,8 +1,10 @@
 ﻿using BusinessLayer;
 using CommonLayer;
+using CommonLayer.DTO;
 using CommonLayer.Exceptions.BussinessExceptions;
 using EntityLayer;
 using PresentationLayer.Clases;
+using SharpCompress.Writers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +12,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PresentationLayer
@@ -907,6 +910,8 @@ namespace PresentationLayer
                     txtTel.Text = cliente.tbPersona.telefono.ToString().Trim().ToUpper();
                     txtCorreo.Text = cliente.tbPersona.correoElectronico.Trim();
 
+
+                    cargarActividades(cliente);
                     calcularMontosT();
 
                 }
@@ -1785,6 +1790,11 @@ namespace PresentationLayer
 
             documento.codigoActividad = Global.actividadEconomic.CodActividad;
 
+            if (cboActividadEconomica.SelectedItem != null)
+            {
+                documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+            }
+
             documento.sucursal = Global.Configuracion.sucursal;
             documento.caja = Global.Configuracion.caja;
 
@@ -2163,7 +2173,10 @@ namespace PresentationLayer
             {
                 chkFacturaElectronica.Checked = false;
             }
-            
+
+            cboActividadEconomica.DataSource = null;
+            cboActividadEconomica.Text = "";
+
             dtgvDetalleFactura.Rows.Clear();
             listaDetalleDocumento.Clear();
             listaProductosPromo.Clear();
@@ -3311,6 +3324,50 @@ namespace PresentationLayer
         private void gbxAcciones_Enter(object sender, EventArgs e)
         {
 
+        }
+        private async Task cargarActividades(tbClientes cliente)
+        {
+            try
+            {
+                cboActividadEconomica.DataSource = null;
+                cboActividadEconomica.Items.Clear();
+                if (cliente != null)
+                {
+                    List<Actividad> lista = await Utility.obtnerActividadesPorCliente(cliente.id);
+                    if (lista != null && lista.Count > 0)
+                    {
+                        cboActividadEconomica.DataSource = lista;
+                        cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
+                        cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
+                    }
+                    else
+                    {
+                        MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+
+
+
+                }
+            }
+            catch (Exception)
+            {
+                cboActividadEconomica.Items.Clear();
+                cboActividadEconomica.Text = "";
+
+                MessageBox.Show("No se logró consultar las actividades económicas del cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+        }
+
+        private void btnActividadesCarga_Click(object sender, EventArgs e)
+        {
+            if (clienteGlo == null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para asignarle las actividades económicas", "Actividades Economicas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            cargarActividades(clienteGlo);
         }
     }
 }

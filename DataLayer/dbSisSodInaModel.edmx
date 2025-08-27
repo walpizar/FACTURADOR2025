@@ -229,6 +229,18 @@
           <Property Name="nombre" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="estado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbClienteActividad">
+          <Key>
+            <PropertyRef Name="idCliente" />
+            <PropertyRef Name="tipoIdCliente" />
+            <PropertyRef Name="codigoActividad" />
+          </Key>
+          <Property Name="idCliente" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="tipoIdCliente" Type="int" Nullable="false" />
+          <Property Name="codigoActividad" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="fecha_crea" Type="datetime" />
+          <Property Name="usuario_crea" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="tbClientes">
           <Key>
             <PropertyRef Name="id" />
@@ -461,6 +473,7 @@
           <Property Name="sucursal" Type="int" />
           <Property Name="caja" Type="int" />
           <Property Name="estadoCorreo" Type="int" />
+          <Property Name="codigoActividadReceptor" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="tbDocumentosPendiente">
           <Key>
@@ -1157,6 +1170,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbClienteActividad_tbActividades">
+          <End Role="tbActividades" Type="Self.tbActividades" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbClienteActividad" Type="Self.tbClienteActividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbActividades">
+              <PropertyRef Name="codigoAct" />
+            </Principal>
+            <Dependent Role="tbClienteActividad">
+              <PropertyRef Name="codigoActividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbClienteActividad_tbClientes">
+          <End Role="tbClientes" Type="Self.tbClientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbClienteActividad" Type="Self.tbClienteActividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbClientes">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="tipoId" />
+            </Principal>
+            <Dependent Role="tbClienteActividad">
+              <PropertyRef Name="idCliente" />
+              <PropertyRef Name="tipoIdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbClientes_tbExoneraciones">
           <End Role="tbExoneraciones" Type="Self.tbExoneraciones" Multiplicity="0..1" />
           <End Role="tbClientes" Type="Self.tbClientes" Multiplicity="*" />
@@ -1821,6 +1864,7 @@
           <EntitySet Name="tbCategoria9Cabys" EntityType="Self.tbCategoria9Cabys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbCategoriaProducto" EntityType="Self.tbCategoriaProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbCategoriaRequerimiento" EntityType="Self.tbCategoriaRequerimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbClienteActividad" EntityType="Self.tbClienteActividad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbClientes" EntityType="Self.tbClientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbCompras" EntityType="Self.tbCompras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbDetalleCompras" EntityType="Self.tbDetalleCompras" Schema="dbo" store:Type="Tables" />
@@ -1908,6 +1952,14 @@
           <AssociationSet Name="FK_tbCategoria8Cabys_tbCategoria7Cabys" Association="Self.FK_tbCategoria8Cabys_tbCategoria7Cabys">
             <End Role="tbCategoria7Cabys" EntitySet="tbCategoria7Cabys" />
             <End Role="tbCategoria8Cabys" EntitySet="tbCategoria8Cabys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClienteActividad_tbActividades" Association="Self.FK_tbClienteActividad_tbActividades">
+            <End Role="tbActividades" EntitySet="tbActividades" />
+            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClienteActividad_tbClientes" Association="Self.FK_tbClienteActividad_tbClientes">
+            <End Role="tbClientes" EntitySet="tbClientes" />
+            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
           </AssociationSet>
           <AssociationSet Name="FK_tbClientes_tbExoneraciones" Association="Self.FK_tbClientes_tbExoneraciones">
             <End Role="tbExoneraciones" EntitySet="tbExoneraciones" />
@@ -2422,6 +2474,15 @@
             <End Role="tbCategoria6Cabys" EntitySet="tbCategoria6Cabys" />
             <End Role="tbCategoria7Cabys" EntitySet="tbCategoria7Cabys" />
           </AssociationSet>
+          <EntitySet Name="tbClienteActividad" EntityType="dbSISSODINAModel.tbClienteActividad" />
+          <AssociationSet Name="FK_tbClienteActividad_tbActividades" Association="dbSISSODINAModel.FK_tbClienteActividad_tbActividades">
+            <End Role="tbActividades" EntitySet="tbActividades" />
+            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClienteActividad_tbClientes" Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes">
+            <End Role="tbClientes" EntitySet="tbClientes" />
+            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -2457,6 +2518,7 @@
           <NavigationProperty Name="tbDocumento" Relationship="dbSISSODINAModel.FK_tbDocumento_tbActividad" FromRole="tbActividades" ToRole="tbDocumento" />
           <NavigationProperty Name="tbEmpresaActividades" Relationship="dbSISSODINAModel.FK_tbEmpresaActividades_tbActividades" FromRole="tbActividades" ToRole="tbEmpresaActividades" />
           <NavigationProperty Name="tbProducto" Relationship="dbSISSODINAModel.FK_tbProducto_tbActividad" FromRole="tbActividades" ToRole="tbProducto" />
+          <NavigationProperty Name="tbClienteActividad" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbActividades" FromRole="tbActividades" ToRole="tbClienteActividad" />
         </EntityType>
         <EntityType Name="tbBarrios">
           <Key>
@@ -2631,6 +2693,7 @@
           <NavigationProperty Name="tbPersona" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbClientes" ToRole="tbPersona" />
           <NavigationProperty Name="tbTipoClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" FromRole="tbClientes" ToRole="tbTipoClientes" />
           <NavigationProperty Name="tbDocumento" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbClientes" ToRole="tbDocumento" />
+          <NavigationProperty Name="tbClienteActividad" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" FromRole="tbClientes" ToRole="tbClienteActividad" />
         </EntityType>
         <EntityType Name="tbCompras">
           <Key>
@@ -2858,6 +2921,7 @@
           <NavigationProperty Name="tbTipoMoneda" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoMoneda" FromRole="tbDocumento" ToRole="tbTipoMoneda" />
           <NavigationProperty Name="tbTipoPago" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoPago" FromRole="tbDocumento" ToRole="tbTipoPago" />
           <NavigationProperty Name="tbTipoVenta" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoVenta" FromRole="tbDocumento" ToRole="tbTipoVenta" />
+          <Property Name="codigoActividadReceptor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbDocumentosPendiente">
           <Key>
@@ -4307,6 +4371,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbClienteActividad">
+          <Key>
+            <PropertyRef Name="idCliente" />
+            <PropertyRef Name="tipoIdCliente" />
+            <PropertyRef Name="codigoActividad" />
+          </Key>
+          <Property Name="idCliente" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="tipoIdCliente" Type="Int32" Nullable="false" />
+          <Property Name="codigoActividad" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="fecha_crea" Type="DateTime" Precision="3" />
+          <Property Name="usuario_crea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbActividades" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbActividades" FromRole="tbClienteActividad" ToRole="tbActividades" />
+          <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" FromRole="tbClienteActividad" ToRole="tbClientes" />
+        </EntityType>
+        <Association Name="FK_tbClienteActividad_tbActividades">
+          <End Type="dbSISSODINAModel.tbActividades" Role="tbActividades" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbSISSODINAModel.tbClienteActividad" Role="tbClienteActividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbActividades">
+              <PropertyRef Name="codigoAct" />
+            </Principal>
+            <Dependent Role="tbClienteActividad">
+              <PropertyRef Name="codigoActividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbClienteActividad_tbClientes">
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbSISSODINAModel.tbClienteActividad" Role="tbClienteActividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbClientes">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="tipoId" />
+            </Principal>
+            <Dependent Role="tbClienteActividad">
+              <PropertyRef Name="idCliente" />
+              <PropertyRef Name="tipoIdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4643,6 +4751,7 @@
           <EntitySetMapping Name="tbDocumento">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbDocumento">
               <MappingFragment StoreEntitySet="tbDocumento">
+                <ScalarProperty Name="codigoActividadReceptor" ColumnName="codigoActividadReceptor" />
                 <ScalarProperty Name="estadoCorreo" ColumnName="estadoCorreo" />
                 <ScalarProperty Name="caja" ColumnName="caja" />
                 <ScalarProperty Name="sucursal" ColumnName="sucursal" />
@@ -5267,6 +5376,17 @@
                 <ScalarProperty Name="SEXO" ColumnName="SEXO" />
                 <ScalarProperty Name="CODIGOPOSTAL" ColumnName="CODIGOPOSTAL" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbClienteActividad">
+            <EntityTypeMapping TypeName="dbSISSODINAModel.tbClienteActividad">
+              <MappingFragment StoreEntitySet="tbClienteActividad">
+                <ScalarProperty Name="usuario_crea" ColumnName="usuario_crea" />
+                <ScalarProperty Name="fecha_crea" ColumnName="fecha_crea" />
+                <ScalarProperty Name="codigoActividad" ColumnName="codigoActividad" />
+                <ScalarProperty Name="tipoIdCliente" ColumnName="tipoIdCliente" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -290,6 +290,12 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             writer.WriteElementString("Clave", _numeroClave);
             writer.WriteElementString("ProveedorSistemas", "603480811");
             writer.WriteElementString("CodigoActividadEmisor", _doc.codigoActividad.Trim().PadLeft(6, '0'));
+            
+            if(_doc.codigoActividadReceptor != null)
+            {
+                writer.WriteElementString("CodigoActividadReceptor", _doc.codigoActividadReceptor.Trim().PadLeft(6, '0'));
+
+            }
             writer.WriteElementString("NumeroConsecutivo", _numeroConsecutivo);
             writer.WriteElementString("FechaEmision", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
 

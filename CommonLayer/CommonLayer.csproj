@@ -266,6 +266,7 @@
     <Compile Include="CorreoElectronicoU.cs" />
     <Compile Include="CreaTicket.cs" />
     <Compile Include="DolarDto.cs" />
+    <Compile Include="DTO\ActividadEconomicaResponse.cs" />
     <Compile Include="DTO\CabysDTO.cs" />
     <Compile Include="DTO\ClienteDTO.cs" />
     <Compile Include="DTO\DocumentoHaciendaDTO.cs" />

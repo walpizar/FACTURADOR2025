@@ -1201,6 +1201,7 @@ namespace PresentationLayer
                         }
 
 
+
                         facturacionIns.guadarCompra(documento);
                         //if (documento.tipoDoc == (int)Enums.TipoDocumento.ComprasSimplificada && facturacionElectronica)
                         //{
@@ -1618,7 +1619,7 @@ namespace PresentationLayer
 
                                 #endregion
 
-                                compraGlobal = Documentos.obtenerCompraXml(file);
+                                compraGlobal = Documentos.ObtenerCompraXmlV44(file);
 
                                 //if (!compraGlobal.idEmpresa.Trim().Equals(Global.actividadEconomic.idEmpresa.Trim()))
                                 // {
@@ -2184,6 +2185,15 @@ namespace PresentationLayer
             }
         }
 
+        private void cboTipoPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(compraGlobal != null  && cboTipoPago.SelectedValue != null)
+            {
+                compraGlobal.tipoPago= 
+                    (int)cboTipoPago.SelectedValue;
+            }
+            
+        }
         //private void dtgvCompras_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         //{
         //    //linea = dtgvCompras.Rows[e.RowIndex].Cells[1].Value.ToString();

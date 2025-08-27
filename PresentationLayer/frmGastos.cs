@@ -111,7 +111,7 @@ namespace PresentationLayer
                         if (File.Exists(file))
                         {
 
-                            var gasto = Documentos.obtenerCompraXml(file);
+                            var gasto = Documentos.ObtenerCompraXmlV44(file);
                             gasto.tipoDoc = gasto.tipoDoc== (int)Enums.TipoDocumento.NotaCredito ? (int)Enums.TipoDocumento.NotaCreditoGasto : (int)Enums.TipoDocumento.Gastos;
                             foreach (var item in gasto.tbDetalleCompras)
                             {

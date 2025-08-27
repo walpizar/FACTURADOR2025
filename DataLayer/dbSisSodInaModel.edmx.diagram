@@ -7,7 +7,7 @@
       <Diagram DiagramId="ada7a4eaead04a319ffd5bc4f7eae1a7" Name="Diagram1">
         <EntityTypeShape EntityType="dbSISSODINAModel.sysdiagrams" Width="1.5" PointX="13.75" PointY="11.875" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbAcompanamiento" Width="1.5" PointX="3.75" PointY="41.375" />
-        <EntityTypeShape EntityType="dbSISSODINAModel.tbActividades" Width="1.5" PointX="0.75" PointY="25.875" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbActividades" Width="1.5" PointX="0.75" PointY="24.625" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbBarrios" Width="1.5" PointX="1.5" PointY="6.625" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbCajasMovimientos" Width="1.5" PointX="13.75" PointY="14.875" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbCanton" Width="1.5" PointX="1.5" PointY="33.5" />
@@ -118,6 +118,9 @@
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria4Cabys_tbCategoria3Cabys" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria5Cabys_tbCategoria4Cabys" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCategoria6Cabys_tbCategoria5Cabys" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbClienteActividad" Width="1.5" PointX="11" PointY="35.125" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClienteActividad_tbActividades" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

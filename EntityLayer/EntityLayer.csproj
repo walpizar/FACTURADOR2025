@@ -112,6 +112,9 @@
     <Compile Include="tbCategoriaRequerimiento.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbClienteActividad.cs">
+      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbClientes.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>

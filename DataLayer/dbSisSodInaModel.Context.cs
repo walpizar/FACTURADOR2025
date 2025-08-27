@@ -82,5 +82,6 @@ namespace DataLayer
         public virtual DbSet<tbCategoria5Cabys> tbCategoria5Cabys { get; set; }
         public virtual DbSet<tbCategoria6Cabys> tbCategoria6Cabys { get; set; }
         public virtual DbSet<tbPersonasTribunalS> tbPersonasTribunalS { get; set; }
+        public virtual DbSet<tbClienteActividad> tbClienteActividad { get; set; }
     }
 }

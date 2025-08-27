@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using CommonLayer;
+using CommonLayer.DTO;
 using CommonLayer.Exceptions.BussinessExceptions;
 using CommonLayer.Logs;
 using EntityLayer;
@@ -11,6 +12,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -1068,7 +1070,8 @@ namespace PresentationLayer
             {
                 chkFacturaElectronica.Checked = false;
             }
-         
+            cboActividadEconomica.DataSource = null;
+            cboActividadEconomica.Text = "";
             documentoGlo = null;
             dtgvDetalleFactura.Rows.Clear();
             listaDetalleDocumento.Clear();
@@ -1084,14 +1087,14 @@ namespace PresentationLayer
             existeRespuesta = false;
 
             chkEnviar.Checked = false;
-            txtCorreo2.Text = string.Empty;
+            //txtCorreo2.Text = string.Empty;
 
             txtIdCliente.Text = string.Empty;
             txtCliente.Text = string.Empty;
             txtDireccion.Text = string.Empty;
             txtTel.Text = string.Empty;
             txtCorreo.Text = string.Empty;
-            txtCorreo2.Text = string.Empty;
+            //txtCorreo2.Text = string.Empty;
 
             txtSubtotal.Text = "0";
             txtIva.Text = "0";
@@ -1263,11 +1266,45 @@ namespace PresentationLayer
                 txtCorreo.Text = cliente.tbPersona.correoElectronico.Trim();
 
                 chkEnviar.Checked = true;
+                cargarActividades(cliente);
                 calcularMontosT();
 
             }
         }
 
+        private async Task cargarActividades(tbClientes cliente)
+        {
+            try
+            {
+                cboActividadEconomica.DataSource = null;
+                cboActividadEconomica.Items.Clear();
+                if (cliente != null)
+                {
+                    List<Actividad> lista = await  Utility.obtnerActividadesPorCliente(cliente.id);
+                    if (lista != null && lista.Count > 0)
+                    {
+                        cboActividadEconomica.DataSource = lista;
+                        cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
+                        cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
+                    }
+                    else
+                    {
+                        MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+
+
+
+                }
+            }
+            catch (Exception)
+            {
+                cboActividadEconomica.Items.Clear();
+                cboActividadEconomica.Text = "";
+
+                MessageBox.Show("No se logró consultar las actividades económicas del cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+        }
         private void txtIdCliente_TextChanged(object sender, EventArgs e)
         {
             if (txtIdCliente.Text == string.Empty)
@@ -1402,16 +1439,16 @@ namespace PresentationLayer
                     txtCorreo.Focus();
                     return false;
                 }
-                if (txtCorreo2.Text != string.Empty)
-                {
-                    if (!Utility.isValidEmail(txtCorreo2.Text))
-                    {
-                        MessageBox.Show("El formato del correo es incorrecto", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        txtCorreo2.Focus();
-                        return false;
-                    }
+                //if (txtCorreo2.Text != string.Empty)
+                //{
+                //    if (!Utility.isValidEmail(txtCorreo2.Text))
+                //    {
+                //        MessageBox.Show("El formato del correo es incorrecto", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        txtCorreo2.Focus();
+                //        return false;
+                //    }
 
-                }
+                //}
             }
 
             if (Global.Usuario.tbEmpresa.regimenSimplificado && (int)Global.Usuario.tbEmpresa.tipoFacturacionRegimen == (int)Enums.TipoFacturacionElectRegimenSimplificado.SoloFacturacionConCliente)
@@ -1705,6 +1742,10 @@ namespace PresentationLayer
 
 
             documento.codigoActividad = Global.actividadEconomic.CodActividad;
+            if (cboActividadEconomica.SelectedItem != null)
+            {
+                documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+            }
 
             documento.sucursal = Global.Configuracion.sucursal;
             documento.caja = Global.Configuracion.caja;
@@ -1713,7 +1754,7 @@ namespace PresentationLayer
             if ((bool)documento.notificarCorreo)
             {
                 documento.correo1 = txtCorreo.Text == string.Empty ? null : txtCorreo.Text.Trim();
-                documento.correo2 = txtCorreo2.Text == string.Empty ? null : txtCorreo2.Text.Trim();
+                //documento.correo2 = txtCorreo2.Text == string.Empty ? null : txtCorreo2.Text.Trim();
 
             }
 
@@ -1876,7 +1917,7 @@ namespace PresentationLayer
 
                                 txtTel.Text = string.Empty;
                                 txtCorreo.Text = string.Empty;
-                                txtCorreo2.Text = string.Empty;
+                              //  txtCorreo2.Text = string.Empty;
                             }
 
                         }
@@ -2059,10 +2100,10 @@ namespace PresentationLayer
                         documento.correo1 = txtCorreo.Text.Trim();
                     }
 
-                    if (txtCorreo2.Text != string.Empty)
-                    {
-                        documento.correo2 = txtCorreo2.Text.Trim();
-                    }
+                    //if (txtCorreo2.Text != string.Empty)
+                    //{
+                    //    documento.correo2 = txtCorreo2.Text.Trim();
+                    //}
                     documento.notificarCorreo = false;
                     frmProforma form = new frmProforma();
                     form.recuperarTotal += respuesta;
@@ -2624,6 +2665,17 @@ namespace PresentationLayer
         {
             frmValidacionDocsHacienda form = new frmValidacionDocsHacienda();
             form.ShowDialog();
+        }
+
+        private void btnActividadesCarga_Click(object sender, EventArgs e)
+        {
+            if(clienteGlo==null)
+            {
+                MessageBox.Show("Debe seleccionar un cliente para asignarle las actividades económicas","Actividades Economicas",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+
+            cargarActividades(clienteGlo);
         }
     }
 

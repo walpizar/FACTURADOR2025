@@ -29,16 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFacturacionReducida));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabFacturacion = new System.Windows.Forms.TabControl();
             this.tabFact = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbxAcciones = new System.Windows.Forms.GroupBox();
-            this.label20 = new System.Windows.Forms.Label();
+            this.lblProgress = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
+            this.btnEnvioCorreos = new System.Windows.Forms.Button();
             this.btnAbonos = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.btnReImprimir = new System.Windows.Forms.Button();
@@ -82,6 +84,7 @@
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblCliente = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.chkFacturaElectronica = new System.Windows.Forms.CheckBox();
@@ -126,9 +129,9 @@
             this.precio1 = new System.Windows.Forms.ToolStripMenuItem();
             this.precio2 = new System.Windows.Forms.ToolStripMenuItem();
             this.precio3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblProgress = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.btnEnvioCorreos = new System.Windows.Forms.Button();
+            this.btnActividadesCarga = new System.Windows.Forms.Button();
+            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabFacturacion.SuspendLayout();
             this.tabFact.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -191,6 +194,7 @@
             this.gbxAcciones.AutoSize = true;
             this.gbxAcciones.BackColor = System.Drawing.Color.Transparent;
             this.gbxAcciones.Controls.Add(this.lblProgress);
+            this.gbxAcciones.Controls.Add(this.label20);
             this.gbxAcciones.Controls.Add(this.label23);
             this.gbxAcciones.Controls.Add(this.label18);
             this.gbxAcciones.Controls.Add(this.btnEnvioCorreos);
@@ -218,17 +222,30 @@
             this.gbxAcciones.Text = "Acciones";
             this.gbxAcciones.Enter += new System.EventHandler(this.gbxAcciones_Enter);
             // 
-            // label20
+            // lblProgress
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Maroon;
-            this.label20.Location = new System.Drawing.Point(12, 74);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(372, 12);
-            this.label20.TabIndex = 83;
-            this.label20.Text = "F2:Cobrar  F4:Producto  F5:Cliente  F9:Imprimir Cuenta  F10:Pendientes";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProgress.ForeColor = System.Drawing.Color.Gray;
+            this.lblProgress.Location = new System.Drawing.Point(379, 78);
+            this.lblProgress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(73, 12);
+            this.lblProgress.TabIndex = 105;
+            this.lblProgress.Text = "Progreso : 0 de 0";
+            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.Gray;
+            this.label23.Location = new System.Drawing.Point(380, 14);
+            this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(72, 12);
+            this.label23.TabIndex = 104;
+            this.label23.Text = "Correo Facturas";
             // 
             // label18
             // 
@@ -240,6 +257,17 @@
             this.label18.Size = new System.Drawing.Size(35, 7);
             this.label18.TabIndex = 64;
             this.label18.Text = "Abonos";
+            // 
+            // btnEnvioCorreos
+            // 
+            this.btnEnvioCorreos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEnvioCorreos.Image = ((System.Drawing.Image)(resources.GetObject("btnEnvioCorreos.Image")));
+            this.btnEnvioCorreos.Location = new System.Drawing.Point(389, 25);
+            this.btnEnvioCorreos.Name = "btnEnvioCorreos";
+            this.btnEnvioCorreos.Size = new System.Drawing.Size(56, 50);
+            this.btnEnvioCorreos.TabIndex = 103;
+            this.btnEnvioCorreos.UseVisualStyleBackColor = true;
+            this.btnEnvioCorreos.Click += new System.EventHandler(this.btnEnvioCorreos_Click);
             // 
             // btnAbonos
             // 
@@ -489,14 +517,14 @@
             // 
             this.dtgvDetalleFactura.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dtgvDetalleFactura.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgvDetalleFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgvDetalleFactura.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgvDetalleFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgvDetalleFactura.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNom,
@@ -506,28 +534,28 @@
             this.colSubTot,
             this.colId,
             this.colEliminar});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgvDetalleFactura.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgvDetalleFactura.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgvDetalleFactura.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dtgvDetalleFactura.Location = new System.Drawing.Point(0, 55);
             this.dtgvDetalleFactura.Margin = new System.Windows.Forms.Padding(4);
             this.dtgvDetalleFactura.MultiSelect = false;
             this.dtgvDetalleFactura.Name = "dtgvDetalleFactura";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgvDetalleFactura.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgvDetalleFactura.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgvDetalleFactura.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dtgvDetalleFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgvDetalleFactura.Size = new System.Drawing.Size(748, 230);
@@ -743,8 +771,10 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label24);
+            this.panel2.Controls.Add(this.btnActividadesCarga);
+            this.panel2.Controls.Add(this.cboActividadEconomica);
             this.panel2.Controls.Add(this.lblCliente);
-            this.panel2.Controls.Add(this.label20);
             this.panel2.Controls.Add(this.txtCliente);
             this.panel2.Controls.Add(this.btnBuscarCliente);
             this.panel2.Controls.Add(this.chkFacturaElectronica);
@@ -773,6 +803,18 @@
             this.lblCliente.Size = new System.Drawing.Size(42, 13);
             this.lblCliente.TabIndex = 56;
             this.lblCliente.Text = "Cliente:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Maroon;
+            this.label20.Location = new System.Drawing.Point(6, 78);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(372, 12);
+            this.label20.TabIndex = 83;
+            this.label20.Text = "F2:Cobrar  F4:Producto  F5:Cliente  F9:Imprimir Cuenta  F10:Pendientes";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // txtCliente
             // 
@@ -832,7 +874,7 @@
             this.label4.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label4.Location = new System.Drawing.Point(11, 33);
+            this.label4.Location = new System.Drawing.Point(10, 33);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 13);
@@ -866,7 +908,7 @@
             this.label6.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(17, 53);
+            this.label6.Location = new System.Drawing.Point(16, 53);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
@@ -1312,41 +1354,38 @@
             this.precio3.Size = new System.Drawing.Size(116, 22);
             this.precio3.Text = "Precio 3";
             // 
-            // lblProgress
+            // btnActividadesCarga
             // 
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.ForeColor = System.Drawing.Color.Gray;
-            this.lblProgress.Location = new System.Drawing.Point(379, 78);
-            this.lblProgress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(73, 12);
-            this.lblProgress.TabIndex = 105;
-            this.lblProgress.Text = "Progreso : 0 de 0";
-            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnActividadesCarga.Image = ((System.Drawing.Image)(resources.GetObject("btnActividadesCarga.Image")));
+            this.btnActividadesCarga.Location = new System.Drawing.Point(488, 69);
+            this.btnActividadesCarga.Margin = new System.Windows.Forms.Padding(2);
+            this.btnActividadesCarga.Name = "btnActividadesCarga";
+            this.btnActividadesCarga.Size = new System.Drawing.Size(29, 27);
+            this.btnActividadesCarga.TabIndex = 99;
+            this.btnActividadesCarga.UseVisualStyleBackColor = true;
+            this.btnActividadesCarga.Click += new System.EventHandler(this.btnActividadesCarga_Click);
             // 
-            // label23
+            // cboActividadEconomica
             // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.Gray;
-            this.label23.Location = new System.Drawing.Point(380, 14);
-            this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(72, 12);
-            this.label23.TabIndex = 104;
-            this.label23.Text = "Correo Facturas";
+            this.cboActividadEconomica.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboActividadEconomica.FormattingEnabled = true;
+            this.cboActividadEconomica.Location = new System.Drawing.Point(70, 71);
+            this.cboActividadEconomica.Name = "cboActividadEconomica";
+            this.cboActividadEconomica.Size = new System.Drawing.Size(414, 21);
+            this.cboActividadEconomica.TabIndex = 100;
             // 
-            // btnEnvioCorreos
+            // label24
             // 
-            this.btnEnvioCorreos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnvioCorreos.Image = ((System.Drawing.Image)(resources.GetObject("btnEnvioCorreos.Image")));
-            this.btnEnvioCorreos.Location = new System.Drawing.Point(389, 25);
-            this.btnEnvioCorreos.Name = "btnEnvioCorreos";
-            this.btnEnvioCorreos.Size = new System.Drawing.Size(56, 50);
-            this.btnEnvioCorreos.TabIndex = 103;
-            this.btnEnvioCorreos.UseVisualStyleBackColor = true;
-            this.btnEnvioCorreos.Click += new System.EventHandler(this.btnEnvioCorreos_Click);
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label24.Location = new System.Drawing.Point(8, 77);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(54, 13);
+            this.label24.TabIndex = 101;
+            this.label24.Text = "Actividad:";
             // 
             // frmFacturacionReducida
             // 
@@ -1483,5 +1522,8 @@
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Button btnEnvioCorreos;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btnActividadesCarga;
+        private System.Windows.Forms.ComboBox cboActividadEconomica;
     }
 }

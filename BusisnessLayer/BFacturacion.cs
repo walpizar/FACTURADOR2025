@@ -175,11 +175,11 @@ namespace BusinessLayer
             DCategoriaProducto cateIns = new DCategoriaProducto();
             tbCompras compraOriginal = null;
 
-            if (Global.Usuario.tbEmpresa.id.Trim() != facturaGlobal.idEmpresa.Trim())
-            {
-                throw new CompraNoEmpresaException(facturaGlobal.numFactura);
+            //if (Global.Usuario.tbEmpresa.id.Trim() != facturaGlobal.idEmpresa.Trim())
+            //{
+            //    throw new CompraNoEmpresaException(facturaGlobal.numFactura);
 
-            }
+            //}
 
             if (facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.NotaCredito)
             {

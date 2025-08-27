@@ -64,6 +64,7 @@ namespace EntityLayer
         public Nullable<int> sucursal { get; set; }
         public Nullable<int> caja { get; set; }
         public Nullable<int> estadoCorreo { get; set; }
+        public string codigoActividadReceptor { get; set; }
     
         public virtual tbActividades tbActividades { get; set; }
         public virtual tbClientes tbClientes { get; set; }

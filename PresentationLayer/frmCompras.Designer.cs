@@ -96,6 +96,21 @@
             this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.btnAgregarProducto = new System.Windows.Forms.Button();
             this.dtgvCompras = new System.Windows.Forms.DataGridView();
+            this.colActPrecio = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colActInv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecActual = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecioN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colImp = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colTotalLinea1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUtilidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecioVenta1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCategoria = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colDetalle = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colEliminar = new System.Windows.Forms.DataGridViewLinkColumn();
             this.tlsMenu = new System.Windows.Forms.ToolStrip();
             this.tlsBtnGuardar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -134,21 +149,6 @@
             this.label30 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label31 = new System.Windows.Forms.Label();
-            this.colActPrecio = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colActInv = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecActual = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecioN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colImp = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colTotalLinea1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUtilidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecioVenta1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCategoria = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colDetalle = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colEliminar = new System.Windows.Forms.DataGridViewLinkColumn();
             this.gbxCompra.SuspendLayout();
             this.gbxMontos.SuspendLayout();
             this.gbxDetalleCompra.SuspendLayout();
@@ -455,6 +455,7 @@
             this.cboTipoPago.Name = "cboTipoPago";
             this.cboTipoPago.Size = new System.Drawing.Size(184, 21);
             this.cboTipoPago.TabIndex = 7;
+            this.cboTipoPago.SelectedIndexChanged += new System.EventHandler(this.cboTipoPago_SelectedIndexChanged);
             // 
             // cboTipoVenta
             // 
@@ -888,6 +889,134 @@
             this.dtgvCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvCompras_CellContentClick);
             this.dtgvCompras.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgvCompras_CellValueChanged);
             // 
+            // colActPrecio
+            // 
+            this.colActPrecio.Frozen = true;
+            this.colActPrecio.HeaderText = "Act Precios";
+            this.colActPrecio.Name = "colActPrecio";
+            this.colActPrecio.Width = 40;
+            // 
+            // colActInv
+            // 
+            this.colActInv.Frozen = true;
+            this.colActInv.HeaderText = "Act Invent";
+            this.colActInv.Name = "colActInv";
+            this.colActInv.Width = 40;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.Frozen = true;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Linea";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 30;
+            // 
+            // colId
+            // 
+            this.colId.Frozen = true;
+            this.colId.HeaderText = "Código";
+            this.colId.Name = "colId";
+            // 
+            // colNombre
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.colNombre.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colNombre.FillWeight = 369.5432F;
+            this.colNombre.Frozen = true;
+            this.colNombre.HeaderText = "Producto";
+            this.colNombre.Name = "colNombre";
+            this.colNombre.Width = 200;
+            // 
+            // colCant
+            // 
+            this.colCant.FillWeight = 10.15228F;
+            this.colCant.Frozen = true;
+            this.colCant.HeaderText = "Cant Inv";
+            this.colCant.Name = "colCant";
+            this.colCant.Width = 40;
+            // 
+            // colPrecActual
+            // 
+            this.colPrecActual.FillWeight = 10.15228F;
+            this.colPrecActual.Frozen = true;
+            this.colPrecActual.HeaderText = "PrecioActual";
+            this.colPrecActual.Name = "colPrecActual";
+            this.colPrecActual.ReadOnly = true;
+            this.colPrecActual.Width = 80;
+            // 
+            // colPrecioN
+            // 
+            this.colPrecioN.Frozen = true;
+            this.colPrecioN.HeaderText = "Precio Compra";
+            this.colPrecioN.Name = "colPrecioN";
+            this.colPrecioN.ReadOnly = true;
+            this.colPrecioN.Width = 80;
+            // 
+            // colImp
+            // 
+            this.colImp.Frozen = true;
+            this.colImp.HeaderText = "Imp Venta.";
+            this.colImp.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "4",
+            "8",
+            "13",
+            "99"});
+            this.colImp.Name = "colImp";
+            // 
+            // colTotalLinea1
+            // 
+            this.colTotalLinea1.Frozen = true;
+            this.colTotalLinea1.HeaderText = "Total Linea";
+            this.colTotalLinea1.Name = "colTotalLinea1";
+            this.colTotalLinea1.ReadOnly = true;
+            this.colTotalLinea1.Width = 80;
+            // 
+            // colUtilidad
+            // 
+            this.colUtilidad.Frozen = true;
+            this.colUtilidad.HeaderText = "%Utilidad";
+            this.colUtilidad.Name = "colUtilidad";
+            this.colUtilidad.Width = 50;
+            // 
+            // colPrecioVenta1
+            // 
+            this.colPrecioVenta1.Frozen = true;
+            this.colPrecioVenta1.HeaderText = "PrecioVenta1";
+            this.colPrecioVenta1.Name = "colPrecioVenta1";
+            this.colPrecioVenta1.Width = 80;
+            // 
+            // colCategoria
+            // 
+            this.colCategoria.Frozen = true;
+            this.colCategoria.HeaderText = "Categoría";
+            this.colCategoria.Name = "colCategoria";
+            this.colCategoria.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colCategoria.Width = 90;
+            // 
+            // colDetalle
+            // 
+            this.colDetalle.Frozen = true;
+            this.colDetalle.HeaderText = "";
+            this.colDetalle.Name = "colDetalle";
+            this.colDetalle.ReadOnly = true;
+            this.colDetalle.Text = "Detalle";
+            this.colDetalle.ToolTipText = "Detalle Compra";
+            this.colDetalle.UseColumnTextForLinkValue = true;
+            this.colDetalle.Width = 60;
+            // 
+            // colEliminar
+            // 
+            this.colEliminar.Frozen = true;
+            this.colEliminar.HeaderText = "";
+            this.colEliminar.Name = "colEliminar";
+            this.colEliminar.Text = "Eliminar";
+            this.colEliminar.ToolTipText = "Eliminar linea";
+            this.colEliminar.UseColumnTextForLinkValue = true;
+            this.colEliminar.Width = 85;
+            // 
             // tlsMenu
             // 
             this.tlsMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -1249,134 +1378,6 @@
             this.label31.Size = new System.Drawing.Size(85, 13);
             this.label31.TabIndex = 123;
             this.label31.Text = "Producto Nuevo";
-            // 
-            // colActPrecio
-            // 
-            this.colActPrecio.Frozen = true;
-            this.colActPrecio.HeaderText = "Act Precios";
-            this.colActPrecio.Name = "colActPrecio";
-            this.colActPrecio.Width = 40;
-            // 
-            // colActInv
-            // 
-            this.colActInv.Frozen = true;
-            this.colActInv.HeaderText = "Act Invent";
-            this.colActInv.Name = "colActInv";
-            this.colActInv.Width = 40;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.Frozen = true;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Linea";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 30;
-            // 
-            // colId
-            // 
-            this.colId.Frozen = true;
-            this.colId.HeaderText = "Código";
-            this.colId.Name = "colId";
-            // 
-            // colNombre
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.colNombre.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colNombre.FillWeight = 369.5432F;
-            this.colNombre.Frozen = true;
-            this.colNombre.HeaderText = "Producto";
-            this.colNombre.Name = "colNombre";
-            this.colNombre.Width = 200;
-            // 
-            // colCant
-            // 
-            this.colCant.FillWeight = 10.15228F;
-            this.colCant.Frozen = true;
-            this.colCant.HeaderText = "Cant Inv";
-            this.colCant.Name = "colCant";
-            this.colCant.Width = 40;
-            // 
-            // colPrecActual
-            // 
-            this.colPrecActual.FillWeight = 10.15228F;
-            this.colPrecActual.Frozen = true;
-            this.colPrecActual.HeaderText = "PrecioActual";
-            this.colPrecActual.Name = "colPrecActual";
-            this.colPrecActual.ReadOnly = true;
-            this.colPrecActual.Width = 80;
-            // 
-            // colPrecioN
-            // 
-            this.colPrecioN.Frozen = true;
-            this.colPrecioN.HeaderText = "Precio Compra";
-            this.colPrecioN.Name = "colPrecioN";
-            this.colPrecioN.ReadOnly = true;
-            this.colPrecioN.Width = 80;
-            // 
-            // colImp
-            // 
-            this.colImp.Frozen = true;
-            this.colImp.HeaderText = "Imp Venta.";
-            this.colImp.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "4",
-            "8",
-            "13",
-            "99"});
-            this.colImp.Name = "colImp";
-            // 
-            // colTotalLinea1
-            // 
-            this.colTotalLinea1.Frozen = true;
-            this.colTotalLinea1.HeaderText = "Total Linea";
-            this.colTotalLinea1.Name = "colTotalLinea1";
-            this.colTotalLinea1.ReadOnly = true;
-            this.colTotalLinea1.Width = 80;
-            // 
-            // colUtilidad
-            // 
-            this.colUtilidad.Frozen = true;
-            this.colUtilidad.HeaderText = "%Utilidad";
-            this.colUtilidad.Name = "colUtilidad";
-            this.colUtilidad.Width = 50;
-            // 
-            // colPrecioVenta1
-            // 
-            this.colPrecioVenta1.Frozen = true;
-            this.colPrecioVenta1.HeaderText = "PrecioVenta1";
-            this.colPrecioVenta1.Name = "colPrecioVenta1";
-            this.colPrecioVenta1.Width = 80;
-            // 
-            // colCategoria
-            // 
-            this.colCategoria.Frozen = true;
-            this.colCategoria.HeaderText = "Categoría";
-            this.colCategoria.Name = "colCategoria";
-            this.colCategoria.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colCategoria.Width = 90;
-            // 
-            // colDetalle
-            // 
-            this.colDetalle.Frozen = true;
-            this.colDetalle.HeaderText = "";
-            this.colDetalle.Name = "colDetalle";
-            this.colDetalle.ReadOnly = true;
-            this.colDetalle.Text = "Detalle";
-            this.colDetalle.ToolTipText = "Detalle Compra";
-            this.colDetalle.UseColumnTextForLinkValue = true;
-            this.colDetalle.Width = 60;
-            // 
-            // colEliminar
-            // 
-            this.colEliminar.Frozen = true;
-            this.colEliminar.HeaderText = "";
-            this.colEliminar.Name = "colEliminar";
-            this.colEliminar.Text = "Eliminar";
-            this.colEliminar.ToolTipText = "Eliminar linea";
-            this.colEliminar.UseColumnTextForLinkValue = true;
-            this.colEliminar.Width = 85;
             // 
             // frmCompras
             // 

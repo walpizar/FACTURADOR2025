@@ -21,6 +21,7 @@ namespace EntityLayer
             this.tbDocumento = new HashSet<tbDocumento>();
             this.tbEmpresaActividades = new HashSet<tbEmpresaActividades>();
             this.tbProducto = new HashSet<tbProducto>();
+            this.tbClienteActividad = new HashSet<tbClienteActividad>();
         }
     
         public string codigoAct { get; set; }
@@ -34,5 +35,7 @@ namespace EntityLayer
         public virtual ICollection<tbEmpresaActividades> tbEmpresaActividades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbProducto> tbProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }
     }
 }
