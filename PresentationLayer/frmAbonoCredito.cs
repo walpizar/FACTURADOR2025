@@ -1,12 +1,15 @@
 ﻿using BusinessLayer;
 using CommonLayer;
+using CommonLayer.Exceptions.BussinessExceptions;
 using EntityLayer;
 using PresentationLayer.Clases;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -21,7 +24,7 @@ namespace PresentationLayer
         List<tbDocumento> docsModificados = new List<tbDocumento>();
         List<tbPagos> pagosModificados = new List<tbPagos>();
         Bcliente clienteB = new Bcliente();
-
+        tbDocumento documentoGlo;
 
 
         public frmAbonoCredito()
@@ -248,6 +251,7 @@ namespace PresentationLayer
 
             try
             {
+                List<tbDocumento> listaReciboPagos= new List<tbDocumento>();
                 DialogResult resp = MessageBox.Show($"Esta seguro que desea realizar el abono por el MONTO: {txtAbono.Text} al CLIENTE: { txtIdCliente.Text}-{txtCliente.Text }", "Aplicar abono", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (resp == DialogResult.Yes)
                 {
@@ -294,7 +298,13 @@ namespace PresentationLayer
                                     pagoE.monto = adeudadoFact;
                                     doc.estadoFactura = (int)Enums.EstadoFactura.Cancelada;
                                     doc.fecha_ult_mod = Utility.getDate();
-                                    doc.usuario_ult_mod = Global.Usuario.nombreUsuario.Trim().ToUpper();   // Global.Usuario.nombreUsuario;
+                                    doc.usuario_ult_mod = Global.Usuario.nombreUsuario.Trim().ToUpper();
+                                    if (doc.tipoDocumento == (int)Enums.TipoDocumento.FacturaElectronica)
+                                    {
+                                        listaReciboPagos.Add(doc);
+                                    }
+                                  
+                                    // Global.Usuario.nombreUsuario;
                                 }
                                 else
                                 {
@@ -340,6 +350,12 @@ namespace PresentationLayer
                                 form.ShowDialog();
 
 
+                                if (listaReciboPagos.Count > 0)
+                                {
+
+                                    EjecutarGenerarReportesEnSegundoPlano(listaReciboPagos);
+                                }
+
 
                             }
 
@@ -364,6 +380,144 @@ namespace PresentationLayer
                 MessageBox.Show("Se produjo un error al realizar el abono, vuelva a intentarlo.", "Error al realizar el abono", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public void EjecutarGenerarReportesEnSegundoPlano(List<tbDocumento> listaReciboPagos)
+        {
+            Task.Run(() => generarReportesPago(listaReciboPagos));
+        }
+
+        private void generarReportesPago(List<tbDocumento> listaReciboPagos)
+        {
+
+
+            foreach (tbDocumento doc in listaReciboPagos)
+            {
+           
+                doc.tipoDocRef = doc.tipoDocumento;
+                doc.claveRef = doc.clave;
+                doc.fechaRef = doc.fecha;
+                doc.razon = "Recibo electronico de pago";
+                doc.tipoVenta = (int)Enums.tipoVenta.PagoDeVentaCredito;
+                doc.tipoDocumento = (int)Enums.TipoDocumento.ReciboElectronicoPago;
+                doc.clave = null;
+                doc.consecutivo = null;
+                doc.fecha = Utility.getDate();
+                doc.codigoRef = 4;
+
+                doc.estado = true;
+                doc.fecha_crea = Utility.getDate();
+                doc.fecha_ult_mod = Utility.getDate();
+                doc.usuario_crea = Global.Usuario.nombreUsuario.Trim().ToUpper();   // Global.Usuario.nombreUsuario;
+                doc.usuario_ult_mod = Global.Usuario.nombreUsuario.Trim().ToUpper();   // Global.Usuario.nombreUsuario;
+
+              
+                documentoGlo = facturacionB.guadar(doc);
+                
+                if (Utility.AccesoInternet())
+                {
+
+                    BackgroundWorker tarea = new BackgroundWorker();             
+                    tarea.DoWork += reportarFacturacionElectronicaAsync;
+                    tarea.RunWorkerAsync();
+
+                }
+                else
+                {
+                    MessageBox.Show("No hay acceso a internet", "Sin Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+            }
+            
+
+
+
+
+        }
+
+        private async void  reportarFacturacionElectronicaAsync(object sender, DoWorkEventArgs e)
+        {
+            tbDocumento doc = documentoGlo;
+            try
+            {
+                if (doc.reporteElectronic)
+                {
+                    try
+                    {
+                        //envio la factura a hacienda
+                        doc = facturacionB.FacturarElectronicamente(doc);
+                        System.Threading.Thread.Sleep(5000);
+                        string mensaje = await facturacionB.consultarFacturaElectronicaPorClave(doc.clave);
+
+                    }
+                    catch (Exception)
+                    {
+
+                        MessageBox.Show("Error al enviar documento o consultar en Hacienda", "Error Hacienda", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+
+                }
+
+
+
+                ////valido todas la facturas
+                //try
+                //{
+                //    facturaIns.validarDocumentosDiarias();
+
+                //}
+                //catch (Exception)
+                //{
+
+                //    MessageBox.Show("Error al consultar el estado del documento en Hacienda, valida el estado del documento", "Error al consultar el estado del documento", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                //}
+
+                ////envios correos pendientes
+                //try
+                //{
+                //    enviarCorreos();
+
+                //}
+                //catch (Exception)
+                //{
+
+                //    //   MessageBox.Show("Error enviando correos automaticamente", "Envio Correos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                //}
+
+            }
+            catch (FacturacionElectronicaException ex)
+            {
+                MessageBox.Show("Error al realizar la facturación electronica", "Factura Electrónica", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (EnvioCorreoException ex)
+            {
+                MessageBox.Show("Error al enviar la facturación por correo electrónico", "Correo electrónico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (TokenException ex)
+            {
+                MessageBox.Show("Error al obtener el Token en Hacienda", "Facturación electrónica", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ConsultaHaciendaExcpetion ex)
+            {
+                MessageBox.Show("Error al consultar hacienda la factura electrónica", "Facturación electrónica", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (generarXMLException ex)
+            {
+                MessageBox.Show("Error al generar el XML de la factura", "Facturación electrónica", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception EX)
+            {
+                MessageBox.Show("Error general de facturación electrónica", "Facturación electrónica", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+
+
+       
 
         private void respuesta(clsAbonos abonos)
         {

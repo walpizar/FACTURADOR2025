@@ -87,6 +87,7 @@
             CobroAFavorTercero = 7,
             ServPrestadoEstadoCredito = 8,
             PagoServicioPrestadoEstado = 9,
+            PagoDeVentaCredito = 11,
             Otros = 99
 
         }
@@ -116,6 +117,7 @@
             NotaCreditoElectronica = 3,
             TiqueteElectronico = 4,
             ComprasSimplificada = 8,
+            ReciboElectronicoPago = 10,
             Proforma = 20,
             Compras = 21,
             Factura = 22,

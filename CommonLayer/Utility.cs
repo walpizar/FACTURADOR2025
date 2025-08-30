@@ -468,6 +468,11 @@ namespace CommonLayer
 
                 nome = "_OC";
             }
+            else if (tipo == (int)Enums.TipoDocumento.ReciboElectronicoPago)
+            {
+
+                nome = "_RC";
+            }
             return nome;
 
 

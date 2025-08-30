@@ -266,7 +266,7 @@ namespace PresentationLayer
                     //{
                         // MessageBox.Show("El respaldo se generará en segundo plano.","Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        Backup respaldo = new Backup();
+                        //Backup respaldo = new Backup();
 
                     //}
                 }
@@ -1072,16 +1072,16 @@ namespace PresentationLayer
                 
             if (Global.Configuracion.respaldo == (int)Enums.EstadoConfig.Si)
             {
-                DialogResult resp = MessageBox.Show("Desea realizar el respaldo de la base de datos.", "Seguridad", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //DialogResult resp = MessageBox.Show("Desea realizar el respaldo de la base de datos.", "Seguridad", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                if (resp == DialogResult.Yes)
-                {
-                    // MessageBox.Show("El respaldo se generará en segundo plano.","Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //if (resp == DialogResult.Yes)
+                //{
+                //    // MessageBox.Show("El respaldo se generará en segundo plano.","Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    frmBackUp respaldo = new frmBackUp();
-                    respaldo.ShowDialog();
+                //    frmBackUp respaldo = new frmBackUp();
+                //    respaldo.ShowDialog();
 
-                }
+                //}
             }
                         
         }
@@ -1821,6 +1821,11 @@ namespace PresentationLayer
             reporteNum = (int)Enums.reportes.gastosPorProveedor;
             AbrirFormulario<frmReportes>((int)Enums.formularios.reporte);
             mnuReporteGastosXProveedor.BackColor = Color.FromArgb(12, 61, 92);
+        }
+
+        private void lblHora_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnConsultas_Click(object sender, EventArgs e)

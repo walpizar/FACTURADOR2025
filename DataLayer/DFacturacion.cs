@@ -1531,21 +1531,26 @@ namespace DataLayer
 
                         context.Entry(item).State = System.Data.Entity.EntityState.Added;
                     }
-                    foreach (var item in entity.tbPagos)
+                    if (entity.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
                     {
-                        //if (item.tipoPago==(int)Enums.TipoPago.Otros)
-                        //{
-                        //    context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
-                        //}
-                        //else
-                        //{
-                        context.Entry(item).State = System.Data.Entity.EntityState.Added;
-                        //}
+                        foreach (var item in entity.tbPagos)
+                        {
+                            //if (item.tipoPago==(int)Enums.TipoPago.Otros)
+                            //{
+                            //    context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
+                            //}
+                            //else
+                            //{
+                            context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                            //}
 
 
+                        }
 
                     }
 
+                      
+                   
                     context.tbDocumento.Add(entity);
 
                     //if (entity.tipoDocumento == (int)Enums.TipoDocumento.NotaCreditoElectronica || entity.tipoDocumento == (int)Enums.TipoDocumento.NotaDebitoElectronica)

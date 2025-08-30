@@ -31,47 +31,64 @@ namespace CommonLayer
 
         private void realizarRespaldo(object o, DoWorkEventArgs e)
         {
+            string servidor = Global.Configuracion.server;   // "localhost\\SQLEXPRESS"
+            string baseDatos = "dbSISSODINA";
+            string fileName = $"{backupFilePrefix}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+            string filePath = Path.Combine(backupFolder, fileName);
+
+            // Cree SIEMPRE una conexión nueva por operación
+            var conn = new ServerConnection(servidor)
+            {
+                // Si usa Windows Auth (predeterminado):
+                //LoginSecure = true,
+
+                //Si usa SQL Auth,
+                //descomente y configure:
+                 LoginSecure = false,
+                 Login = "sa",
+                 Password = "crpp",
+
+                ConnectTimeout = 30
+            };
+
+            var server = new Server(conn);
+
+            var backup = new Microsoft.SqlServer.Management.Smo.Backup
+            {
+                Action = BackupActionType.Database,
+                Database = baseDatos,
+                Initialize = true,
+                BackupSetName = $"Backup de {baseDatos}",
+                BackupSetDescription = $"Backup completo de la base de datos {baseDatos}",
+                CompressionOption = BackupCompressionOptions.On,
+                PercentCompleteNotification = 10
+            };
+            backup.Devices.AddDevice(filePath, DeviceType.File);
+
+            // Progreso opcional hacia el BackgroundWorker
+            backup.PercentComplete += (s, args) =>
+            {
+                if (((BackgroundWorker)o).WorkerReportsProgress)
+                    ((BackgroundWorker)o).ReportProgress(args.Percent);
+            };
+
             try
             {
-                // Datos de conexión y de la base de datos a respaldar.
-                string servidor = Global.Configuracion.server;         // Ejemplo: "localhost\SQLEXPRESS"
-                string baseDatos = "dbSISSODINA";      // Cambia por el nombre de tu BD
-
-                // Genera un nombre de archivo único con timestamp.
-                string backupFileName = $"{backupFilePrefix}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
-                string backupFilePath = Path.Combine(backupFolder, backupFileName);
-
-                // Conecta al servidor (usa autenticación integrada; para SQL Server Authentication, proporciona usuario y contraseña).
-                ServerConnection serverConnection = new ServerConnection(servidor);
-                Server sqlServer = new Server(serverConnection);
-
-                // Configura el objeto Backup.
-                Microsoft.SqlServer.Management.Smo.Backup backup = new Microsoft.SqlServer.Management.Smo.Backup()
-                {
-                    Action = BackupActionType.Database,
-                    Database = baseDatos,
-                    Initialize = true, // Crea un nuevo archivo, sin acumulación de respaldos.
-                    BackupSetName = $"Backup de {baseDatos}",
-                    BackupSetDescription = $"Backup completo de la base de datos {baseDatos}",
-                    CompressionOption = BackupCompressionOptions.On, // Activa la compresión (si el servidor lo permite).
-                    PercentCompleteNotification = 10
-                };
-
-                // Agrega el dispositivo de backup (archivo).
-                backup.Devices.AddDevice(backupFilePath, DeviceType.File);
-
-
-                // Inicia el backup de forma asíncrona.
-                backup.SqlBackupAsync(sqlServer);
-
-
+                backup.SqlBackup(server); // Bloquea hasta terminar: sin carreras ni hilos extra
+                e.Result = filePath;      // reporte de salida
             }
             catch (Exception ex)
             {
-                throw ex;
+                // Manejo de errores
+                e.Result = ex;
+                throw;
             }
-
-
+            finally
+            {
+                // Limpieza explícita
+                conn.Disconnect();
+                server.ConnectionContext.Disconnect();
+            }
         }
 
         private void CleanupOldBackups()

@@ -179,6 +179,22 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 {
                     GeneraXMLTiqueteElectronico4_4(writer);
                 }
+                if (_doc.tipoDocumento == (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    //if (_doc.idCliente !=null && (bool)_doc.clienteContribuyente)
+                    //{
+                    //genera factura al contribuyente
+                    GeneraXMLReciboPago4_4(writer);
+                    //}
+                    //else
+                    //{
+                    //    //genera contribuyente a no contribuyente
+                    //    GeneraXMLFacturaElectronicaNoContribuyente4_3(writer);
+
+                    //}
+
+
+                }
 
 
                 mXML.Seek(0, System.IO.SeekOrigin.Begin);
@@ -193,6 +209,33 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             catch (Exception ex)
             {
                 throw new generarXMLException(ex);
+            }
+        }
+
+        private void GeneraXMLReciboPago4_4(XmlTextWriter writer)
+        {
+            try
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("ReciboElectronicoPago");
+
+                // Namespaces actualizados para versión 4.4
+                writer.WriteAttributeString("xmlns", "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/reciboElectronicoPago");
+                writer.WriteAttributeString("xmlns:ds", "http://www.w3.org/2000/09/xmldsig#");
+                writer.WriteAttributeString("xmlns:vc", "http://www.w3.org/2007/XMLSchema-versioning");
+                writer.WriteAttributeString("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
+
+                CuerpoDocumento4_4(ref writer);
+
+                // 'Aqui va la firma, despues la agregamos.
+
+                writer.WriteEndElement(); // </TiqueteElectronico>
+                writer.WriteEndDocument();
+                writer.Flush();
+            }
+            catch (Exception)
+            {
+                throw; // conserva el stack trace original
             }
         }
         #region 4.3
@@ -288,14 +331,21 @@ namespace FacturacionElectronicaLayer.ClasesDatos
         {
             // Cabecera del comprobante
             writer.WriteElementString("Clave", _numeroClave);
-            writer.WriteElementString("ProveedorSistemas", "603480811");
-            writer.WriteElementString("CodigoActividadEmisor", _doc.codigoActividad.Trim().PadLeft(6, '0'));
-            
-            if(_doc.codigoActividadReceptor != null)
-            {
-                writer.WriteElementString("CodigoActividadReceptor", _doc.codigoActividadReceptor.Trim().PadLeft(6, '0'));
+            writer.WriteElementString("ProveedorSistemas", "3101759889");
 
+            if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+            {
+
+                writer.WriteElementString("CodigoActividadEmisor", _doc.codigoActividad.Trim().PadLeft(6, '0'));
+                
+                if (_doc.codigoActividadReceptor != null)
+                {
+                    writer.WriteElementString("CodigoActividadReceptor", _doc.codigoActividadReceptor.Trim().PadLeft(6, '0'));
+
+                }
             }
+
+            
             writer.WriteElementString("NumeroConsecutivo", _numeroConsecutivo);
             writer.WriteElementString("FechaEmision", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
 
@@ -306,16 +356,24 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             writer.WriteElementString("Tipo", _emisor.Identificacion_Tipo);
             writer.WriteElementString("Numero", _emisor.Identificacion_Numero);
             writer.WriteEndElement();
-            writer.WriteStartElement("Ubicacion");
-            writer.WriteElementString("Provincia", _emisor.Ubicacion_Provincia);
-            writer.WriteElementString("Canton", _emisor.Ubicacion_Canton);
-            writer.WriteElementString("Distrito", _emisor.Ubicacion_Distrito);
-            writer.WriteElementString("OtrasSenas", _emisor.Ubicacion_OtrasSenas);
-            writer.WriteEndElement();
-            writer.WriteStartElement("Telefono");
-            writer.WriteElementString("CodigoPais", _emisor.Telefono_CodigoPais);
-            writer.WriteElementString("NumTelefono", _emisor.Telefono_Numero.ToString());
-            writer.WriteEndElement();
+
+
+
+
+            if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+            {
+                writer.WriteStartElement("Ubicacion");
+                writer.WriteElementString("Provincia", _emisor.Ubicacion_Provincia);
+                writer.WriteElementString("Canton", _emisor.Ubicacion_Canton);
+                writer.WriteElementString("Distrito", _emisor.Ubicacion_Distrito);
+                writer.WriteElementString("OtrasSenas", _emisor.Ubicacion_OtrasSenas);
+                writer.WriteEndElement();
+                writer.WriteStartElement("Telefono");
+                writer.WriteElementString("CodigoPais", _emisor.Telefono_CodigoPais);
+                writer.WriteElementString("NumTelefono", _emisor.Telefono_Numero.ToString());
+                writer.WriteEndElement();
+            }
+ 
             writer.WriteElementString("CorreoElectronico", _emisor.CorreoElectronico);
             writer.WriteEndElement();
 
@@ -328,7 +386,12 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 writer.WriteElementString("Tipo", _receptor.Identificacion_Tipo);
                 writer.WriteElementString("Numero", _receptor.Identificacion_Numero);
                 writer.WriteEndElement();
-                writer.WriteElementString("CorreoElectronico", _receptor.CorreoElectronico);
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    writer.WriteElementString("CorreoElectronico", _receptor.CorreoElectronico);
+                    
+                }
+
                 writer.WriteEndElement();
             }
 
@@ -344,8 +407,12 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             {
                 writer.WriteElementString("CondicionVenta", _condicionVenta);
 
-                if (_condicionVenta == "02")
-                    writer.WriteElementString("PlazoCredito", _plazoCredito);
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    if (_condicionVenta == "02")
+                        writer.WriteElementString("PlazoCredito", _plazoCredito);
+                }
+               
             }
                 
             //if (_condicionVenta == "99")
@@ -359,42 +426,48 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             {
                 writer.WriteStartElement("LineaDetalle");
                 writer.WriteElementString("NumeroLinea", detalle.numLinea.ToString());
-                writer.WriteElementString("CodigoCABYS", detalle.tbProducto.codigoCabys.Trim());
-
-                writer.WriteStartElement("CodigoComercial");
-                writer.WriteElementString("Tipo", "01");
-                writer.WriteElementString("Codigo", detalle.idProducto.ToString().Trim());
-                writer.WriteEndElement();
-
-                writer.WriteElementString("Cantidad", detalle.cantidad.ToString("F3", CultureInfo.InvariantCulture));
-                writer.WriteElementString("UnidadMedida",
-                    _listaMedidas.Single(m => m.idTipoMedida == detalle.tbProducto.idMedida)
-                                  .nomenclatura.Trim());
-
-                writer.WriteElementString("Detalle", detalle.tbProducto.nombre.Trim());
-                writer.WriteElementString("PrecioUnitario", detalle.precio.ToString("F5", CultureInfo.InvariantCulture));
-
-                writer.WriteElementString("MontoTotal", detalle.montoTotal.ToString("F5", CultureInfo.InvariantCulture));
-                if (detalle.montoTotalDesc != 0)
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
                 {
-                    writer.WriteStartElement("Descuento");
-                    writer.WriteElementString("MontoDescuento", detalle.montoTotalDesc.ToString("F5", CultureInfo.InvariantCulture));
-                    writer.WriteElementString("CodigoDescuento", "08");// siempre difinido con el codigo descuento 08 que es descuento comercial
-                    writer.WriteElementString("NaturalezaDescuento", "Descuento aplicado al cliente");
+                    writer.WriteElementString("CodigoCABYS", detalle.tbProducto.codigoCabys.Trim());
+
+                    writer.WriteStartElement("CodigoComercial");
+                    writer.WriteElementString("Tipo", "01");
+                    writer.WriteElementString("Codigo", detalle.idProducto.ToString().Trim());
                     writer.WriteEndElement();
+
+                    writer.WriteElementString("Cantidad", detalle.cantidad.ToString("F3", CultureInfo.InvariantCulture));
+                    writer.WriteElementString("UnidadMedida",
+                        _listaMedidas.Single(m => m.idTipoMedida == detalle.tbProducto.idMedida)
+                                      .nomenclatura.Trim());
                 }
+                writer.WriteElementString("Detalle", detalle.tbProducto.nombre.Trim());
 
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    writer.WriteElementString("PrecioUnitario", detalle.precio.ToString("F5", CultureInfo.InvariantCulture));
+                }
+                writer.WriteElementString("MontoTotal", detalle.montoTotal.ToString("F5", CultureInfo.InvariantCulture));
 
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    if (detalle.montoTotalDesc != 0)
+                    {
+                        writer.WriteStartElement("Descuento");
+                        writer.WriteElementString("MontoDescuento", detalle.montoTotalDesc.ToString("F5", CultureInfo.InvariantCulture));
+                        writer.WriteElementString("CodigoDescuento", "08");// siempre difinido con el codigo descuento 08 que es descuento comercial
+                        writer.WriteElementString("NaturalezaDescuento", "Descuento aplicado al cliente");
+                        writer.WriteEndElement();
+                    }
+
+                }
                 writer.WriteElementString("SubTotal", (detalle.montoTotal - detalle.montoTotalDesc)
                     .ToString("F5", CultureInfo.InvariantCulture));
 
-
-         
-               
-         
-               writer.WriteElementString("BaseImponible", (detalle.montoTotal - detalle.montoTotalDesc)
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    writer.WriteElementString("BaseImponible", (detalle.montoTotal - detalle.montoTotalDesc)
                     .ToString("F5", CultureInfo.InvariantCulture));
-
+                }
                 writer.WriteStartElement("Impuesto");
                 writer.WriteElementString("Codigo", "01");
                 writer.WriteElementString("CodigoTarifaIVA", detalle.tbProducto.tbImpuestos.id.ToString().PadLeft(2, '0'));
@@ -413,7 +486,11 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 }
                 writer.WriteEndElement();
                 //0 xq no se fabrica
-                writer.WriteElementString("ImpuestoAsumidoEmisorFabrica", 0.ToString("F5", CultureInfo.InvariantCulture));
+               
+                if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+                {
+                    writer.WriteElementString("ImpuestoAsumidoEmisorFabrica", 0.ToString("F5", CultureInfo.InvariantCulture));
+                }
                 writer.WriteElementString("ImpuestoNeto", detalle.montoTotalImp.ToString("F5", CultureInfo.InvariantCulture));
 
 
@@ -476,40 +553,42 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             writer.WriteElementString("CodigoMoneda", "CRC");
             writer.WriteElementString("TipoCambio", 1.ToString());
             writer.WriteEndElement();
-
-           
-            writer.WriteElementString("TotalServGravados", String.Format("{0:F5}", totalServGrav));
-            writer.WriteElementString("TotalServExentos", String.Format("{0:F5}", totalServExc));
-
-
-            if (totalServExo!=0)
+            if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
             {
-                writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExo));
-            }
-           
-            writer.WriteElementString("TotalMercanciasGravadas", String.Format("{0:F5}", totalProdGrav));
-            writer.WriteElementString("TotalMercanciasExentas", String.Format("{0:F5}", totalProdExc));
-            if (totalProdExo != 0)
-            {
-                writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExo));
-            }
 
-      
-            writer.WriteElementString("TotalGravado", String.Format("{0:F5}", totalGravado));
-            writer.WriteElementString("TotalExento", String.Format("{0:F5}", totalExento));
+                writer.WriteElementString("TotalServGravados", String.Format("{0:F5}", totalServGrav));
+                writer.WriteElementString("TotalServExentos", String.Format("{0:F5}", totalServExc));
 
-            if (totalExonerado != 0)
-            {
-                writer.WriteElementString("TotalExonerado", String.Format("{0:F5}", totalExonerado));
+
+                if (totalServExo != 0)
+                {
+                    writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExo));
+                }
+
+                writer.WriteElementString("TotalMercanciasGravadas", String.Format("{0:F5}", totalProdGrav));
+                writer.WriteElementString("TotalMercanciasExentas", String.Format("{0:F5}", totalProdExc));
+                if (totalProdExo != 0)
+                {
+                    writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExo));
+                }
+
+
+                writer.WriteElementString("TotalGravado", String.Format("{0:F5}", totalGravado));
+                writer.WriteElementString("TotalExento", String.Format("{0:F5}", totalExento));
+
+                if (totalExonerado != 0)
+                {
+                    writer.WriteElementString("TotalExonerado", String.Format("{0:F5}", totalExonerado));
+                }
             }
-            
             writer.WriteElementString("TotalVenta", String.Format("{0:F5}", totalVenta));
-            
-            if (totalDescuento != 0)
+            if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
             {
-                writer.WriteElementString("TotalDescuentos", String.Format("{0:F5}", totalDescuento));
+                if (totalDescuento != 0)
+                {
+                    writer.WriteElementString("TotalDescuentos", String.Format("{0:F5}", totalDescuento));
+                }
             }
-            
             writer.WriteElementString("TotalVentaNeta", String.Format("{0:F5}", totalVentaNeta));
 
 
@@ -575,14 +654,18 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
             // INFORMACIÓN REFERENCIA (nota crédito/débito)
             if (_doc.tipoDocumento == (int)Enums.TipoDocumento.NotaCreditoElectronica ||
-                _doc.tipoDocumento == (int)Enums.TipoDocumento.NotaDebitoElectronica)
+                _doc.tipoDocumento == (int)Enums.TipoDocumento.NotaDebitoElectronica || _doc.tipoDocumento == (int)Enums.TipoDocumento.ReciboElectronicoPago  )
             {
                 writer.WriteStartElement("InformacionReferencia");
                 writer.WriteElementString("TipoDocIR", _doc.tipoDocRef.ToString().PadLeft(2, '0'));
                 writer.WriteElementString("Numero", _doc.claveRef);
                 writer.WriteElementString("FechaEmisionIR", _doc.fechaRef.Value.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
+            
+
                 writer.WriteElementString("Codigo", _doc.codigoRef.ToString().PadLeft(2, '0'));
                 writer.WriteElementString("Razon", _doc.razon.ToUpper().Substring(0, 180).Trim());
+
+             
                 writer.WriteEndElement();
             }
 

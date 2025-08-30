@@ -1,4 +1,4 @@
-﻿using BusinessLayer;
+﻿ using BusinessLayer;
 using CommonLayer;
 using EntityLayer;
 using PresentationLayer.Clases;
@@ -157,8 +157,8 @@ namespace PresentationLayer
 
                 inicioCaja = cajaCierre == null ? 0 : cajaCierre.montoApertura;
 
-                listaDoc = facturaIns.getDocsByNoTrack(sucursal, caja, fechaIncio, fechaFin);             
-                listaPagos = facturaIns.getAbonosByFechaAsNotTracking(fechaIncio, fechaFin, sucursal, caja);
+                listaDoc = facturaIns.getDocsByNoTrack(sucursal, caja, fechaIncio, fechaFin).Where(x=>x.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago);             
+                listaPagos = facturaIns.getAbonosByFechaAsNotTracking(fechaIncio, fechaFin, sucursal, caja).Where(x => x.tipoDoc != (int)Enums.TipoDocumento.ReciboElectronicoPago);
                 listaMov = bMovimiento.getListMovByFechaAsNotTracking(fechaIncio, fechaFin, sucursal, caja);
 
                 IEnumerable<tbDocumento> lista = listaDoc.Where(x => (x.tipoDocumento == (int)Enums.TipoDocumento.Factura || x.tipoDocumento == (int)Enums.TipoDocumento.FacturaElectronica

@@ -1287,10 +1287,10 @@ namespace PresentationLayer
                         cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
                         cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
                     }
-                    else
-                    {
-                        MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    //}
 
 
 

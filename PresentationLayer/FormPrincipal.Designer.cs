@@ -767,6 +767,7 @@
             this.lblHora.Size = new System.Drawing.Size(52, 18);
             this.lblHora.TabIndex = 1;
             this.lblHora.Text = "label1";
+            this.lblHora.Click += new System.EventHandler(this.lblHora_Click);
             // 
             // lblFecha
             // 
@@ -958,7 +959,7 @@
             this.promocionesToolStripMenuItem});
             this.mnuReportes.Name = "mnuReportes";
             this.mnuReportes.ShowImageMargin = false;
-            this.mnuReportes.Size = new System.Drawing.Size(245, 242);
+            this.mnuReportes.Size = new System.Drawing.Size(245, 220);
             // 
             // productoToolStripMenuItem
             // 

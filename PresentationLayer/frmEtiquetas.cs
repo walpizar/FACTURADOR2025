@@ -317,7 +317,7 @@ namespace PresentationLayer
                     if (bandera)
                     {
                       
-                        rptEtiquetas2 reporte = new rptEtiquetas2();
+                        rptEtiquetas3 reporte = new rptEtiquetas3();
 
                         reporte.SetDataSource(et);
 
