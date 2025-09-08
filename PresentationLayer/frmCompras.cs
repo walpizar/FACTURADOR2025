@@ -211,11 +211,11 @@ namespace PresentationLayer
 
             foreach (tbDetalleCompras detalle in lista)
             {
-                detalle.montoTotalLinea = (decimal)((detalle.montoTotal - detalle.montoTotaDesc+ detalle.montoOtroImp) + (detalle.montoTotalImp-detalle.montoTotalExo));
+                detalle.montoTotalLinea = (decimal)((detalle.montoTotal - detalle.montoTotaDesc) + (detalle.montoTotalImp-detalle.montoTotalExo));
                 total += (decimal)detalle.montoTotalLinea;
                 desc += (decimal)detalle.montoTotaDesc;
                 iva += (decimal)detalle.montoTotalImp;
-                iva += (decimal)detalle.montoOtroImp;
+                //iva += (decimal)detalle.montoOtroImp;
                 subtotal += (decimal)detalle.montoTotal;
                 exo += (decimal)detalle.montoTotalExo;
 
@@ -295,12 +295,12 @@ namespace PresentationLayer
            
                 
                 if (detalle.cantidad == detalle.cantidadVenta) {
-                    precioAntesImp = (decimal)(((detalle.precio * detalle.cantidad) - detalle.montoTotaDesc + detalle.montoOtroImp) / detalle.cantidad);
+                    precioAntesImp = (decimal)(((detalle.precio * detalle.cantidad) - detalle.montoTotaDesc ) / detalle.cantidad);
 
                 }
                 else
                 {
-                    precioAntesImp = (decimal)(((detalle.precio * detalle.cantidad) - detalle.montoTotaDesc + detalle.montoOtroImp) / detalle.cantidadVenta);
+                    precioAntesImp = (decimal)(((detalle.precio * detalle.cantidad) - detalle.montoTotaDesc ) / detalle.cantidadVenta);
 
                 }
                  row.Cells[7].Value = string.Format("{0:N2}", precioAntesImp);

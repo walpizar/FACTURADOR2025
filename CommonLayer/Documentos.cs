@@ -177,6 +177,10 @@ namespace CommonLayer
 
                     // CABYS en <Codigo>
                     d.codigoCabys = S(linea, "CodigoCABYS");
+                    if (d.codigoCabys == null)
+                    {
+                        d.codigoCabys = S(linea, "codigo");
+                    }
 
                     // CodigoComercial opcional -> proveedor
                     var codCom = linea.Element(ns + "CodigoComercial");
@@ -220,7 +224,7 @@ namespace CommonLayer
                         else
                         {
                             // Considerar IVA como principal si Codigo = "01"
-                            if (string.Equals(codigoImp, "01"))
+                            if (string.Equals(codigoImp, "01") || string.Equals(codigoImp, "07"))
                             {
                                 impuestoPrincipalTarifa = tarifa;
                                 impuestoPrincipalMonto += monto;
@@ -238,11 +242,13 @@ namespace CommonLayer
                             d.montoTotalExo = D(S(exo, "MontoExoneracion"));
                     }
 
-                    d.montoOtroImp = acumuladoOtrosImp;
+                    d.montoOtroImp = 0;
                     d.tarifaImp = impuestoPrincipalTarifa;
-                    d.montoTotalImp = impuestoPrincipalMonto;
+
+
+                    d.montoTotalImp = D(S(linea, "ImpuestoNeto"));
                     d.tarifaImpVenta = d.tarifaImp;
-                   
+
                     d.montoTotalLinea = D(S(linea, "MontoTotalLinea"));
 
                     listaDetalleCompras.Add(d);
@@ -279,7 +285,7 @@ namespace CommonLayer
                 documento.CodActividad = xDoc.GetElementsByTagName("CodigoActividad").Item(0).InnerText;
 
             }
-         
+
             documento.fecha = Utility.getDate();
             documento.numFactura = documento.consecutivoEmisor.Substring(10, 10);
             documento.fechaCompra = DateTime.Parse(xDoc.GetElementsByTagName("FechaEmision").Item(0).InnerText);
@@ -293,12 +299,12 @@ namespace CommonLayer
             var identificacion = ((XmlElement)emisor[0]).GetElementsByTagName("Identificacion");
             //var correo = ((XmlElement)emisor[0]).GetElementsByTagName("CorreoElectronico").Item(0).InnerText;
 
-   
+
 
             documento.tipoIdProveedor = int.Parse(((XmlElement)identificacion[0]).GetElementsByTagName("Tipo").Item(0).InnerText);
             documento.idProveedor = ((XmlElement)identificacion[0]).GetElementsByTagName("Numero").Item(0).InnerText;
             documento.nombreProveedor = ((XmlElement)emisor[0]).GetElementsByTagName("Nombre").Item(0).InnerText;
-            
+
             //receptor
             var receptor = xDoc.GetElementsByTagName("Receptor");
             var identificacionReceptor = ((XmlElement)receptor[0]).GetElementsByTagName("Identificacion");
@@ -417,12 +423,12 @@ namespace CommonLayer
 
                     detalle.idProducto = "0";
 
-                    
+
                     detalle.nombreProducto = ((XmlElement)item).GetElementsByTagName("Detalle").Item(0).InnerText;
                     if (detalle.nombreProducto.Length > 159)
                     {
                         detalle.nombreProducto = detalle.nombreProducto.Substring(0, 159);
- 
+
                     }
                     detalle.nomenclatura = ((XmlElement)item).GetElementsByTagName("UnidadMedida").Item(0).InnerText;
 
@@ -486,7 +492,7 @@ namespace CommonLayer
 
                     }
 
-                    
+
                     detalle.tarifaImpVenta = detalle.tarifaImp;
 
                     var totaLinea = ((XmlElement)item).GetElementsByTagName("MontoTotalLinea").Item(0).InnerText.Trim();

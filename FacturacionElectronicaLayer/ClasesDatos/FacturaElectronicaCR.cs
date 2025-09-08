@@ -7,6 +7,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
     using EntityLayer;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Eventing.Reader;
     using System.Globalization;
     using System.Linq;
     using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
@@ -510,6 +511,8 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             decimal totalProdGrav = 0m, totalServGrav = 0m;
             decimal totalProdExc = 0m, totalServExc = 0m;
             decimal totalProdExo = 0m, totalServExo = 0m;
+            decimal totalMercNoSujeta = 0m, totalServNoSujeta = 0m;
+
 
             foreach (var d in _listaDetalle)
             {
@@ -527,17 +530,33 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 {
                     if (d.montoTotalImp != 0)
                         totalServGrav += (1 - factor) * d.montoTotal;
+                    else if ((bool)d.tbProducto.esExento || porcImp==0)
+                    {
+                        totalServNoSujeta= + d.montoTotal;
+                    }
                     else
+                    {
                         totalServExc += d.montoTotal;
-                    totalServExo += factor * d.montoTotal;
+                        totalServExo += factor * d.montoTotal;
+                    }                   
+                    
+                    //totalServExo += factor * d.montoTotal;
                 }
                 else
                 {
                     if (d.montoTotalImp != 0)
                         totalProdGrav += (1 - factor) * d.montoTotal;
+                    else if ((bool)d.tbProducto.esExento || porcImp == 0)
+                    {
+                        totalMercNoSujeta = +d.montoTotal;
+
+                    }
                     else
+                    {
                         totalProdExc += d.montoTotal;
-                    totalProdExo += factor * d.montoTotal;
+                        totalProdExo += factor * d.montoTotal;
+                    }
+               
                 }
             }
 
@@ -546,6 +565,9 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             decimal totalExonerado = totalProdExo  + totalServExo;
             decimal totalVenta = totalGravado + totalExento + totalExonerado;
             decimal totalVentaNeta = totalVenta   - totalDescuento;
+            decimal totalNoSujeta = totalMercNoSujeta + totalServNoSujeta;
+            totalVenta += totalNoSujeta;
+            totalVentaNeta += totalNoSujeta;
 
             writer.WriteStartElement("ResumenFactura");
             
@@ -565,13 +587,23 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                     writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExo));
                 }
 
+
+                if (totalServNoSujeta != 0)
+                {
+                    writer.WriteElementString("TotalServNoSujeto", String.Format("{0:F5}", totalServNoSujeta));
+                }
+
                 writer.WriteElementString("TotalMercanciasGravadas", String.Format("{0:F5}", totalProdGrav));
                 writer.WriteElementString("TotalMercanciasExentas", String.Format("{0:F5}", totalProdExc));
                 if (totalProdExo != 0)
                 {
                     writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExo));
                 }
-
+               
+                if (totalMercNoSujeta != 0)
+                {
+                    writer.WriteElementString("TotalMercNoSujeto", String.Format("{0:F5}", totalMercNoSujeta));
+                }
 
                 writer.WriteElementString("TotalGravado", String.Format("{0:F5}", totalGravado));
                 writer.WriteElementString("TotalExento", String.Format("{0:F5}", totalExento));
@@ -580,6 +612,14 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 {
                     writer.WriteElementString("TotalExonerado", String.Format("{0:F5}", totalExonerado));
                 }
+
+
+                //totalNosujeta
+                if (totalNoSujeta != 0)
+                {
+                    writer.WriteElementString("TotalNoSujeto", String.Format("{0:F5}", totalNoSujeta));
+                }
+
             }
             writer.WriteElementString("TotalVenta", String.Format("{0:F5}", totalVenta));
             if (_doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
@@ -1093,6 +1133,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             decimal totalDescuento = 0;
             decimal totalComprobante = 0;
             decimal impuestos = 0;
+      
 
             foreach (tbDetalleDocumento detalle in _listaDetalle)
             {
@@ -1136,9 +1177,24 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             writer.WriteElementString("TotalServGravados", String.Format("{0:F5}", totalSevGravados));
             writer.WriteElementString("TotalServExentos", String.Format("{0:F5}", totalServExcentos));
             writer.WriteElementString("TotalServExonerado", String.Format("{0:F5}", totalServExonerado));
+
+
+            if (totalServExcentos > 0) {
+                writer.WriteElementString("TotalServNoSujeto", String.Format("{0:F5}", totalServExcentos));
+
+            }
+
+
+
             writer.WriteElementString("TotalMercanciasGravadas", String.Format("{0:F5}", totalProdGravados));
             writer.WriteElementString("TotalMercanciasExentas", String.Format("{0:F5}", totalProdExcentos));
             writer.WriteElementString("TotalMercExonerada", String.Format("{0:F5}", totalProdExonerado));
+
+            if (totalProdExcentos>0)
+            {
+                writer.WriteElementString("TotalMercNoSujeta", String.Format("{0:F5}", totalProdExcentos));
+
+            }
 
             decimal totalGravados = totalSevGravados + totalProdGravados;
             decimal totalExentos = totalProdExcentos + totalServExcentos;
@@ -1150,6 +1206,13 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
             decimal totalVenta = totalGravados + totalExentos + totalExo;
             decimal totalVentaNeta = totalVenta - totalDescuento;//calula el monto de descuento
+            decimal totalNoSujeto = totalServExcentos + totalProdExcentos;
+
+            if (totalNoSujeto > 0)
+            {
+                writer.WriteElementString("TotalNoSujeto", String.Format("{0:F5}", totalNoSujeto));
+
+            }
 
             writer.WriteElementString("TotalVenta", String.Format("{0:F5}", totalVenta));
             writer.WriteElementString("TotalDescuentos", String.Format("{0:F5}", totalDescuento));

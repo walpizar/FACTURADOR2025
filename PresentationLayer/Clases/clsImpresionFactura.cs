@@ -645,7 +645,7 @@ namespace PresentationLayer.Clases
             Ticket1.LineasGuion();
             Ticket1.TextoIzquierda("Hecho por:" + Global.Usuario.nombreUsuario.Trim().ToUpper());
             Ticket1.TextoIzquierda("Autorizada mediante resolución No. DGT-R");
-            Ticket1.TextoIzquierda("-033-2019 del 20 de junio del 2019 V4.3");
+            Ticket1.TextoIzquierda("-033-2019 del 20 de junio del 2019 V4.4");
 
             Ticket1.TextoCentro("GRACIAS POR PREFERIRNOS");
 
