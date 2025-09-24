@@ -61,9 +61,6 @@
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="tbAcompanamiento.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
@@ -77,30 +74,6 @@
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tbCanton.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria1Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria2Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria3Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria4Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria5Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria6Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria7Cabys.cs">
-      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbCategoria8Cabys.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
     <Compile Include="tbCategoria9Cabys.cs">

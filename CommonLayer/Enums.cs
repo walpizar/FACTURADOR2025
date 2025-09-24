@@ -24,6 +24,19 @@
             fotos=4
 
         }
+        public enum TiposCabys
+        {
+            ProductosAgriculturaSilviculturaPesca = 0,/*AMPLIA(BARES-RESTAURANTES-SODA)*/
+            MineralesElectricidadGasAgua = 1,/*REDUCIDA (FERRETERIA,MINISUPER)*/
+            ProductosAlimenticiosBebidasTabacoTextilesPrendasCuero =2,/*tactil pantalla pequeña*/
+            Bienestransportables = 3,
+            ProductosMetálicosMaquinariaEquipo = 4,
+            ConstruccionesServiciosConstrucción = 5,
+            ServVentaDistribAlojamienServComidasBebidaServTranspoServElectriGasAgua = 6,
+            ServFinancierosServConexosServInmobiliariosAlquilerFinan = 7,
+            ServPrestadosEmpresasServiciosProduc = 8,
+            SerVComunidadSocialesPersonales=9
+        }
 
         public enum tipoImpresion
         {

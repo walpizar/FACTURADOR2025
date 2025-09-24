@@ -17,8 +17,8 @@ namespace EntityLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbClientes()
         {
-            this.tbDocumento = new HashSet<tbDocumento>();
             this.tbClienteActividad = new HashSet<tbClienteActividad>();
+            this.tbDocumento = new HashSet<tbDocumento>();
         }
     
         public string id { get; set; }
@@ -47,12 +47,12 @@ namespace EntityLayer
         public bool contribuyente { get; set; }
         public Nullable<bool> aplicaDescAuto { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }
         public virtual tbExoneraciones tbExoneraciones { get; set; }
         public virtual tbPersona tbPersona { get; set; }
         public virtual tbTipoClientes tbTipoClientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbDocumento> tbDocumento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }
     }
 }

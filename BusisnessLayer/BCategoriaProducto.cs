@@ -140,19 +140,19 @@ namespace BusinessLayer
         //    return catProductosIns.getCat8Cabys(cat1, cat2, cat3, cat4, cat5, cat6, cat7);
 
         //}
-        //public List<tbCategoria9Cabys> getCat9Cabys(string cat1, string cat2, string cat3, string cat4, string cat5, string cat6, string cat7, string cat8)
-        //{
+        public List<tbCategoria9Cabys> getCat9Cabys()
+        {
 
-        //    return catProductosIns.getCat9Cabys(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8);
+            return catProductosIns.getCat9Cabys();
 
-        //}
+        }
 
-        //public List<tbCategoria9Cabys> getCat9CabysByText(string text)
-        //{
+        public List<tbCategoria9Cabys> getCat9CabysByText(string text)
+        {
 
-        //    return catProductosIns.getCat9CabysByText(text);
+            return catProductosIns.getCat9CabysByText(text);
 
-        //}
+        }
 
         //public tbCategoria9Cabys getCat9CabysById(string codigo)
         //{

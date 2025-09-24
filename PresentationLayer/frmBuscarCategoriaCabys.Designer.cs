@@ -36,6 +36,7 @@
             this.txtbusqueda = new System.Windows.Forms.TextBox();
             this.lblNombreProducto = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.colProductoServ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lstvBienServicios
@@ -43,14 +44,15 @@
             this.lstvBienServicios.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colID,
             this.colName,
-            this.colImpuesto});
+            this.colImpuesto,
+            this.colProductoServ});
             this.lstvBienServicios.FullRowSelect = true;
             this.lstvBienServicios.HideSelection = false;
-            this.lstvBienServicios.Location = new System.Drawing.Point(11, 65);
+            this.lstvBienServicios.Location = new System.Drawing.Point(17, 65);
             this.lstvBienServicios.Margin = new System.Windows.Forms.Padding(2);
             this.lstvBienServicios.MultiSelect = false;
             this.lstvBienServicios.Name = "lstvBienServicios";
-            this.lstvBienServicios.Size = new System.Drawing.Size(855, 209);
+            this.lstvBienServicios.Size = new System.Drawing.Size(1005, 298);
             this.lstvBienServicios.TabIndex = 1;
             this.lstvBienServicios.UseCompatibleStateImageBehavior = false;
             this.lstvBienServicios.View = System.Windows.Forms.View.Details;
@@ -60,7 +62,7 @@
             // colID
             // 
             this.colID.Text = "ID";
-            this.colID.Width = 100;
+            this.colID.Width = 150;
             // 
             // colName
             // 
@@ -77,9 +79,9 @@
             this.txtbusqueda.Location = new System.Drawing.Point(92, 31);
             this.txtbusqueda.Margin = new System.Windows.Forms.Padding(2);
             this.txtbusqueda.Name = "txtbusqueda";
-            this.txtbusqueda.Size = new System.Drawing.Size(406, 20);
+            this.txtbusqueda.Size = new System.Drawing.Size(349, 20);
             this.txtbusqueda.TabIndex = 13;
-            this.txtbusqueda.MouseEnter += new System.EventHandler(this.txtbusqueda_MouseEnter);
+            this.txtbusqueda.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtbusqueda_KeyDown);
             // 
             // lblNombreProducto
             // 
@@ -96,7 +98,7 @@
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.Transparent;
             this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
-            this.btnBuscar.Location = new System.Drawing.Point(814, 12);
+            this.btnBuscar.Location = new System.Drawing.Point(455, 12);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(52, 48);
             this.btnBuscar.TabIndex = 35;
@@ -104,11 +106,16 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // colProductoServ
+            // 
+            this.colProductoServ.Text = "Tipo";
+            this.colProductoServ.Width = 150;
+            // 
             // frmBuscarCategoriaCabys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(879, 287);
+            this.ClientSize = new System.Drawing.Size(1031, 374);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtbusqueda);
             this.Controls.Add(this.lblNombreProducto);
@@ -130,5 +137,6 @@
         private System.Windows.Forms.TextBox txtbusqueda;
         private System.Windows.Forms.Label lblNombreProducto;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.ColumnHeader colProductoServ;
     }
 }

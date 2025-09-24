@@ -102,9 +102,16 @@ namespace CommonLayer
                 documento.plazo = 0;
 
             // Medios de pago: múltiples <MedioPago>, seleccionar el primero como "tipoPago" y guardar todos si se requiere
-            var mediosPago = doc.Root.Descendants(ns + "MedioPago").Select(x => x.Value?.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToList();
-            if (mediosPago.Count > 0)
-                documento.tipoPago = I(mediosPago[0]);
+            var mediosPago = doc.Root?
+        .Descendants(ns + "MedioPago")
+        .Select(x => x.Element(ns + "TipoMedioPago")?.Value.Trim())
+        .Where(v => !string.IsNullOrWhiteSpace(v))
+        .ToList();
+            if (mediosPago.Any())
+            {
+                documento.tipoPago = I(mediosPago.First());
+               //documento.MediosPago = mediosPago; // si la clase Documento lo soporta
+            }
 
             // Emisor
             var emisor = doc.Root.Element(ns + "Emisor");
@@ -179,7 +186,7 @@ namespace CommonLayer
                     d.codigoCabys = S(linea, "CodigoCABYS");
                     if (d.codigoCabys == null)
                     {
-                        d.codigoCabys = S(linea, "codigo");
+                        d.codigoCabys = S(linea, "Codigo");
                     }
 
                     // CodigoComercial opcional -> proveedor

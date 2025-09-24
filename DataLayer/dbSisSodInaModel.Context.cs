@@ -27,18 +27,15 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tbAcompanamiento> tbAcompanamiento { get; set; }
         public virtual DbSet<tbActividades> tbActividades { get; set; }
         public virtual DbSet<tbBarrios> tbBarrios { get; set; }
         public virtual DbSet<tbCajasMovimientos> tbCajasMovimientos { get; set; }
         public virtual DbSet<tbCanton> tbCanton { get; set; }
-        public virtual DbSet<tbCategoria1Cabys> tbCategoria1Cabys { get; set; }
-        public virtual DbSet<tbCategoria7Cabys> tbCategoria7Cabys { get; set; }
-        public virtual DbSet<tbCategoria8Cabys> tbCategoria8Cabys { get; set; }
         public virtual DbSet<tbCategoria9Cabys> tbCategoria9Cabys { get; set; }
         public virtual DbSet<tbCategoriaProducto> tbCategoriaProducto { get; set; }
         public virtual DbSet<tbCategoriaRequerimiento> tbCategoriaRequerimiento { get; set; }
+        public virtual DbSet<tbClienteActividad> tbClienteActividad { get; set; }
         public virtual DbSet<tbClientes> tbClientes { get; set; }
         public virtual DbSet<tbCompras> tbCompras { get; set; }
         public virtual DbSet<tbDetalleCompras> tbDetalleCompras { get; set; }
@@ -59,6 +56,7 @@ namespace DataLayer
         public virtual DbSet<tbPagos> tbPagos { get; set; }
         public virtual DbSet<tbParametrosEmpresa> tbParametrosEmpresa { get; set; }
         public virtual DbSet<tbPersona> tbPersona { get; set; }
+        public virtual DbSet<tbPersonasTribunalS> tbPersonasTribunalS { get; set; }
         public virtual DbSet<tbProducto> tbProducto { get; set; }
         public virtual DbSet<tbPromociones> tbPromociones { get; set; }
         public virtual DbSet<tbProveedores> tbProveedores { get; set; }
@@ -76,12 +74,5 @@ namespace DataLayer
         public virtual DbSet<tbTipoPuesto> tbTipoPuesto { get; set; }
         public virtual DbSet<tbTipoVenta> tbTipoVenta { get; set; }
         public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
-        public virtual DbSet<tbCategoria2Cabys> tbCategoria2Cabys { get; set; }
-        public virtual DbSet<tbCategoria3Cabys> tbCategoria3Cabys { get; set; }
-        public virtual DbSet<tbCategoria4Cabys> tbCategoria4Cabys { get; set; }
-        public virtual DbSet<tbCategoria5Cabys> tbCategoria5Cabys { get; set; }
-        public virtual DbSet<tbCategoria6Cabys> tbCategoria6Cabys { get; set; }
-        public virtual DbSet<tbPersonasTribunalS> tbPersonasTribunalS { get; set; }
-        public virtual DbSet<tbClienteActividad> tbClienteActividad { get; set; }
     }
 }

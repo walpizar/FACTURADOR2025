@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -302,121 +303,244 @@ namespace PresentationLayer
             //registra el acceso en segundo plano
             BackgroundWorker tarea = new BackgroundWorker();
 
-            tarea.DoWork += registrarIngresoAsync;
+            tarea.DoWork +=  registrarIngreso_DoWork;
             tarea.RunWorkerAsync();
 
         }
-
-        private void registrarIngresoAsync(object sender, DoWorkEventArgs e)
+        private void registrarIngreso_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
-                try
+                if (!Utility.AccesoInternet()) return;
+
+                // Armar la entrada
+                var asm = System.Reflection.Assembly.GetExecutingAssembly();
+                var ver = FileVersionInfo.GetVersionInfo(asm.Location)?.FileVersion;
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                var ip = host.AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork)?.ToString();
+
+                var entrada = new clsTerminal
                 {
-                    if (Utility.AccesoInternet())
-                    {
+                    ip = ip,
+                    id = Global.Usuario?.tbEmpresa?.id?.Trim(),
+                    nombreEmpresa = Global.actividadEconomic?.nombreComercial?.Trim().ToUpper(),
+                    fecha = Utility.getDate(),
+                    version = ver
+                };
 
-                        FtpWebRequest request =
-                        (FtpWebRequest)WebRequest.Create("ftp://ftp.espartanosolutions.com/acceso.json");
-                        request.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
-                        request.Method = WebRequestMethods.Ftp.DownloadFile;
-                        var lista = new List<clsTerminal>();
-                        using (WebResponse response = request.GetResponse())
-                        {
-                            Stream responseStream = response.GetResponseStream();
-                            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
-                            using (var reader = new StreamReader(responseStream, encode))
-                            {
-                                string json = reader.ReadToEnd();
-                                lista = JsonConvert.DeserializeObject<List<clsTerminal>>(json);
+                // 1) Descargar JSON actual
+                var urlBase = "ftp://ftp.espartanosolutions.com/";
+                var archivo = "acceso.json";
+                var temporal = "acceso.json.uploading";
 
-                            }
+                var lista = DescargarListaFtp(urlBase + archivo) ?? new List<clsTerminal>();
+                lista.Add(entrada);
 
-                            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                            {
-                                Console.WriteLine("No Network Available");
-                            }
+                // 2) Serializar
+                var json = JsonConvert.SerializeObject(lista);
 
-                            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-
-                            var ippaddress = host
-                                .AddressList
-                                .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-
-
-                            clsTerminal terminal = new clsTerminal();
-                            terminal.ip = ippaddress.ToString();                            
-                            terminal.id = Global.Usuario.tbEmpresa.id.Trim();                      
-                            terminal.nombreEmpresa = Global.actividadEconomic.nombreComercial.Trim().ToUpper();
-                            terminal.fecha = Utility.getDate();
-
-                            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-
-                            terminal.version = versionInfo.FileVersion;
-
-                            lista.Add(terminal);
-
-                            var listaJson = JsonConvert.SerializeObject(lista);
-
-
-                            subirArchivoIngreso(listaJson);
-
-
-                        }
-
-                    }
-
-                }
-                catch (Exception ex)  
-                {
-
-                }
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
-       
-
-        private void subirArchivoIngreso(string listaJson)
-        {
-            try
-            {
-                FtpWebRequest request =
-                       (FtpWebRequest)WebRequest.Create("ftp://ftp.espartanosolutions.com/acceso.json");
-                request.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
-                request.Method = WebRequestMethods.Ftp.UploadFile;
-
-
-                byte[] fileContents = Encoding.UTF8.GetBytes(listaJson);
-            
-
-
-                request.ContentLength = fileContents.Length;
-
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    requestStream.Write(fileContents, 0, fileContents.Length);
-                }
-
-                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                {
-                    Console.WriteLine($"Upload File Complete, status { response.StatusDescription}");
-                }
-
+                // 3) Subir atómicamente (upload temp + rename)
+                SubirArchivoFtp(urlBase + temporal, json);
+                RenombrarFtp(urlBase + temporal, archivo);
             }
             catch (Exception ex)
             {
-
-          
+                // Loguea el error; evita catch vacíos
+                Console.Error.WriteLine(ex);
+                // opcional: avisar al usuario si esto es crítico
+                // MessageBox.Show("No fue posible registrar el ingreso.", "Accesos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-       
+        private List<clsTerminal> DescargarListaFtp(string url)
+        {
+            var req = (FtpWebRequest)WebRequest.Create(url);
+            req.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
+            req.Method = WebRequestMethods.Ftp.DownloadFile;
+            //req.UseBinary = true;
+            //req.EnableSsl = false;   // FTPS si el hosting lo soporta
+            //req.KeepAlive = false;
+            //req.Proxy = null;
+
+
+            try
+            {
+                using (var resp = (FtpWebResponse)req.GetResponse())
+                using (var stream = resp.GetResponseStream())
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    var json = reader.ReadToEnd();
+                    return string.IsNullOrWhiteSpace(json)
+                        ? new List<clsTerminal>()
+                        : JsonConvert.DeserializeObject<List<clsTerminal>>(json);
+                }
+            }
+            catch (WebException ex)
+            {
+                // Si no existe el archivo remoto aún
+                if (ex.Response is FtpWebResponse ftp &&
+                    ftp.StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                    return new List<clsTerminal>();
+
+                throw;
+            }
+        }
+
+        private void SubirArchivoFtp(string urlDestino, string contenido)
+        {
+            var data = Encoding.UTF8.GetBytes(contenido);
+
+            var req = (FtpWebRequest)WebRequest.Create(urlDestino);
+            req.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
+            req.Method = WebRequestMethods.Ftp.UploadFile;
+            //req.UseBinary = true;
+            //req.EnableSsl = true;   // FTPS
+            //req.KeepAlive = false;
+            req.ContentLength = data.Length;
+            //req.Proxy = null;
+
+            using (var stream = req.GetRequestStream())
+                stream.Write(data, 0, data.Length);
+
+            using (var resp = (FtpWebResponse)req.GetResponse()) { /* opcional validar resp.StatusDescription */ }
+        }
+
+        private void RenombrarFtp(string urlOrigen, string nombreDestino)
+        {
+            var req = (FtpWebRequest)WebRequest.Create(urlOrigen);
+            req.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
+            req.Method = WebRequestMethods.Ftp.Rename;
+            req.RenameTo = nombreDestino;
+            //req.UseBinary = true;
+            //req.EnableSsl = true;
+            //req.KeepAlive = false;
+            //req.Proxy = null;
+
+            using (var resp = (FtpWebResponse)req.GetResponse()) { }
+        }
+
+
+        //private void registrarIngresoAsync(object sender, DoWorkEventArgs e)
+        //{
+        //    try
+        //    {
+        //        try
+        //        {
+        //            if (Utility.AccesoInternet())
+        //            {
+
+        //                FtpWebRequest request =
+        //                (FtpWebRequest)WebRequest.Create("ftp://ftp.espartanosolutions.com/acceso.json");
+        //                request.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
+        //                request.Method = WebRequestMethods.Ftp.DownloadFile;
+        //                var lista = new List<clsTerminal>();
+        //                using (WebResponse response = request.GetResponse())
+        //                {
+        //                    Stream responseStream = response.GetResponseStream();
+        //                    Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+        //                    using (var reader = new StreamReader(responseStream, encode))
+        //                    {
+        //                        string json = reader.ReadToEnd();
+        //                        lista = JsonConvert.DeserializeObject<List<clsTerminal>>(json);
+
+        //                    }
+
+        //                    if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+        //                    {
+        //                        Console.WriteLine("No Network Available");
+        //                    }
+
+        //                    IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+
+        //                    var ippaddress = host
+        //                        .AddressList
+        //                        .FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+
+
+        //                    clsTerminal terminal = new clsTerminal();
+        //                    terminal.ip = ippaddress.ToString();                            
+        //                    terminal.id = Global.Usuario.tbEmpresa.id.Trim();                      
+        //                    terminal.nombreEmpresa = Global.actividadEconomic.nombreComercial.Trim().ToUpper();
+        //                    terminal.fecha = Utility.getDate();
+
+        //                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        //                    FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+        //                    terminal.version = versionInfo.FileVersion;
+
+
+
+
+
+        //                    try
+        //                    {
+        //                        lista = lista ?? new List<clsTerminal>();
+        //                        lista.Add(terminal);
+        //                        var listaJson = JsonConvert.SerializeObject(lista);
+        //                        subirArchivoIngreso(listaJson);
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+
+
+        //                    }
+
+
+
+        //                }
+
+        //            }
+
+        //        }
+        //        catch (Exception ex)  
+        //        {
+
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+
+
+        //    }
+        //}
+
+
+
+        //private void subirArchivoIngreso(string listaJson)
+        //{
+        //    try
+        //    {
+        //        FtpWebRequest request =
+        //               (FtpWebRequest)WebRequest.Create("ftp://ftp.espartanosolutions.com/acceso.json");
+        //        request.Credentials = new NetworkCredential("release@espartanosolutions.com", "Casa8383*");
+        //        request.Method = WebRequestMethods.Ftp.UploadFile;
+
+
+        //        byte[] fileContents = Encoding.UTF8.GetBytes(listaJson);
+
+
+
+        //        request.ContentLength = fileContents.Length;
+
+        //        using (Stream requestStream = request.GetRequestStream())
+        //        {
+        //            requestStream.Write(fileContents, 0, fileContents.Length);
+        //        }
+
+        //        using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+        //        {
+        //            Console.WriteLine($"Upload File Complete, status { response.StatusDescription}");
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+
+        //    }
+        //}
+
+
 
         private void cargarOpciones()
         {

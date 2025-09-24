@@ -484,53 +484,50 @@ namespace DataLayer
         //    }
 
         //}
-        //public List<tbCategoria9Cabys> getCat9Cabys(string cat1, string cat2, string cat3, string cat4, string cat5,
-        //    string cat6, string cat7, string cat8)
-        //{
+        public List<tbCategoria9Cabys> getCat9Cabys()
+        {
 
-        //    try
-        //    {
+            try
+            {
 
-        //        using (Entities context = new Entities())
-        //        {
-        //            return (from p in context.tbCategoria9Cabys
-        //                    where p.idCategoria1 == cat1 && p.idCategoria2 == cat2 && p.idCategoria3 == cat3 && p.idCategoria4 == cat4
-        //                 && p.idCategoria5 == cat5 && p.idCategoria6 == cat6 && p.idCategoria7 == cat7 && p.idCategoria8 == cat8
-        //                    select p).ToList();
-        //        }
+                using (Entities context = new Entities())
+                {
+                    return (from p in context.tbCategoria9Cabys.AsNoTracking()                           
+                            select p).ToList();
+                }
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+            }
+            catch (Exception ex)
+            {
 
-        //        throw new Exception(ex.Message); ;
-        //    }
+                throw new Exception(ex.Message); ;
+            }
 
-        //}
+        }
 
-        //public List<tbCategoria9Cabys> getCat9CabysByText(string text)
-        //{
+        public List<tbCategoria9Cabys> getCat9CabysByText(string text)
+        {
 
-        //    try
-        //    {
+            try
+            {
 
-        //        using (Entities context = new Entities())
-        //        {
-        //            return (from p in context.tbCategoria9Cabys
-        //                    where p.nombre.Trim().ToUpper().Contains(text) || p.idCategoria9.Trim().ToUpper().Contains(text)
-        //                    select p).ToList();
-        //        }
+                using (Entities context = new Entities())
+                {
+                    return (from p in context.tbCategoria9Cabys
+                            where p.nombre.Trim().ToUpper().Contains(text) || p.idCategoria9.Trim().ToUpper().Contains(text)
+                            select p).ToList();
+                }
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
+            }
+            catch (Exception ex)
+            {
 
-        //        throw new Exception(ex.Message); ;
-        //    }
+                throw new Exception(ex.Message); ;
+            }
 
-        //}
+        }
 
         //public tbCategoria9Cabys getCat9CabysById(string text)
         //{

@@ -14,14 +14,6 @@ namespace EntityLayer
     
     public partial class tbCategoria9Cabys
     {
-        public string idCategoria1 { get; set; }
-        public string idCategoria2 { get; set; }
-        public string idCategoria3 { get; set; }
-        public string idCategoria4 { get; set; }
-        public string idCategoria5 { get; set; }
-        public string idCategoria6 { get; set; }
-        public string idCategoria7 { get; set; }
-        public string idCategoria8 { get; set; }
         public string idCategoria9 { get; set; }
         public string nombre { get; set; }
         public int impuesto { get; set; }
