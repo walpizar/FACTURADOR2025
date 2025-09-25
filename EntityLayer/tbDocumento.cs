@@ -67,7 +67,6 @@ namespace EntityLayer
         public string codigoActividadReceptor { get; set; }
     
         public virtual tbActividades tbActividades { get; set; }
-        public virtual tbClientes tbClientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbDetalleDocumento> tbDetalleDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -77,5 +76,6 @@ namespace EntityLayer
         public virtual tbTipoMoneda tbTipoMoneda { get; set; }
         public virtual tbTipoPago tbTipoPago { get; set; }
         public virtual tbTipoVenta tbTipoVenta { get; set; }
+        public virtual tbClientes tbClientes { get; set; }
     }
 }

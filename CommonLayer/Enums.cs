@@ -389,6 +389,74 @@
 
         }
 
+        public enum InstitucionExoneracion
+        {
+            /// <summary>
+            /// Ministerio de Hacienda
+            /// </summary>
+            MinisterioHacienda = 1,
+
+            /// <summary>
+            /// Ministerio de Relaciones Exteriores y Culto
+            /// </summary>
+            MinisterioRelacionesExterioresCulto = 2,
+
+            /// <summary>
+            /// Ministerio de Agricultura y Ganadería
+            /// </summary>
+            MinisterioAgriculturaGanaderia = 3,
+
+            /// <summary>
+            /// Ministerio de Economía, Industria y Comercio
+            /// </summary>
+            MinisterioEconomiaIndustriaComercio = 4,
+
+            /// <summary>
+            /// Cruz Roja Costarricense
+            /// </summary>
+            CruzRojaCostarricense = 5,
+
+            /// <summary>
+            /// Benemérito Cuerpo de Bomberos de Costa Rica
+            /// </summary>
+            BomberosCostaRica = 6,
+
+            /// <summary>
+            /// Asociación Obras del Espíritu Santo
+            /// </summary>
+            ObrasEspiritoSanto = 7,
+
+            /// <summary>
+            /// Federación Cruzada Nacional de protección al Anciano (Fecrunapa)
+            /// </summary>
+            Fecrunapa = 8,
+
+            /// <summary>
+            /// Escuela de Agricultura de la Región Húmeda (EARTH)
+            /// </summary>
+            EARTH = 9,
+
+            /// <summary>
+            /// Instituto Centroamericano de Administración de Empresas (INCAE)
+            /// </summary>
+            INCAE = 10,
+
+            /// <summary>
+            /// Junta de Protección Social (JPS)
+            /// </summary>
+            JPS = 11,
+
+            /// <summary>
+            /// Autoridad Reguladora de los Servicios Públicos (ARESEP)
+            /// </summary>
+            ARESEP = 12,
+
+            /// <summary>
+            /// Otros
+            /// </summary>
+            Otros = 99
+        }
+
 
 
 

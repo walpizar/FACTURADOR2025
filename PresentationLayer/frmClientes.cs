@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
@@ -850,7 +851,7 @@ namespace PresentationLayer
             cboExoneracion.DisplayMember = "nombre";
             cboExoneracion.DataSource = exoneraIns.getListaExoneraciones();
 
-
+            cboInstitucionExo.DataSource = Enum.GetValues(typeof(Enums.InstitucionExoneracion));
         }
 
         private void tlsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

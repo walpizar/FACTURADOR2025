@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             this.gbxCliente = new System.Windows.Forms.GroupBox();
+            this.chkDescAuto = new System.Windows.Forms.CheckBox();
             this.txtIdentificacion = new System.Windows.Forms.MaskedTextBox();
             this.gbxExoneracion = new System.Windows.Forms.GroupBox();
             this.dtpVencimiento = new System.Windows.Forms.DateTimePicker();
@@ -41,7 +42,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.dtpFechaEmisionExo = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
-            this.txtInstitucionExo = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.cboExoneracion = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -113,7 +113,11 @@
             this.tlsBtnCancelar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tlsBtnSalir = new System.Windows.Forms.ToolStripButton();
-            this.chkDescAuto = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.cboInstitucionExo = new System.Windows.Forms.ComboBox();
             this.gbxCliente.SuspendLayout();
             this.gbxExoneracion.SuspendLayout();
             this.gboSexo.SuspendLayout();
@@ -184,6 +188,17 @@
             this.gbxCliente.TabStop = false;
             this.gbxCliente.Text = "Datos del Cliente";
             // 
+            // chkDescAuto
+            // 
+            this.chkDescAuto.AutoSize = true;
+            this.chkDescAuto.Location = new System.Drawing.Point(613, 350);
+            this.chkDescAuto.Margin = new System.Windows.Forms.Padding(2);
+            this.chkDescAuto.Name = "chkDescAuto";
+            this.chkDescAuto.Size = new System.Drawing.Size(48, 17);
+            this.chkDescAuto.TabIndex = 75;
+            this.chkDescAuto.Text = "Auto";
+            this.chkDescAuto.UseVisualStyleBackColor = true;
+            // 
             // txtIdentificacion
             // 
             this.txtIdentificacion.Enabled = false;
@@ -196,6 +211,11 @@
             // 
             // gbxExoneracion
             // 
+            this.gbxExoneracion.Controls.Add(this.cboInstitucionExo);
+            this.gbxExoneracion.Controls.Add(this.label26);
+            this.gbxExoneracion.Controls.Add(this.textBox2);
+            this.gbxExoneracion.Controls.Add(this.label25);
+            this.gbxExoneracion.Controls.Add(this.textBox1);
             this.gbxExoneracion.Controls.Add(this.dtpVencimiento);
             this.gbxExoneracion.Controls.Add(this.label24);
             this.gbxExoneracion.Controls.Add(this.btnObtnerExo);
@@ -205,7 +225,6 @@
             this.gbxExoneracion.Controls.Add(this.label22);
             this.gbxExoneracion.Controls.Add(this.dtpFechaEmisionExo);
             this.gbxExoneracion.Controls.Add(this.label21);
-            this.gbxExoneracion.Controls.Add(this.txtInstitucionExo);
             this.gbxExoneracion.Controls.Add(this.label19);
             this.gbxExoneracion.Controls.Add(this.cboExoneracion);
             this.gbxExoneracion.Controls.Add(this.label20);
@@ -292,11 +311,11 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(18, 20);
+            this.label22.Location = new System.Drawing.Point(197, 97);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(105, 13);
+            this.label22.Size = new System.Drawing.Size(45, 13);
             this.label22.TabIndex = 81;
-            this.label22.Text = "Número Documento:";
+            this.label22.Text = "Articulo:";
             // 
             // dtpFechaEmisionExo
             // 
@@ -315,14 +334,6 @@
             this.label21.Size = new System.Drawing.Size(79, 13);
             this.label21.TabIndex = 80;
             this.label21.Text = "Fecha Emisión:";
-            // 
-            // txtInstitucionExo
-            // 
-            this.txtInstitucionExo.Location = new System.Drawing.Point(128, 42);
-            this.txtInstitucionExo.MaxLength = 160;
-            this.txtInstitucionExo.Name = "txtInstitucionExo";
-            this.txtInstitucionExo.Size = new System.Drawing.Size(444, 20);
-            this.txtInstitucionExo.TabIndex = 79;
             // 
             // label19
             // 
@@ -994,16 +1005,53 @@
             this.tlsBtnSalir.Size = new System.Drawing.Size(36, 36);
             this.tlsBtnSalir.Text = "Salir";
             // 
-            // chkDescAuto
+            // textBox1
             // 
-            this.chkDescAuto.AutoSize = true;
-            this.chkDescAuto.Location = new System.Drawing.Point(613, 350);
-            this.chkDescAuto.Margin = new System.Windows.Forms.Padding(2);
-            this.chkDescAuto.Name = "chkDescAuto";
-            this.chkDescAuto.Size = new System.Drawing.Size(48, 17);
-            this.chkDescAuto.TabIndex = 75;
-            this.chkDescAuto.Text = "Auto";
-            this.chkDescAuto.UseVisualStyleBackColor = true;
+            this.textBox1.Location = new System.Drawing.Point(248, 94);
+            this.textBox1.MaxLength = 40;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(125, 20);
+            this.textBox1.TabIndex = 86;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(423, 94);
+            this.textBox2.MaxLength = 40;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(150, 20);
+            this.textBox2.TabIndex = 88;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(379, 97);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(38, 13);
+            this.label25.TabIndex = 87;
+            this.label25.Text = "Inciso:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(15, 21);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(103, 13);
+            this.label26.TabIndex = 89;
+            this.label26.Text = "Numero documento:";
+            // 
+            // cboInstitucionExo
+            // 
+            this.cboInstitucionExo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboInstitucionExo.Enabled = false;
+            this.cboInstitucionExo.FormattingEnabled = true;
+            this.cboInstitucionExo.Items.AddRange(new object[] {
+            "1- Precio 1",
+            "2 -Precio 2",
+            "3- Precio 3"});
+            this.cboInstitucionExo.Location = new System.Drawing.Point(128, 44);
+            this.cboInstitucionExo.Name = "cboInstitucionExo";
+            this.cboInstitucionExo.Size = new System.Drawing.Size(444, 21);
+            this.cboInstitucionExo.TabIndex = 76;
             // 
             // frmClientes
             // 
@@ -1105,7 +1153,6 @@
         private System.Windows.Forms.CheckBox chkAplicaExo;
         private System.Windows.Forms.DateTimePicker dtpFechaEmisionExo;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox txtInstitucionExo;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cboExoneracion;
         private System.Windows.Forms.Label label20;
@@ -1118,5 +1165,10 @@
         private System.Windows.Forms.DateTimePicker dtpVencimiento;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.CheckBox chkDescAuto;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cboInstitucionExo;
     }
 }

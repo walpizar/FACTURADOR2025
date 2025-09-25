@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoriaProducto" Width="1.5" PointX="0.75" PointY="33.75" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbCategoriaRequerimiento" Width="1.5" PointX="1" PointY="85.125" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbClienteActividad" Width="1.5" PointX="3" PointY="26.25" />
-        <EntityTypeShape EntityType="dbSISSODINAModel.tbClientes" Width="1.5" PointX="0.75" PointY="63.125" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbCompras" Width="1.5" PointX="9" PointY="22" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleCompras" Width="1.5" PointX="11.25" PointY="24.25" />
         <EntityTypeShape EntityType="dbSISSODINAModel.tbDetalleDocumento" Width="1.5" PointX="11.25" PointY="32.375" />
@@ -63,11 +62,6 @@
         <AssociationConnector Association="dbSISSODINAModel.FK_tbDistrito_tbCanton" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbProducto_tbCategoriaProducto" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbRequerimientos_tbCategoriaRequerimiento" />
-        <AssociationConnector Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" />
-        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" />
-        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbPersona" />
-        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" />
-        <AssociationConnector Association="dbSISSODINAModel.FK_tbFactura_tbClientes" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbReporteHacienda" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbTipoPago" />
         <AssociationConnector Association="dbSISSODINAModel.FK_tbCompras_tbTipoVenta" />
@@ -109,6 +103,12 @@
         <AssociationConnector Association="dbSISSODINAModel.FK_tbUsuarios_tbRoles" />
         <AssociationConnector Association="dbSISSODINAModel.tbPermisos" />
         <AssociationConnector Association="dbSISSODINAModel.tbProdutoAcompa" />
+        <EntityTypeShape EntityType="dbSISSODINAModel.tbClientes" Width="1.5" PointX="3.75" PointY="42.5" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbPersona" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" />
+        <AssociationConnector Association="dbSISSODINAModel.FK_tbFactura_tbClientes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

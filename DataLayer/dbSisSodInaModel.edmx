@@ -133,6 +133,9 @@
           <Property Name="contacto" Type="nchar" MaxLength="50" />
           <Property Name="contribuyente" Type="bit" Nullable="false" />
           <Property Name="aplicaDescAuto" Type="bit" />
+          <Property Name="fechaVencExo" Type="date" />
+          <Property Name="incisoExo" Type="nvarchar" MaxLength="50" />
+          <Property Name="articuloExo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbCompras">
           <Key>
@@ -1901,7 +1904,6 @@
           <EntitySet Name="tbCategoriaProducto" EntityType="dbSISSODINAModel.tbCategoriaProducto" />
           <EntitySet Name="tbCategoriaRequerimiento" EntityType="dbSISSODINAModel.tbCategoriaRequerimiento" />
           <EntitySet Name="tbClienteActividad" EntityType="dbSISSODINAModel.tbClienteActividad" />
-          <EntitySet Name="tbClientes" EntityType="dbSISSODINAModel.tbClientes" />
           <EntitySet Name="tbCompras" EntityType="dbSISSODINAModel.tbCompras" />
           <EntitySet Name="tbDetalleCompras" EntityType="dbSISSODINAModel.tbDetalleCompras" />
           <EntitySet Name="tbDetalleDocumento" EntityType="dbSISSODINAModel.tbDetalleDocumento" />
@@ -1982,26 +1984,6 @@
           <AssociationSet Name="FK_tbRequerimientos_tbCategoriaRequerimiento" Association="dbSISSODINAModel.FK_tbRequerimientos_tbCategoriaRequerimiento">
             <End Role="tbCategoriaRequerimiento" EntitySet="tbCategoriaRequerimiento" />
             <End Role="tbRequerimientos" EntitySet="tbRequerimientos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbClienteActividad_tbClientes" Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes">
-            <End Role="tbClientes" EntitySet="tbClientes" />
-            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbClientes_tbExoneraciones" Association="dbSISSODINAModel.FK_tbClientes_tbExoneraciones">
-            <End Role="tbExoneraciones" EntitySet="tbExoneraciones" />
-            <End Role="tbClientes" EntitySet="tbClientes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbClientes_tbPersona" Association="dbSISSODINAModel.FK_tbClientes_tbPersona">
-            <End Role="tbPersona" EntitySet="tbPersona" />
-            <End Role="tbClientes" EntitySet="tbClientes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbClientes_tbTipoClientes" Association="dbSISSODINAModel.FK_tbClientes_tbTipoClientes">
-            <End Role="tbTipoClientes" EntitySet="tbTipoClientes" />
-            <End Role="tbClientes" EntitySet="tbClientes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbFactura_tbClientes" Association="dbSISSODINAModel.FK_tbFactura_tbClientes">
-            <End Role="tbClientes" EntitySet="tbClientes" />
-            <End Role="tbDocumento" EntitySet="tbDocumento" />
           </AssociationSet>
           <AssociationSet Name="FK_tbCompras_tbReporteHacienda" Association="dbSISSODINAModel.FK_tbCompras_tbReporteHacienda">
             <End Role="tbReporteHacienda" EntitySet="tbReporteHacienda" />
@@ -2167,6 +2149,27 @@
             <End Role="tbAcompanamiento" EntitySet="tbAcompanamiento" />
             <End Role="tbProducto" EntitySet="tbProducto" />
           </AssociationSet>
+          <EntitySet Name="tbClientes" EntityType="dbSISSODINAModel.tbClientes" />
+          <AssociationSet Name="FK_tbClienteActividad_tbClientes" Association="dbSISSODINAModel.FK_tbClienteActividad_tbClientes">
+            <End Role="tbClientes" EntitySet="tbClientes" />
+            <End Role="tbClienteActividad" EntitySet="tbClienteActividad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClientes_tbExoneraciones" Association="dbSISSODINAModel.FK_tbClientes_tbExoneraciones">
+            <End Role="tbExoneraciones" EntitySet="tbExoneraciones" />
+            <End Role="tbClientes" EntitySet="tbClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClientes_tbPersona" Association="dbSISSODINAModel.FK_tbClientes_tbPersona">
+            <End Role="tbPersona" EntitySet="tbPersona" />
+            <End Role="tbClientes" EntitySet="tbClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbClientes_tbTipoClientes" Association="dbSISSODINAModel.FK_tbClientes_tbTipoClientes">
+            <End Role="tbTipoClientes" EntitySet="tbTipoClientes" />
+            <End Role="tbClientes" EntitySet="tbClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbFactura_tbClientes" Association="dbSISSODINAModel.FK_tbFactura_tbClientes">
+            <End Role="tbClientes" EntitySet="tbClientes" />
+            <End Role="tbDocumento" EntitySet="tbDocumento" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbAcompanamiento">
           <Key>
@@ -2279,42 +2282,6 @@
           <Property Name="usuario_crea" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tbActividades" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbActividades" FromRole="tbClienteActividad" ToRole="tbActividades" />
           <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" FromRole="tbClienteActividad" ToRole="tbClientes" />
-        </EntityType>
-        <EntityType Name="tbClientes">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="tipoId" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="tipoId" Type="Int32" Nullable="false" />
-          <Property Name="tipoCliente" Type="Int32" Nullable="false" />
-          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
-          <Property Name="estado" Type="Boolean" Nullable="false" />
-          <Property Name="precioAplicar" Type="Int32" Nullable="false" />
-          <Property Name="descuentoMax" Type="Int32" Nullable="false" />
-          <Property Name="creditoMax" Type="Int32" Nullable="false" />
-          <Property Name="plazoCreditoMax" Type="Int32" Nullable="false" />
-          <Property Name="nombreTributario" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="encargadoConta" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="correoElectConta" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="exonera" Type="Boolean" />
-          <Property Name="idExonercion" Type="Int32" />
-          <Property Name="numeroDocumentoExo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="institucionExo" Type="String" MaxLength="160" FixedLength="true" Unicode="true" />
-          <Property Name="FechaEmisionExo" Type="DateTime" Precision="3" />
-          <Property Name="porcExo" Type="Int32" />
-          <Property Name="fecha_crea" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fecha_ult_mod" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario_crea" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="usuario_ult_crea" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="contacto" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="contribuyente" Type="Boolean" Nullable="false" />
-          <Property Name="aplicaDescAuto" Type="Boolean" />
-          <NavigationProperty Name="tbClienteActividad" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" FromRole="tbClientes" ToRole="tbClienteActividad" />
-          <NavigationProperty Name="tbExoneraciones" Relationship="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" FromRole="tbClientes" ToRole="tbExoneraciones" />
-          <NavigationProperty Name="tbPersona" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbClientes" ToRole="tbPersona" />
-          <NavigationProperty Name="tbTipoClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" FromRole="tbClientes" ToRole="tbTipoClientes" />
-          <NavigationProperty Name="tbDocumento" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbClientes" ToRole="tbDocumento" />
         </EntityType>
         <EntityType Name="tbCompras">
           <Key>
@@ -2535,7 +2502,6 @@
           <Property Name="estadoCorreo" Type="Int32" />
           <Property Name="codigoActividadReceptor" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbActividades" Relationship="dbSISSODINAModel.FK_tbDocumento_tbActividad" FromRole="tbDocumento" ToRole="tbActividades" />
-          <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbDocumento" ToRole="tbClientes" />
           <NavigationProperty Name="tbDetalleDocumento" Relationship="dbSISSODINAModel.FK_tbDetalleDocumento_tbDocumento" FromRole="tbDocumento" ToRole="tbDetalleDocumento" />
           <NavigationProperty Name="tbPagos" Relationship="dbSISSODINAModel.FK_tbAbonos_tbDocumento" FromRole="tbDocumento" ToRole="tbPagos" />
           <NavigationProperty Name="tbEmpresa" Relationship="dbSISSODINAModel.FK_tbDocumento_tbEmpresa" FromRole="tbDocumento" ToRole="tbEmpresa" />
@@ -2543,6 +2509,7 @@
           <NavigationProperty Name="tbTipoMoneda" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoMoneda" FromRole="tbDocumento" ToRole="tbTipoMoneda" />
           <NavigationProperty Name="tbTipoPago" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoPago" FromRole="tbDocumento" ToRole="tbTipoPago" />
           <NavigationProperty Name="tbTipoVenta" Relationship="dbSISSODINAModel.FK_tbDocumento_tbTipoVenta" FromRole="tbDocumento" ToRole="tbTipoVenta" />
+          <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbDocumento" ToRole="tbClientes" />
         </EntityType>
         <EntityType Name="tbDocumentosPendiente">
           <Key>
@@ -2788,12 +2755,12 @@
           <Property Name="barrio" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
           <Property Name="otrasSenas" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="tbBarrios" Relationship="dbSISSODINAModel.FK_tbPersona_tbBarrios" FromRole="tbPersona" ToRole="tbBarrios" />
-          <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbPersona" ToRole="tbClientes" />
           <NavigationProperty Name="tbEmpleado" Relationship="dbSISSODINAModel.FK_tbEmpleado_tbPersona" FromRole="tbPersona" ToRole="tbEmpleado" />
           <NavigationProperty Name="tbEmpresa" Relationship="dbSISSODINAModel.FK_tbEmpresa_tbPersona" FromRole="tbPersona" ToRole="tbEmpresa" />
           <NavigationProperty Name="tbTipoId" Relationship="dbSISSODINAModel.FK_tbPersona_tbTipoId" FromRole="tbPersona" ToRole="tbTipoId" />
           <NavigationProperty Name="tbProveedores" Relationship="dbSISSODINAModel.FK_tbProveedores_tbPersona" FromRole="tbPersona" ToRole="tbProveedores" />
           <NavigationProperty Name="tbUsuarios" Relationship="dbSISSODINAModel.FK_tbUsuarios_tbPersona" FromRole="tbPersona" ToRole="tbUsuarios" />
+          <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbPersona" ToRole="tbClientes" />
         </EntityType>
         <EntityType Name="tbPersonasTribunalS">
           <Key>
@@ -3244,74 +3211,6 @@
             </Principal>
             <Dependent Role="tbRequerimientos">
               <PropertyRef Name="idCategoriaReq" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbClienteActividad_tbClientes">
-          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="dbSISSODINAModel.tbClienteActividad" Role="tbClienteActividad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbClientes">
-              <PropertyRef Name="id" />
-              <PropertyRef Name="tipoId" />
-            </Principal>
-            <Dependent Role="tbClienteActividad">
-              <PropertyRef Name="idCliente" />
-              <PropertyRef Name="tipoIdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbClientes_tbExoneraciones">
-          <End Type="dbSISSODINAModel.tbExoneraciones" Role="tbExoneraciones" Multiplicity="0..1" />
-          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbExoneraciones">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="tbClientes">
-              <PropertyRef Name="idExonercion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbClientes_tbPersona">
-          <End Type="dbSISSODINAModel.tbPersona" Role="tbPersona" Multiplicity="1" />
-          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="tbPersona">
-              <PropertyRef Name="tipoId" />
-              <PropertyRef Name="identificacion" />
-            </Principal>
-            <Dependent Role="tbClientes">
-              <PropertyRef Name="tipoId" />
-              <PropertyRef Name="id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbClientes_tbTipoClientes">
-          <End Type="dbSISSODINAModel.tbTipoClientes" Role="tbTipoClientes" Multiplicity="1" />
-          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbTipoClientes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="tbClientes">
-              <PropertyRef Name="tipoCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbFactura_tbClientes">
-          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="0..1" />
-          <End Type="dbSISSODINAModel.tbDocumento" Role="tbDocumento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbClientes">
-              <PropertyRef Name="id" />
-              <PropertyRef Name="tipoId" />
-            </Principal>
-            <Dependent Role="tbDocumento">
-              <PropertyRef Name="idCliente" />
-              <PropertyRef Name="tipoIdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3821,6 +3720,113 @@
           <End Type="dbSISSODINAModel.tbAcompanamiento" Role="tbAcompanamiento" Multiplicity="*" />
           <End Type="dbSISSODINAModel.tbProducto" Role="tbProducto" Multiplicity="*" />
         </Association>
+        <EntityType Name="tbClientes">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="tipoId" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="tipoId" Type="Int32" Nullable="false" />
+          <Property Name="tipoCliente" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="precioAplicar" Type="Int32" Nullable="false" />
+          <Property Name="descuentoMax" Type="Int32" Nullable="false" />
+          <Property Name="creditoMax" Type="Int32" Nullable="false" />
+          <Property Name="plazoCreditoMax" Type="Int32" Nullable="false" />
+          <Property Name="nombreTributario" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="encargadoConta" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="correoElectConta" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="exonera" Type="Boolean" />
+          <Property Name="idExonercion" Type="Int32" />
+          <Property Name="numeroDocumentoExo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="institucionExo" Type="String" MaxLength="160" FixedLength="true" Unicode="true" />
+          <Property Name="FechaEmisionExo" Type="DateTime" Precision="3" />
+          <Property Name="porcExo" Type="Int32" />
+          <Property Name="fecha_crea" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_ult_mod" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario_crea" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="usuario_ult_crea" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="contacto" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="contribuyente" Type="Boolean" Nullable="false" />
+          <Property Name="aplicaDescAuto" Type="Boolean" />
+          <Property Name="fechaVencExo" Type="DateTime" Precision="0" />
+          <Property Name="incisoExo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="articuloExo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbClienteActividad" Relationship="dbSISSODINAModel.FK_tbClienteActividad_tbClientes" FromRole="tbClientes" ToRole="tbClienteActividad" />
+          <NavigationProperty Name="tbExoneraciones" Relationship="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" FromRole="tbClientes" ToRole="tbExoneraciones" />
+          <NavigationProperty Name="tbPersona" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbClientes" ToRole="tbPersona" />
+          <NavigationProperty Name="tbTipoClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" FromRole="tbClientes" ToRole="tbTipoClientes" />
+          <NavigationProperty Name="tbDocumento" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbClientes" ToRole="tbDocumento" />
+        </EntityType>
+        <Association Name="FK_tbClienteActividad_tbClientes">
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbSISSODINAModel.tbClienteActividad" Role="tbClienteActividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbClientes">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="tipoId" />
+            </Principal>
+            <Dependent Role="tbClienteActividad">
+              <PropertyRef Name="idCliente" />
+              <PropertyRef Name="tipoIdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbClientes_tbExoneraciones">
+          <End Type="dbSISSODINAModel.tbExoneraciones" Role="tbExoneraciones" Multiplicity="0..1" />
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbExoneraciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbClientes">
+              <PropertyRef Name="idExonercion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbClientes_tbPersona">
+          <End Type="dbSISSODINAModel.tbPersona" Role="tbPersona" Multiplicity="1" />
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tbPersona">
+              <PropertyRef Name="tipoId" />
+              <PropertyRef Name="identificacion" />
+            </Principal>
+            <Dependent Role="tbClientes">
+              <PropertyRef Name="tipoId" />
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbClientes_tbTipoClientes">
+          <End Type="dbSISSODINAModel.tbTipoClientes" Role="tbTipoClientes" Multiplicity="1" />
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTipoClientes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbClientes">
+              <PropertyRef Name="tipoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbFactura_tbClientes">
+          <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="0..1" />
+          <End Type="dbSISSODINAModel.tbDocumento" Role="tbDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbClientes">
+              <PropertyRef Name="id" />
+              <PropertyRef Name="tipoId" />
+            </Principal>
+            <Dependent Role="tbDocumento">
+              <PropertyRef Name="idCliente" />
+              <PropertyRef Name="tipoIdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3925,37 +3931,6 @@
                 <ScalarProperty Name="codigoActividad" ColumnName="codigoActividad" />
                 <ScalarProperty Name="tipoIdCliente" ColumnName="tipoIdCliente" />
                 <ScalarProperty Name="idCliente" ColumnName="idCliente" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbClientes">
-            <EntityTypeMapping TypeName="dbSISSODINAModel.tbClientes">
-              <MappingFragment StoreEntitySet="tbClientes">
-                <ScalarProperty Name="aplicaDescAuto" ColumnName="aplicaDescAuto" />
-                <ScalarProperty Name="contribuyente" ColumnName="contribuyente" />
-                <ScalarProperty Name="contacto" ColumnName="contacto" />
-                <ScalarProperty Name="usuario_ult_crea" ColumnName="usuario_ult_crea" />
-                <ScalarProperty Name="usuario_crea" ColumnName="usuario_crea" />
-                <ScalarProperty Name="fecha_ult_mod" ColumnName="fecha_ult_mod" />
-                <ScalarProperty Name="fecha_crea" ColumnName="fecha_crea" />
-                <ScalarProperty Name="porcExo" ColumnName="porcExo" />
-                <ScalarProperty Name="FechaEmisionExo" ColumnName="FechaEmisionExo" />
-                <ScalarProperty Name="institucionExo" ColumnName="institucionExo" />
-                <ScalarProperty Name="numeroDocumentoExo" ColumnName="numeroDocumentoExo" />
-                <ScalarProperty Name="idExonercion" ColumnName="idExonercion" />
-                <ScalarProperty Name="exonera" ColumnName="exonera" />
-                <ScalarProperty Name="correoElectConta" ColumnName="correoElectConta" />
-                <ScalarProperty Name="encargadoConta" ColumnName="encargadoConta" />
-                <ScalarProperty Name="nombreTributario" ColumnName="nombreTributario" />
-                <ScalarProperty Name="plazoCreditoMax" ColumnName="plazoCreditoMax" />
-                <ScalarProperty Name="creditoMax" ColumnName="creditoMax" />
-                <ScalarProperty Name="descuentoMax" ColumnName="descuentoMax" />
-                <ScalarProperty Name="precioAplicar" ColumnName="precioAplicar" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="tipoCliente" ColumnName="tipoCliente" />
-                <ScalarProperty Name="tipoId" ColumnName="tipoId" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4685,6 +4660,40 @@
               <ScalarProperty Name="id" ColumnName="idAcomp" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="tbClientes">
+            <EntityTypeMapping TypeName="dbSISSODINAModel.tbClientes">
+              <MappingFragment StoreEntitySet="tbClientes">
+                <ScalarProperty Name="articuloExo" ColumnName="articuloExo" />
+                <ScalarProperty Name="incisoExo" ColumnName="incisoExo" />
+                <ScalarProperty Name="fechaVencExo" ColumnName="fechaVencExo" />
+                <ScalarProperty Name="aplicaDescAuto" ColumnName="aplicaDescAuto" />
+                <ScalarProperty Name="contribuyente" ColumnName="contribuyente" />
+                <ScalarProperty Name="contacto" ColumnName="contacto" />
+                <ScalarProperty Name="usuario_ult_crea" ColumnName="usuario_ult_crea" />
+                <ScalarProperty Name="usuario_crea" ColumnName="usuario_crea" />
+                <ScalarProperty Name="fecha_ult_mod" ColumnName="fecha_ult_mod" />
+                <ScalarProperty Name="fecha_crea" ColumnName="fecha_crea" />
+                <ScalarProperty Name="porcExo" ColumnName="porcExo" />
+                <ScalarProperty Name="FechaEmisionExo" ColumnName="FechaEmisionExo" />
+                <ScalarProperty Name="institucionExo" ColumnName="institucionExo" />
+                <ScalarProperty Name="numeroDocumentoExo" ColumnName="numeroDocumentoExo" />
+                <ScalarProperty Name="idExonercion" ColumnName="idExonercion" />
+                <ScalarProperty Name="exonera" ColumnName="exonera" />
+                <ScalarProperty Name="correoElectConta" ColumnName="correoElectConta" />
+                <ScalarProperty Name="encargadoConta" ColumnName="encargadoConta" />
+                <ScalarProperty Name="nombreTributario" ColumnName="nombreTributario" />
+                <ScalarProperty Name="plazoCreditoMax" ColumnName="plazoCreditoMax" />
+                <ScalarProperty Name="creditoMax" ColumnName="creditoMax" />
+                <ScalarProperty Name="descuentoMax" ColumnName="descuentoMax" />
+                <ScalarProperty Name="precioAplicar" ColumnName="precioAplicar" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="tipoCliente" ColumnName="tipoCliente" />
+                <ScalarProperty Name="tipoId" ColumnName="tipoId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4702,7 +4711,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -33,11 +33,11 @@ namespace EntityLayer
         public string otrasSenas { get; set; }
     
         public virtual tbBarrios tbBarrios { get; set; }
-        public virtual tbClientes tbClientes { get; set; }
         public virtual tbEmpleado tbEmpleado { get; set; }
         public virtual tbEmpresa tbEmpresa { get; set; }
         public virtual tbTipoId tbTipoId { get; set; }
         public virtual tbProveedores tbProveedores { get; set; }
         public virtual tbUsuarios tbUsuarios { get; set; }
+        public virtual tbClientes tbClientes { get; set; }
     }
 }

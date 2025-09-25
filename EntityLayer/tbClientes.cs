@@ -46,6 +46,9 @@ namespace EntityLayer
         public string contacto { get; set; }
         public bool contribuyente { get; set; }
         public Nullable<bool> aplicaDescAuto { get; set; }
+        public Nullable<System.DateTime> fechaVencExo { get; set; }
+        public string incisoExo { get; set; }
+        public string articuloExo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }
