@@ -50,10 +50,11 @@ namespace CommonLayer
                 return def ?? DateTime.Now;
             }
 
+
             // Instancia del resultado
             var documento = new tbCompras
             {
-                reporteElectronico = false,
+                reporteElectronico = (bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().facturacionElectronica,
                 estado = true,
                 fecha = Utility.getDate(),
                 fechaReporte = Utility.getDate(),
@@ -64,7 +65,9 @@ namespace CommonLayer
                 sucursal = Global.Configuracion.sucursal,
                 caja = Global.Configuracion.caja,
                 codigoActividadEmpresa = Global.actividadEconomic.CodActividad,
-                tipoPago = 1 // Valor por defecto, se sobreescribe si hay datos
+                tipoPago = 1, // Valor por defecto, se sobreescribe si hay datos
+                codigoMensaje = ((bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().facturacionElectronica ? 1 : 0),
+                
 
             };
 

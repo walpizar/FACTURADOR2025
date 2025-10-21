@@ -15,6 +15,8 @@ namespace FacturacionElectronicaLayer.ClasesDatos
         public int valorExo { get; set; }
         public string institucionExo { get; set; }
         public string docExoneracion { get; set; }
+        public string articulo { get; set; }
+        public string inciso { get; set; }
 
 
 
@@ -25,7 +27,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                         string pTelefono_CodigoPais, int pTelefono_Numero,
                         string pCorreoElectronico, string pTipoExo,
                         DateTime pFechaEmisionExo, string pInstitucionExo,
-                        int pValorExo, string pDocExo)
+                        int pValorExo, string pDocExo, string pArticulo, string pInciso)
         {
             Nombre = pNombre;
             Identificacion_Tipo = pIdentificacion_Tipo;
@@ -38,6 +40,9 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             valorExo = pValorExo;
             institucionExo = pInstitucionExo;
             docExoneracion = pDocExo;
+            articulo=pArticulo;
+            inciso=pInciso; 
+
         }
     }
 

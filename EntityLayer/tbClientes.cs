@@ -49,6 +49,7 @@ namespace EntityLayer
         public Nullable<System.DateTime> fechaVencExo { get; set; }
         public string incisoExo { get; set; }
         public string articuloExo { get; set; }
+        public string codigoActDefault { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }

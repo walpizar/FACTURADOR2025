@@ -3,11 +3,14 @@ using CommonLayer;
 using CommonLayer.DTO;
 using CommonLayer.Exceptions.BusisnessExceptions;
 using CommonLayer.Exceptions.DataExceptions;
+using DataLayer;
 using EntityLayer;
 using FacturacionElectronicaLayer.Clases;
+using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CommonLayer.Enums;
 
@@ -192,6 +195,9 @@ namespace PresentationLayer
 
                 txtPlazoMaxInt.Text = "0";
             }
+
+
+
             if (chkAplicaExo.Checked)
             {
 
@@ -210,10 +216,10 @@ namespace PresentationLayer
                     return false;
 
                 }
-                if (txtInstitucionExo.Text == string.Empty)
+                if (cboInstitucionExo.Text == string.Empty)
                 {
                     MessageBox.Show("Debe indicar la institución que emitió la exoneración");
-                    txtInstitucionExo.Focus();
+                    cboInstitucionExo.Focus();
                     return false;
 
                 }
@@ -234,7 +240,18 @@ namespace PresentationLayer
 
             }
 
-            return true;
+            if (chkContribuyente.Checked)
+            {
+                if (cboActividadEconomica.Text == string.Empty)
+                {
+                    MessageBox.Show("Debe indicar la actividad económica del cliente");
+                    cboActividadEconomica.Focus();
+                    return false;
+
+                }
+            }
+
+                return true;
         }
 
 
@@ -305,7 +322,7 @@ namespace PresentationLayer
 
                     if (chkAplicaExo.Checked)
                     {
-                        cliente.institucionExo = txtInstitucionExo.Text.ToUpper().Trim();
+                        cliente.institucionExo = cboInstitucionExo.SelectedValue.ToString();
                         if (cboExoneracion.Text != string.Empty)
                         {
                             cliente.idExonercion = (int)cboExoneracion.SelectedValue;
@@ -316,9 +333,21 @@ namespace PresentationLayer
                         }
                         cliente.FechaEmisionExo = dtpFechaEmisionExo.Value;
                         cliente.numeroDocumentoExo = txtDocExo.Text;
-                        cliente.porcExo = int.Parse(cboPorcExo.Text);
+                        cliente.porcExo =
+                            !string.IsNullOrWhiteSpace(cboPorcExo.Text) && int.TryParse(cboPorcExo.Text, out int porcExo)
+                            ? porcExo
+                            : (int?)null; cliente.fechaVencExo = dtpVencimiento.Value;
+                        cliente.incisoExo = string.IsNullOrWhiteSpace(txtInciso.Text) ? null : txtInciso.Text;
+                        cliente.articuloExo = string.IsNullOrWhiteSpace(txtArticulo.Text) ? null : txtArticulo.Text;
                     }
+                    cliente.contribuyente = chkContribuyente.Checked;
 
+                    if (chkContribuyente.Checked)
+                    {
+                        cliente.codigoActDefault= cboActividadEconomica.SelectedValue.ToString().Trim();
+
+
+                    }
 
                     cliente.correoElectConta = txtCorreoContabilidad.Text;
                     cliente.creditoMax = int.Parse(txtCreditoMaxInt.Text);
@@ -648,24 +677,82 @@ namespace PresentationLayer
                             cboBarrios.SelectedValue = clienteGlobal.tbPersona.barrio;
                             cboPrecioAplicar.SelectedIndex = clienteGlobal.precioAplicar - 1;
                             chkAplicaExo.Checked = (bool)clienteGlobal.exonera;
-                            if (chkAplicaExo.Checked)
+                            chkContribuyente.Checked = (bool)clienteGlobal.contribuyente;
+                            if (chkContribuyente.Checked)
+                            {
+                                gbxAct.Enabled = true;
+                                cargarActividades();
+                                cboActividadEconomica.SelectedValue= clienteGlobal.codigoActDefault;
+
+
+                            }
+                            else
+                            {
+                                gbxAct.Enabled = false;
+                                cboActividadEconomica.DataSource = null;
+                                cboActividadEconomica.Items.Clear();
+                            }
+
+                                if (chkAplicaExo.Checked)
                             {
                                 gbxExoneracion.Enabled = true;
-                                txtInstitucionExo.Text = clienteGlobal.institucionExo.ToUpper().Trim();
-                                cboExoneracion.SelectedValue = clienteGlobal.idExonercion;
-                                dtpFechaEmisionExo.Value = clienteGlobal.FechaEmisionExo.Value;
-                                txtDocExo.Text = clienteGlobal.numeroDocumentoExo.Trim();
-                                cboPorcExo.SelectedItem = clienteGlobal.porcExo.ToString();
+                                // --- Institución (string tipo "04") ---
+                                var instExo = (clienteGlobal.institucionExo ?? string.Empty).Trim().ToUpper();
+                                if (!string.IsNullOrEmpty(instExo))
+                                {
+                                    cboInstitucionExo.SelectedValue = instExo;
+                                    if (cboInstitucionExo.SelectedIndex == -1) // valor no existe en el DataSource
+                                        cboInstitucionExo.SelectedIndex = -1;  // sin selección
+                                }
+                                else
+                                {
+                                    cboInstitucionExo.SelectedIndex = -1;      // sin selección
+                                }
+
+                                // --- Id Exoneración (entero; por defecto 0) ---
+                                var idExon = clienteGlobal.idExonercion ?? 0;  // enteros -> 0 si null
+                                if (idExon != 0)
+                                {
+                                    cboExoneracion.SelectedValue = idExon;
+                                    if (cboExoneracion.SelectedIndex == -1)    // no existe en el DataSource
+                                        cboExoneracion.SelectedIndex = -1;
+                                }
+                                else
+                                {
+                                    cboExoneracion.SelectedIndex = -1;
+                                }
+
+                                // --- Fechas (si null -> Now) ---
+                                dtpFechaEmisionExo.Value = clienteGlobal.FechaEmisionExo ?? DateTime.Now;
+                                dtpVencimiento.Value = clienteGlobal.fechaVencExo ?? DateTime.Now;
+
+                                // --- Documento exoneración (string) ---
+                                txtDocExo.Text = (clienteGlobal.numeroDocumentoExo ?? string.Empty).Trim();
+
+                                // --- Porcentaje Exoneración (entero; por defecto 0) ---
+                                // Si el ComboBox contiene ítems de texto "0","1","2","13", etc.
+                                var porcExo = (clienteGlobal.porcExo ?? 0).ToString();
+                                if (cboPorcExo.Items.Contains(porcExo))
+                                    cboPorcExo.SelectedItem = porcExo;
+                                else
+                                    cboPorcExo.SelectedIndex = -1;
+
+                                // --- Artículo e Inciso (strings) ---
+                                txtArticulo.Text = (clienteGlobal.articuloExo ?? string.Empty).Trim();
+                                txtInciso.Text = (clienteGlobal.incisoExo ?? string.Empty).Trim();
 
                             }
                             else
                             {
                                 gbxExoneracion.Enabled = false;
-                                txtInstitucionExo.Text = string.Empty;
+                                cboInstitucionExo.SelectedIndex = 0;
                                 cboExoneracion.ResetText();
                                 cboPorcExo.SelectedIndex = 0;
                                 dtpFechaEmisionExo.ResetText();
+                                dtpVencimiento.ResetText();
                                 txtDocExo.Text = string.Empty;
+                                txtArticulo.Text = string.Empty;
+                                txtInciso.Text = string.Empty;
                             }
 
 
@@ -752,21 +839,35 @@ namespace PresentationLayer
 
 
                     clienteGlobal.exonera = chkAplicaExo.Checked;
-                    if ((bool)clienteGlobal.exonera)
+                    if (chkAplicaExo.Checked)
                     {
-                        clienteGlobal.institucionExo = txtInstitucionExo.Text.ToUpper().Trim();
+                        clienteGlobal.institucionExo = cboInstitucionExo.SelectedValue.ToString();
                         if (cboExoneracion.Text != string.Empty)
                         {
                             clienteGlobal.idExonercion = (int)cboExoneracion.SelectedValue;
-
+                            //if (cliente.idExonercion==null)
+                            //{
+                            //    cliente.idExonercion = 3;
+                            //}
                         }
                         clienteGlobal.FechaEmisionExo = dtpFechaEmisionExo.Value;
-                        clienteGlobal.numeroDocumentoExo = txtDocExo.Text.Trim();
-                        clienteGlobal.porcExo = int.Parse(cboPorcExo.Text);
-
+                        clienteGlobal.numeroDocumentoExo = txtDocExo.Text;
+                        clienteGlobal.porcExo =
+                            !string.IsNullOrWhiteSpace(cboPorcExo.Text) && int.TryParse(cboPorcExo.Text, out int porcExo)
+                            ? porcExo
+                            : (int?)null; clienteGlobal.fechaVencExo = dtpVencimiento.Value;
+                        clienteGlobal.incisoExo = string.IsNullOrWhiteSpace(txtInciso.Text) ? null : txtInciso.Text;
+                        clienteGlobal.articuloExo = string.IsNullOrWhiteSpace(txtArticulo.Text) ? null : txtArticulo.Text;
                     }
 
+                    clienteGlobal.contribuyente = chkContribuyente.Checked;
 
+                    if (chkContribuyente.Checked)
+                    {
+                        clienteGlobal.codigoActDefault = cboActividadEconomica.SelectedValue.ToString().Trim();
+
+
+                    }
 
 
                     clienteGlobal.correoElectConta = txtCorreoContabilidad.Text.Trim();
@@ -830,6 +931,8 @@ namespace PresentationLayer
             txtCreditoMaxInt.Text = "100000";
             txtPlazoMaxInt.Text = Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().plazoMaximoCredito.ToString();
             chkDescAuto.Checked = false;
+            cboActividadEconomica.DataSource = null;
+            cboActividadEconomica.Items.Clear();
         }
 
         private void CargarCombos()
@@ -851,7 +954,17 @@ namespace PresentationLayer
             cboExoneracion.DisplayMember = "nombre";
             cboExoneracion.DataSource = exoneraIns.getListaExoneraciones();
 
-            cboInstitucionExo.DataSource = Enum.GetValues(typeof(Enums.InstitucionExoneracion));
+            cboInstitucionExo.DataSource = Enum.GetValues(typeof(InstitucionExoneracion))
+                .Cast<InstitucionExoneracion>()
+                .Select(e => new
+                {
+                    Value = ((int)e).ToString("00"), // "01", "02", "03", "04", etc.
+                    Text = e.ToString()              // Nombre del enum (MinisterioHacienda, etc.)
+                })
+                .ToList();
+
+            cboInstitucionExo.DisplayMember = "Text";
+            cboInstitucionExo.ValueMember = "Value";
         }
 
         private void tlsMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -1046,8 +1159,11 @@ namespace PresentationLayer
             {
                 gbxExoneracion.Enabled = false;
                 cboExoneracion.SelectedIndex = 0;
-                txtInstitucionExo.Text = string.Empty;
+                cboInstitucionExo.SelectedIndex = 0;
                 dtpFechaEmisionExo.ResetText();
+                txtInciso.Text = string.Empty;
+                txtArticulo.Text = string.Empty;
+                dtpVencimiento.ResetText();
 
             }
         }
@@ -1085,16 +1201,26 @@ namespace PresentationLayer
                     if(comunicacion.exoneracion != null)
                     {
                         txtDocExo.Text = comunicacion.exoneracion.numeroDocumento;
-                        txtInstitucionExo.Text= comunicacion.exoneracion.nombreInstitucion.Trim();
+                        cboInstitucionExo.Text= comunicacion.exoneracion.nombreInstitucion.Trim();
                         dtpFechaEmisionExo.Text = comunicacion.exoneracion.fechaEmision;
                         dtpVencimiento.Text = comunicacion.exoneracion.fechaVencimiento;
                         cboPorcExo.Text = comunicacion.exoneracion.porcentajeExoneracion;
                         cboExoneracion.SelectedValue = int.Parse(comunicacion.exoneracion.tipoDoc.codigo);
+
+                        cboInstitucionExo.SelectedValue = comunicacion.exoneracion.codigoInstitucion;
+                        cboExoneracion.SelectedValue = int.Parse(comunicacion.exoneracion.tipoDoc.codigo);
+
+
+
+
+
+
+
                     }
                     else
                     {
                         txtDocExo.Text = string.Empty;
-                        txtInstitucionExo.Text = string.Empty;
+                      //  txtInstitucionExo.Text = string.Empty;
                         dtpFechaEmisionExo.Text = string.Empty;
                         dtpVencimiento.Text = string.Empty;
                         cboPorcExo.Text = "13";
@@ -1120,6 +1246,53 @@ namespace PresentationLayer
         private void btnObtnerExo_Click(object sender, EventArgs e)
         {
             obtenerDatosExoneracion();
+        }
+
+        private void buscarActividad_Click(object sender, EventArgs e)
+        {
+            cargarActividades();
+        }
+
+        private async Task cargarActividades()
+        {
+            try
+            {
+                cboActividadEconomica.DataSource = null;
+                cboActividadEconomica.Items.Clear();
+
+                var id = (int)cbotipoId.SelectedValue == (int)Enums.TipoId.Fisica ? mskidentificacion.Text.Trim() : txtIdentificacion.Text.Trim();
+               
+                if (id != null)
+                {
+                    List<Actividad> lista = await Utility.obtnerActividadesPorCliente(id);
+                    if (lista != null && lista.Count > 0)
+                    {
+                        cboActividadEconomica.DataSource = lista;
+                        cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
+                        cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
+                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    //}
+
+
+
+                }
+            }
+            catch (Exception)
+            {
+                cboActividadEconomica.Items.Clear();
+                cboActividadEconomica.Text = "";
+
+                MessageBox.Show("No se logró consultar las actividades económicas del cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+        }
+
+        private void chkContribuyente_CheckedChanged(object sender, EventArgs e)
+        {
+            gbxAct.Enabled = chkContribuyente.Checked;
         }
     }
 }

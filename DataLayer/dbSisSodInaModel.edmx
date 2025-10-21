@@ -136,6 +136,7 @@
           <Property Name="fechaVencExo" Type="date" />
           <Property Name="incisoExo" Type="nvarchar" MaxLength="50" />
           <Property Name="articuloExo" Type="nvarchar" MaxLength="50" />
+          <Property Name="codigoActDefault" Type="char" MaxLength="10" />
         </EntityType>
         <EntityType Name="tbCompras">
           <Key>
@@ -189,6 +190,9 @@
           <Property Name="caja" Type="int" />
           <Property Name="cambiarColon" Type="bit" />
           <Property Name="nombreProveedor" Type="varchar" MaxLength="100" />
+          <Property Name="codigoMensaje" Type="int" />
+          <Property Name="EstadoMensaje" Type="varchar" MaxLength="9" />
+          <Property Name="DetalleMensaje" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tbDetalleCompras">
           <Key>
@@ -414,7 +418,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="nombre" Type="nchar" MaxLength="30" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="descripcion" Type="nchar" MaxLength="500" />
           <Property Name="valor" Type="int" />
         </EntityType>
@@ -537,6 +541,7 @@
           <Property Name="promociones" Type="bit" />
           <Property Name="etiquetas" Type="bit" />
           <Property Name="validaCabys" Type="bit" />
+          <Property Name="inventarioNegativo" Type="bit" />
         </EntityType>
         <EntityType Name="tbPermisos">
           <Key>
@@ -1407,24 +1412,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbPersona_tbBarrios">
-          <End Role="tbBarrios" Type="Self.tbBarrios" Multiplicity="0..1" />
-          <End Role="tbPersona" Type="Self.tbPersona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbBarrios">
-              <PropertyRef Name="Provincia" />
-              <PropertyRef Name="canton" />
-              <PropertyRef Name="distrito" />
-              <PropertyRef Name="barrio" />
-            </Principal>
-            <Dependent Role="tbPersona">
-              <PropertyRef Name="provincia" />
-              <PropertyRef Name="canton" />
-              <PropertyRef Name="distrito" />
-              <PropertyRef Name="barrio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbPersona_tbTipoId">
           <End Role="tbTipoId" Type="Self.tbTipoId" Multiplicity="1" />
           <End Role="tbPersona" Type="Self.tbPersona" Multiplicity="*" />
@@ -1828,10 +1815,6 @@
           <AssociationSet Name="FK_tbPermisos_tbRoles" Association="Self.FK_tbPermisos_tbRoles">
             <End Role="tbRoles" EntitySet="tbRoles" />
             <End Role="tbPermisos" EntitySet="tbPermisos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPersona_tbBarrios" Association="Self.FK_tbPersona_tbBarrios">
-            <End Role="tbBarrios" EntitySet="tbBarrios" />
-            <End Role="tbPersona" EntitySet="tbPersona" />
           </AssociationSet>
           <AssociationSet Name="FK_tbPersona_tbTipoId" Association="Self.FK_tbPersona_tbTipoId">
             <End Role="tbTipoId" EntitySet="tbTipoId" />
@@ -2340,6 +2323,9 @@
           <NavigationProperty Name="tbTipoPago" Relationship="dbSISSODINAModel.FK_tbCompras_tbTipoPago" FromRole="tbCompras" ToRole="tbTipoPago" />
           <NavigationProperty Name="tbTipoVenta" Relationship="dbSISSODINAModel.FK_tbCompras_tbTipoVenta" FromRole="tbCompras" ToRole="tbTipoVenta" />
           <NavigationProperty Name="tbDetalleCompras" Relationship="dbSISSODINAModel.FK_tbDetalleCompras_tbCompras" FromRole="tbCompras" ToRole="tbDetalleCompras" />
+          <Property Name="codigoMensaje" Type="Int32" />
+          <Property Name="EstadoMensaje" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="DetalleMensaje" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tbDetalleCompras">
           <Key>
@@ -2597,7 +2583,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
           <Property Name="valor" Type="Int32" />
           <NavigationProperty Name="tbClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbExoneraciones" FromRole="tbExoneraciones" ToRole="tbClientes" />
@@ -2731,6 +2717,7 @@
           <Property Name="etiquetas" Type="Boolean" />
           <Property Name="validaCabys" Type="Boolean" />
           <NavigationProperty Name="tbEmpresa" Relationship="dbSISSODINAModel.FK_tbParametrosEmpresa_tbEmpresa" FromRole="tbParametrosEmpresa" ToRole="tbEmpresa" />
+          <Property Name="inventarioNegativo" Type="Boolean" />
         </EntityType>
         <EntityType Name="tbPersona">
           <Key>
@@ -3758,6 +3745,7 @@
           <NavigationProperty Name="tbPersona" Relationship="dbSISSODINAModel.FK_tbClientes_tbPersona" FromRole="tbClientes" ToRole="tbPersona" />
           <NavigationProperty Name="tbTipoClientes" Relationship="dbSISSODINAModel.FK_tbClientes_tbTipoClientes" FromRole="tbClientes" ToRole="tbTipoClientes" />
           <NavigationProperty Name="tbDocumento" Relationship="dbSISSODINAModel.FK_tbFactura_tbClientes" FromRole="tbClientes" ToRole="tbDocumento" />
+          <Property Name="codigoActDefault" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_tbClienteActividad_tbClientes">
           <End Type="dbSISSODINAModel.tbClientes" Role="tbClientes" Multiplicity="1">
@@ -3937,6 +3925,9 @@
           <EntitySetMapping Name="tbCompras">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbCompras">
               <MappingFragment StoreEntitySet="tbCompras">
+                <ScalarProperty Name="DetalleMensaje" ColumnName="DetalleMensaje" />
+                <ScalarProperty Name="EstadoMensaje" ColumnName="EstadoMensaje" />
+                <ScalarProperty Name="codigoMensaje" ColumnName="codigoMensaje" />
                 <ScalarProperty Name="nombreProveedor" ColumnName="nombreProveedor" />
                 <ScalarProperty Name="cambiarColon" ColumnName="cambiarColon" />
                 <ScalarProperty Name="caja" ColumnName="caja" />
@@ -4306,6 +4297,7 @@
           <EntitySetMapping Name="tbParametrosEmpresa">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbParametrosEmpresa">
               <MappingFragment StoreEntitySet="tbParametrosEmpresa">
+                <ScalarProperty Name="inventarioNegativo" ColumnName="inventarioNegativo" />
                 <ScalarProperty Name="validaCabys" ColumnName="validaCabys" />
                 <ScalarProperty Name="etiquetas" ColumnName="etiquetas" />
                 <ScalarProperty Name="promociones" ColumnName="promociones" />
@@ -4663,6 +4655,7 @@
           <EntitySetMapping Name="tbClientes">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbClientes">
               <MappingFragment StoreEntitySet="tbClientes">
+                <ScalarProperty Name="codigoActDefault" ColumnName="codigoActDefault" />
                 <ScalarProperty Name="articuloExo" ColumnName="articuloExo" />
                 <ScalarProperty Name="incisoExo" ColumnName="incisoExo" />
                 <ScalarProperty Name="fechaVencExo" ColumnName="fechaVencExo" />
@@ -4711,7 +4704,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

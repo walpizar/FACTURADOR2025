@@ -1790,9 +1790,21 @@ namespace PresentationLayer
 
             documento.codigoActividad = Global.actividadEconomic.CodActividad;
 
-            if (cboActividadEconomica.SelectedItem != null)
+            if (clienteGlo != null)
             {
-                documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                documento.idCliente = clienteGlo.id;
+                documento.tipoIdCliente = clienteGlo.tipoId;
+                documento.tbClientes = clienteGlo;
+
+
+                if (clienteGlo.contribuyente)
+                {
+                    if (cboActividadEconomica.SelectedItem != null)
+                    {
+                        documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                    }
+                }
+
             }
 
             documento.sucursal = Global.Configuracion.sucursal;
@@ -1806,14 +1818,6 @@ namespace PresentationLayer
 
             }
 
-            //cliente
-            if (clienteGlo != null)
-            {
-                documento.idCliente = clienteGlo.id;
-                documento.tipoIdCliente = clienteGlo.tipoId;
-                documento.tbClientes = clienteGlo;
-
-            }
 
             if (documento.reporteElectronic)
             {

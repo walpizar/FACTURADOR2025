@@ -1040,11 +1040,21 @@ namespace PresentationLayer
             categorias.ShowDialog();
         }
 
-        private void dataBuscarCategoriaCabys(string codigo)
+        private void dataBuscarCategoriaCabys(string codigo, int tipo)
         {
             if (codigo != null)
             {
                // categoriaCABYS = codigo;
+               if(tipo == 1)
+                {
+                    // Después de asignar DataSource, DisplayMember y ValueMember
+                 
+               
+                   cboCategoriaProducto.SelectedIndex = 0; // "04"
+                  
+
+                }
+     
                 this.txtCategoriaCabys.Text = codigo;
 
             }

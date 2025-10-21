@@ -44,6 +44,7 @@ namespace EntityLayer
         public Nullable<bool> promociones { get; set; }
         public Nullable<bool> etiquetas { get; set; }
         public Nullable<bool> validaCabys { get; set; }
+        public Nullable<bool> inventarioNegativo { get; set; }
     
         public virtual tbEmpresa tbEmpresa { get; set; }
     }

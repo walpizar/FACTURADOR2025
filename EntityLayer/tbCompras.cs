@@ -67,6 +67,9 @@ namespace EntityLayer
         public Nullable<int> caja { get; set; }
         public Nullable<bool> cambiarColon { get; set; }
         public string nombreProveedor { get; set; }
+        public Nullable<int> codigoMensaje { get; set; }
+        public string EstadoMensaje { get; set; }
+        public string DetalleMensaje { get; set; }
     
         public virtual tbActividades tbActividades { get; set; }
         public virtual tbReporteHacienda tbReporteHacienda { get; set; }

@@ -43,6 +43,23 @@ namespace DataLayer
         public tbClientes Guardar(tbClientes clientes)
         {
 
+            //tbPersona persona = new tbPersona();
+
+            //persona.identificacion = txtId.text;
+            //persona.tipoId = (int)cmbTipoId.SelectedValue;
+            //persona.nombre= txtNombre.text;
+            //persona.apellidos= txtApellido.text;
+
+
+
+            //tbClientes cliente = new tbClientes();
+            //cliente.id = txtId.text;
+            //persona.tipoId = (int)cmbTipoId.SelectedValue;
+            //cliente.tipoCliente = (int)cmbTipoCliente.SelectedValue;
+            //cliente.descripcion = txtDescripcion.text;
+
+            //cliente.tbPersona= persona;  
+
 
             try
             {
@@ -56,6 +73,11 @@ namespace DataLayer
                         context.Entry(clientes.tbPersona).State = System.Data.Entity.EntityState.Modified;
 
 
+
+                    }
+                    else
+                    {
+                        context.Entry(clientes.tbPersona).State = System.Data.Entity.EntityState.Added;
 
                     }
 
@@ -82,7 +104,7 @@ namespace DataLayer
                 {
                     //SE LE AGRAGA OTRO CONTEX CON LA RELACION A LA TABLA DE LA CUAL OCUPAMOS DATOS.....
                     //context.Entry(cliente.tbExoneraciones).State = System.Data.Entity.EntityState.Detached;
-                    //cliente.tbExoneraciones = null;
+                    cliente.tbExoneraciones = null;
                     context.Entry(cliente).State = System.Data.Entity.EntityState.Modified;
 
                     context.Entry(cliente.tbPersona).State = System.Data.Entity.EntityState.Modified;

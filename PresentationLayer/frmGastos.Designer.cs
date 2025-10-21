@@ -44,6 +44,7 @@
             this.ColFechaEmision = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColImp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colEstadoHacienda = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,6 +54,11 @@
             this.txtClave = new System.Windows.Forms.TextBox();
             this.txtFecha = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtRazon = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cboEstado = new System.Windows.Forms.ComboBox();
             this.txtCambio = new System.Windows.Forms.TextBox();
             this.txtTipoDoc = new System.Windows.Forms.TextBox();
             this.txtMoneda = new System.Windows.Forms.TextBox();
@@ -79,6 +85,7 @@
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnsalir)).BeginInit();
             this.SuspendLayout();
@@ -143,7 +150,8 @@
             this.colEmisor,
             this.ColFechaEmision,
             this.ColImp,
-            this.ColTotal});
+            this.ColTotal,
+            this.colEstadoHacienda});
             this.lsvDoc.FullRowSelect = true;
             this.lsvDoc.GridLines = true;
             this.lsvDoc.HideSelection = false;
@@ -151,7 +159,7 @@
             this.lsvDoc.Location = new System.Drawing.Point(10, 80);
             this.lsvDoc.MultiSelect = false;
             this.lsvDoc.Name = "lsvDoc";
-            this.lsvDoc.Size = new System.Drawing.Size(1136, 192);
+            this.lsvDoc.Size = new System.Drawing.Size(1181, 192);
             this.lsvDoc.TabIndex = 2;
             this.lsvDoc.UseCompatibleStateImageBehavior = false;
             this.lsvDoc.View = System.Windows.Forms.View.Details;
@@ -201,6 +209,10 @@
             // 
             this.ColTotal.Text = "Total";
             this.ColTotal.Width = 90;
+            // 
+            // colEstadoHacienda
+            // 
+            this.colEstadoHacienda.Text = "Mensaje";
             // 
             // label3
             // 
@@ -280,6 +292,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.txtCambio);
             this.groupBox1.Controls.Add(this.txtTipoDoc);
             this.groupBox1.Controls.Add(this.txtMoneda);
@@ -304,9 +317,60 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(378, 258);
+            this.groupBox1.Size = new System.Drawing.Size(378, 399);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.txtRazon);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.cboEstado);
+            this.groupBox3.Location = new System.Drawing.Point(19, 256);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(342, 135);
+            this.groupBox3.TabIndex = 23;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Mensaje Hacienda";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(12, 55);
+            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 13);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "Razón:";
+            // 
+            // txtRazon
+            // 
+            this.txtRazon.Location = new System.Drawing.Point(60, 52);
+            this.txtRazon.MaxLength = 500;
+            this.txtRazon.Multiline = true;
+            this.txtRazon.Name = "txtRazon";
+            this.txtRazon.Size = new System.Drawing.Size(233, 64);
+            this.txtRazon.TabIndex = 25;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(12, 28);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 24;
+            this.label15.Text = "Estado:";
+            // 
+            // cboEstado
+            // 
+            this.cboEstado.FormattingEnabled = true;
+            this.cboEstado.Location = new System.Drawing.Point(60, 25);
+            this.cboEstado.Name = "cboEstado";
+            this.cboEstado.Size = new System.Drawing.Size(232, 21);
+            this.cboEstado.TabIndex = 0;
+            this.cboEstado.SelectedIndexChanged += new System.EventHandler(this.cboEstado_SelectedIndexChanged);
             // 
             // txtCambio
             // 
@@ -407,7 +471,7 @@
             this.btnProcesar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcesar.Image = ((System.Drawing.Image)(resources.GetObject("btnProcesar.Image")));
             this.btnProcesar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnProcesar.Location = new System.Drawing.Point(1052, 516);
+            this.btnProcesar.Location = new System.Drawing.Point(1113, 522);
             this.btnProcesar.Margin = new System.Windows.Forms.Padding(2);
             this.btnProcesar.Name = "btnProcesar";
             this.btnProcesar.Size = new System.Drawing.Size(79, 61);
@@ -425,7 +489,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(738, 235);
+            this.groupBox2.Size = new System.Drawing.Size(781, 235);
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             // 
@@ -439,14 +503,14 @@
             this.txtMensaje.Name = "txtMensaje";
             this.txtMensaje.ReadOnly = true;
             this.txtMensaje.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtMensaje.Size = new System.Drawing.Size(708, 202);
+            this.txtMensaje.Size = new System.Drawing.Size(755, 202);
             this.txtMensaje.TabIndex = 19;
             this.txtMensaje.WordWrap = false;
             // 
             // chkCambiarColon
             // 
             this.chkCambiarColon.AutoSize = true;
-            this.chkCambiarColon.Location = new System.Drawing.Point(934, 537);
+            this.chkCambiarColon.Location = new System.Drawing.Point(995, 543);
             this.chkCambiarColon.Name = "chkCambiarColon";
             this.chkCambiarColon.Size = new System.Drawing.Size(103, 17);
             this.chkCambiarColon.TabIndex = 23;
@@ -457,7 +521,7 @@
             // btnsalir
             // 
             this.btnsalir.Image = ((System.Drawing.Image)(resources.GetObject("btnsalir.Image")));
-            this.btnsalir.Location = new System.Drawing.Point(1126, 7);
+            this.btnsalir.Location = new System.Drawing.Point(1158, 14);
             this.btnsalir.Name = "btnsalir";
             this.btnsalir.Size = new System.Drawing.Size(20, 20);
             this.btnsalir.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -472,9 +536,9 @@
             this.label12.Location = new System.Drawing.Point(631, 2);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(169, 25);
+            this.label12.Size = new System.Drawing.Size(390, 25);
             this.label12.TabIndex = 98;
-            this.label12.Text = "Reportar Gastos";
+            this.label12.Text = "Reportar  de compras Hacienda Gastos";
             // 
             // btnCorreo
             // 
@@ -539,7 +603,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1159, 583);
+            this.ClientSize = new System.Drawing.Size(1203, 684);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -560,6 +624,8 @@
             this.Load += new System.EventHandler(this.frmMensajesHacienda_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnsalir)).EndInit();
@@ -613,5 +679,11 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cboEstado;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtRazon;
+        private System.Windows.Forms.ColumnHeader colEstadoHacienda;
     }
 }

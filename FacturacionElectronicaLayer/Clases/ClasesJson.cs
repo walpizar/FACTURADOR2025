@@ -47,6 +47,10 @@ namespace FacturacionElectronicaLayer.Clases
 
         [JsonProperty("tipoDocumento")]
         public TipoDocExo tipoDoc { get; set; }
+
+        [JsonProperty("CodigoInstitucion")]
+        public string codigoInstitucion { get; set; }
+        
     }
 
     public class TipoDocExo

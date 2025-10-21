@@ -168,9 +168,8 @@
 
         public enum Mensajes
         {
-
+        
             Aceptado = 1,
-            AceptadoParcial = 2,
             Rechazado = 3
         }
         public enum EstadoOrdenCompra

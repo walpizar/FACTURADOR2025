@@ -1266,7 +1266,24 @@ namespace PresentationLayer
                 txtCorreo.Text = cliente.tbPersona.correoElectronico.Trim();
 
                 chkEnviar.Checked = true;
-                cargarActividades(cliente);
+                if (cliente.contribuyente)
+                {
+                    cargarActividades(cliente);
+                    cboActividadEconomica.Enabled = true;
+                    btnActividadesCarga.Enabled = true;
+                }
+                else
+                {
+                    cboActividadEconomica.DataSource = null;
+                    cboActividadEconomica.Items.Clear();
+
+                    cboActividadEconomica.Enabled = false;
+                    btnActividadesCarga.Enabled = false;
+
+                }
+
+
+                   
                 calcularMontosT();
 
             }
@@ -1739,13 +1756,26 @@ namespace PresentationLayer
             documento.observaciones = txtObservaciones.Text.ToUpper().Trim();
             documento.idEmpresa = Global.Usuario.tbEmpresa.id;
             documento.tipoIdEmpresa = Global.Usuario.tbEmpresa.tipoId;
-
+            //cliente
 
             documento.codigoActividad = Global.actividadEconomic.CodActividad;
-            if (cboActividadEconomica.SelectedItem != null)
+
+            if (clienteGlo != null)
             {
-                documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                documento.idCliente = clienteGlo.id;
+                documento.tipoIdCliente = clienteGlo.tipoId;
+                documento.tbClientes = clienteGlo;
+
+
+                if (clienteGlo.contribuyente)
+                {
+                    if (cboActividadEconomica.SelectedItem != null)
+                    {
+                        documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                    }
+                }
             }
+           
 
             documento.sucursal = Global.Configuracion.sucursal;
             documento.caja = Global.Configuracion.caja;
@@ -1759,13 +1789,7 @@ namespace PresentationLayer
             }
 
             //cliente
-            if (clienteGlo != null)
-            {
-                documento.idCliente = clienteGlo.id;
-                documento.tipoIdCliente = clienteGlo.tipoId;
-                documento.tbClientes = clienteGlo;
-
-            }
+ 
 
             if (documento.reporteElectronic)
             {

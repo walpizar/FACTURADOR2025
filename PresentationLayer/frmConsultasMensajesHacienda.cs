@@ -72,7 +72,7 @@ namespace PresentationLayer
                         else
                         {
 
-                            txtXMLSinFirma.Text = facturacion.consultarMensaje(mensaje);
+                           // txtXMLSinFirma.Text = facturacion.consultarMensaje(mensaje);
                         }
 
 

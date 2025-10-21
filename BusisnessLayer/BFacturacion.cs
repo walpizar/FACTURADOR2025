@@ -270,13 +270,17 @@ namespace BusinessLayer
 
             if (facturaGlobal.tipoDoc != (int)Enums.TipoDocumento.Proforma)
             {
-
+                var consecutivo= facturaGlobal.tipoDoc;
+                if(facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Gastos || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Compras || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.ComprasSimplificada)
+                {
+                    consecutivo = facturaGlobal.codigoMensaje == 1 ? 05 : facturaGlobal.codigoMensaje == 2 ? 06 : 07;
+                }
 
                 facturaGlobal.consecutivo = CreaNumeroConsecutivo(sucursal,
                                                                         caja,
-                                                                        facturaGlobal.tipoDoc.ToString().Trim(),
+                                                                        consecutivo.ToString().Trim(),
                                                                         facturaGlobal.id.ToString().Trim());
-                string codigoSeguridad = CreaCodigoSeguridad(facturaGlobal.tipoDoc.ToString().Trim(),
+                string codigoSeguridad = CreaCodigoSeguridad(consecutivo.ToString().Trim(),
                                                                 sucursal,
                                                                 caja,
                                                                 facturaGlobal.fecha,
@@ -536,10 +540,10 @@ namespace BusinessLayer
                 {
                     foreach (var msj in listaGuardados)
                     {
-                        enviarMensajeHacienda(msj);
+                      //  enviarMensajeHacienda(msj);
 
 
-                        consultarMensaje(msj);
+                       // consultarMensaje(msj);
 
 
 
@@ -556,24 +560,23 @@ namespace BusinessLayer
 
         }
 
-        public void reportarMensajesHacienda(List<tbReporteHacienda> lista)
+        public void reportarMensajesHacienda(List<tbCompras> lista)
         {
             try
             {
                 if (Utility.AccesoInternet())
                 {
-                    foreach (var msj in lista)
+                    foreach (var compra in lista)
                     {
-                        if (msj.reporteAceptaHacienda == false)
+                        if (compra.reporteAceptaHacienda == false)
                         {
-                            enviarMensajeHacienda(msj);
+                            var compraAct = DFacturaIns.GetEntityCompra(compra);
+                            enviarMensajeHacienda(compra);
                             System.Threading.Thread.Sleep(1500);
                         }
 
 
-                        consultarMensaje(msj);
-
-
+                       // consultarMensaje(compra);
 
                     }
                 }
@@ -609,20 +612,20 @@ namespace BusinessLayer
 
         }
 
-        private tbReporteHacienda enviarMensajeHacienda(tbReporteHacienda mensajeHacienda)
+        private tbCompras enviarMensajeHacienda(tbCompras compra)
         {
             Emisor _emisor;
             Receptor _receptor = null;
             try
             {
-                FacturaElectronicaCR factura = new FacturaElectronicaCR(mensajeHacienda);
+                FacturaElectronicaCR factura = new FacturaElectronicaCR(compra);
 
 
-                XmlDocument xml = factura.CreaXMLMensajeHacienda();
-                mensajeHacienda.xmlSinFirma = Utility.EncodeStrToBase64(xml.OuterXml);
+                XmlDocument xml = factura.CreaXMLMensajeReceptor();
+                compra.xmlSinFirma = Utility.EncodeStrToBase64(xml.OuterXml);
 
                 string directorio = Global.Usuario.tbEmpresa.rutaXMLCompras.Trim();
-                string nombreArchivo = mensajeHacienda.consecutivoReceptor;
+                string nombreArchivo = compra.consecutivoEmisor;
                 string tipoDoc = "_MS";
                 //sino existe el directorio lo crea
                 if (!Directory.Exists(directorio))
@@ -640,29 +643,29 @@ namespace BusinessLayer
                 XmlDocument xmlElectronica = new XmlDocument();
                 FacturacionElectronicaLayer.Clases.Firma _firma = new FacturacionElectronicaLayer.Clases.Firma();
                 xmlElectronica = _firma.FirmaXML_Xades((directorio + nombreArchivo + tipoDoc), Global.Usuario.tbEmpresa.certificadoInstalado.Trim());
-                mensajeHacienda.xmlFirmado = Utility.EncodeStrToBase64(xmlElectronica.OuterXml);
+                compra.xmlFirmado = Utility.EncodeStrToBase64(xmlElectronica.OuterXml);
 
                 //json
 
 
                 FacturacionElectronicaLayer.Clases.Emisor myEmisor = new FacturacionElectronicaLayer.Clases.Emisor();
-                myEmisor.numeroIdentificacion = mensajeHacienda.idEmisor.ToString().Trim();
-                myEmisor.TipoIdentificacion = mensajeHacienda.tipoIdEmisor.ToString().Trim().PadLeft(2, '0');
+                myEmisor.numeroIdentificacion = compra.idProveedor.ToString().Trim();
+                myEmisor.TipoIdentificacion = compra.tipoIdProveedor.ToString().Trim().PadLeft(2, '0');
 
                 FacturacionElectronicaLayer.Clases.Receptor myReceptor = new FacturacionElectronicaLayer.Clases.Receptor();
 
                 myReceptor.sinReceptor = false;
-                myReceptor.numeroIdentificacion = mensajeHacienda.idEmpresa.Trim();
-                myReceptor.TipoIdentificacion = mensajeHacienda.tipoIdEmpresa.ToString().Trim();
+                myReceptor.numeroIdentificacion = compra.idEmpresa.Trim();
+                myReceptor.TipoIdentificacion = compra.tipoIdEmpresa.ToString().Trim();
 
                 FacturacionElectronicaLayer.Clases.RecepcionMensaje myRecepcion = new FacturacionElectronicaLayer.Clases.RecepcionMensaje();
                 myRecepcion.emisor = myEmisor;
                 myRecepcion.receptor = myReceptor;
 
-                myRecepcion.clave = mensajeHacienda.claveDocEmisor;
+                myRecepcion.clave = compra.claveEmisor;
                 myRecepcion.fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz");
-                myRecepcion.comprobanteXml = mensajeHacienda.xmlFirmado;
-                myRecepcion.consecutivoReceptor = mensajeHacienda.consecutivoReceptor;
+                myRecepcion.comprobanteXml = compra.xmlFirmado;
+                myRecepcion.consecutivoReceptor = compra.consecutivoEmisor;
                 xmlElectronica = null;
 
                 string Token = "";
@@ -686,14 +689,14 @@ namespace BusinessLayer
 
                 if (enviaFactura.statusCode == "Accepted")
                 {
-                    mensajeHacienda.reporteAceptaHacienda = true;
-                    mensajeHacienda.mensajeReporteHacienda = enviaFactura.estadoEnvio;
-                    mensajeHacienda.rutaRespuestaHacienda = enviaFactura.mensajeRespuesta;
+                    compra.reporteAceptaHacienda = true;
+                    compra.mensajeReporteHacienda = enviaFactura.estadoEnvio;
+                    //compra. = enviaFactura.mensajeRespuesta;
                 }
 
 
-                DFacturaIns.ActualizarMensaje(mensajeHacienda);
-                return mensajeHacienda;
+                DFacturaIns.ActualizarCompraSimplificada(compra);
+                return compra;
             }
             catch (Exception ex)
             {
@@ -952,12 +955,12 @@ namespace BusinessLayer
 
                     if ((bool)cliente.exonera)
                     {
-                        _receptor = new Receptor(NombreEmpresa, tipoId, id, cliente.tbPersona.provincia.Trim(), cliente.tbPersona.canton.Trim().PadLeft(2, '0'), cliente.tbPersona.distrito.Trim().PadLeft(2, '0'), cliente.tbPersona.barrio.Trim().PadLeft(2, '0'), cliente.tbPersona.otrasSenas.ToUpper(), cliente.tbPersona.codigoPaisTel.Trim(), cliente.tbPersona.telefono, cliente.tbPersona.correoElectronico.Trim(), cliente.idExonercion.ToString(), (DateTime)cliente.FechaEmisionExo, cliente.institucionExo, (int)cliente.tbExoneraciones.valor, cliente.numeroDocumentoExo);
+                        _receptor = new Receptor(NombreEmpresa, tipoId, id, cliente.tbPersona.provincia.Trim(), cliente.tbPersona.canton.Trim().PadLeft(2, '0'), cliente.tbPersona.distrito.Trim().PadLeft(2, '0'), cliente.tbPersona.barrio.Trim().PadLeft(2, '0'), cliente.tbPersona.otrasSenas.ToUpper(), cliente.tbPersona.codigoPaisTel.Trim(), cliente.tbPersona.telefono, cliente.tbPersona.correoElectronico.Trim(), cliente.idExonercion.ToString(), (DateTime)cliente.FechaEmisionExo, cliente.institucionExo, (int)cliente.tbExoneraciones.valor, cliente.numeroDocumentoExo, cliente.articuloExo, cliente.incisoExo);
 
                     }
                     else
                     {
-                        _receptor = new Receptor(NombreEmpresa, tipoId, id, cliente.tbPersona.provincia.Trim(), cliente.tbPersona.canton.Trim().PadLeft(2, '0'), cliente.tbPersona.distrito.Trim().PadLeft(2, '0'), cliente.tbPersona.barrio.Trim().PadLeft(2, '0'), cliente.tbPersona.otrasSenas.ToUpper(), cliente.tbPersona.codigoPaisTel.Trim(), cliente.tbPersona.telefono, cliente.tbPersona.correoElectronico.Trim(), null, DateTime.MinValue, null, int.MinValue, null);
+                        _receptor = new Receptor(NombreEmpresa, tipoId, id, cliente.tbPersona.provincia.Trim(), cliente.tbPersona.canton.Trim().PadLeft(2, '0'), cliente.tbPersona.distrito.Trim().PadLeft(2, '0'), cliente.tbPersona.barrio.Trim().PadLeft(2, '0'), cliente.tbPersona.otrasSenas.ToUpper(), cliente.tbPersona.codigoPaisTel.Trim(), cliente.tbPersona.telefono, cliente.tbPersona.correoElectronico.Trim(), null, DateTime.MinValue, null, int.MinValue, null, cliente.articuloExo, cliente.incisoExo);
 
                     }
 
@@ -1568,13 +1571,13 @@ namespace BusinessLayer
             {
                 if (!msj.reporteAceptaHacienda)
                 {
-                    enviarMensajeHacienda(msj);
+                   // enviarMensajeHacienda(msj);
                 }
 
 
                 if (msj.rutaRespuestaHacienda != null)
                 {
-                    return consultarMensaje(msj);
+                   // return consultarMensaje(msj);
                 }
 
 
@@ -1904,7 +1907,7 @@ namespace BusinessLayer
 
             return DFacturaIns.GetMensajeById(id);
         }
-        public string consultarMensaje(tbReporteHacienda msj)
+        public string consultarMensaje(tbCompras msj)
         {
             string mensaje = string.Empty;
             try
@@ -1917,7 +1920,7 @@ namespace BusinessLayer
 
                 try
                 {
-                    factura.ConsultaEstatusMensajes(Token, msj.rutaRespuestaHacienda);
+                    //factura.ConsultaEstatusMensajes(Token, msj.rutaRespuestaHacienda);
                 }
                 catch (Exception ex)
                 {
@@ -1928,42 +1931,42 @@ namespace BusinessLayer
                 factura.CerrarSesion(Token);
                 string directorio = Global.Usuario.tbEmpresa.rutaXMLCompras.Trim();
                 string jsonRespuesta = "";
-                string consecutivo = msj.consecutivoReceptor.Trim();
+                //string consecutivo = msj.consecutivoReceptor.Trim();
                 jsonRespuesta = factura.jsonRespuesta;
 
 
-                System.IO.StreamWriter outputFile = new System.IO.StreamWriter((directorio
-                                + (consecutivo + tipoDod + "_04_jsonRespuesta.txt")));
-                outputFile.Write(jsonRespuesta);
-                outputFile.Close();
+              //  System.IO.StreamWriter outputFile = new System.IO.StreamWriter((directorio
+                //                + (consecutivo + tipoDod + "_04_jsonRespuesta.txt")));
+                //outputFile.Write(jsonRespuesta);
+                //outputFile.Close();
 
 
-                if (!(factura.xmlRespuesta == null))
-                {
-                    msj.xmlRespuesta = factura.xmlCodificado;
-                    factura.xmlRespuesta.Save((directorio
-                                    + (consecutivo + tipoDod + "_05_RESP.xml")));
+                //if (!(factura.xmlRespuesta == null))
+                //{
+                //    msj.xmlRespuesta = factura.xmlCodificado;
+                //    factura.xmlRespuesta.Save((directorio
+                //                    + (consecutivo + tipoDod + "_05_RESP.xml")));
 
-                }
-                else
-                {
-                    outputFile = new System.IO.StreamWriter((directorio
-                                    + (consecutivo + tipoDod + "_05_RESP_SinRespuesta.txt")));
-                    outputFile.Write("");
-                    outputFile.Close();
+                //}
+                //else
+                //{
+                //    outputFile = new System.IO.StreamWriter((directorio
+                //                    + (consecutivo + tipoDod + "_05_RESP_SinRespuesta.txt")));
+                //    outputFile.Write("");
+                //    outputFile.Close();
 
 
-                }
-                if (factura.statusCode == "OK")
-                {
-                    msj.mensajeRespHacienda = true;
-                    msj.EstadoRespHacienda = factura.estadoFactura;
+                //}
+                //if (factura.statusCode == "OK")
+                //{
+                //    msj.mensajeRespHacienda = true;
+                //    msj.EstadoRespHacienda = factura.estadoFactura;
 
-                }
+                //}
                 mensaje = string.Format("Estado Mensaje: {1}{0}Mensaje Hacienda:{0}{2}", Environment.NewLine, factura.mensajeRespuesta, factura.xmlRespuesta == null ? "Sin respuesta" : factura.xmlRespuesta.InnerText);
 
 
-                DFacturaIns.ActualizarMensaje(msj);
+               // DFacturaIns.ActualizarMensaje(msj);
 
 
 

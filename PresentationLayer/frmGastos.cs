@@ -9,12 +9,14 @@ using PresentationLayer.Clases;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
@@ -48,7 +50,7 @@ namespace PresentationLayer
             btnCorreo.Visible = cargaCorreoElect;
                     
            
-            //cboEstado.DataSource = Enum.GetValues(typeof(Enums.Mensajes));
+           cboEstado.DataSource = Enum.GetValues(typeof(Enums.Mensajes));
 
 
         }
@@ -81,7 +83,7 @@ namespace PresentationLayer
                 item.SubItems.Add(resp.fechaCompra.ToString());
                 item.SubItems.Add(resp.tbDetalleCompras.Sum(x => x.montoTotalImp).ToString());
                 item.SubItems.Add(resp.tbDetalleCompras.Sum(x => x.montoTotalLinea).ToString());
-
+                item.SubItems.Add(resp.codigoMensaje == 0 ? "Sin Estado" : Enum.GetName(typeof(Mensajes), resp.codigoMensaje));
 
                 lsvDoc.Items.Add(item);
 
@@ -116,99 +118,14 @@ namespace PresentationLayer
                             foreach (var item in gasto.tbDetalleCompras)
                             {
                                 item.utilidad = 0;
+                               
+                                
                             }
+                        
                             
-                            //if (!gasto.idEmpresa.Trim().Equals(Global.actividadEconomic.idEmpresa.Trim()))
-                            //{
-
-                            //    MessageBox.Show(string.Format("El documento #Factura[{1}-{2}] a procesar no pertenece a la empresa: {0}.", Global.actividadEconomic.idEmpresa.Trim(), gasto.numFactura, gasto.nombreProveedor.Trim()), "Documento incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //    return;
-                            //}
-
-
+                          
                             listaCompras.Add(gasto);
 
-                            //XmlDocument xDoc = new XmlDocument();
-                            //xDoc.Load(file);
-                            //tbReporteHacienda compra = new tbReporteHacienda();
-
-
-
-
-                            //var fecha = xDoc.GetElementsByTagName("FechaEmision").Item(0).InnerText;
-                            //var actividad = xDoc.GetElementsByTagName("CodigoActividad").Item(0).InnerText;
-                            //var emisor = xDoc.GetElementsByTagName("Emisor");
-
-                            ////XmlNodeList dataNodes = xmlDoc.SelectNodes("//Fac");
-
-
-                            ////foreach (XmlNode node in dataNodes)
-                            ////{
-                            ////    int Count = 0;
-                            ////    //int Max = node.ChildNodes.Count;
-
-
-                            ////    var c=node.Name;
-                            ////    var u= node.SelectSingleNode("Identificacion").InnerText;
-                            ////    Count = Count + 1;
-                            ////}
-
-                            //var identificacion = ((XmlElement)emisor[0]).GetElementsByTagName("Identificacion");
-                            //var correo = ((XmlElement)emisor[0]).GetElementsByTagName("CorreoElectronico").Item(0).InnerText;
-
-                            //var recepetor = xDoc.GetElementsByTagName("Receptor");
-                            //var IdentidicacionRecept = ((XmlElement)recepetor[0]).GetElementsByTagName("Identificacion");
-
-                            ////emisor
-                            //var numeroId = ((XmlElement)identificacion[0]).GetElementsByTagName("Numero").Item(0).InnerText;
-                            //var tipoId = ((XmlElement)identificacion[0]).GetElementsByTagName("Tipo").Item(0).InnerText;
-                            //var nombreEmisor = ((XmlElement)emisor[0]).GetElementsByTagName("Nombre").Item(0).InnerText;
-
-
-                            ////receptor
-                            //var nombreRecepetor = ((XmlElement)recepetor[0]).GetElementsByTagName("Nombre").Item(0).InnerText;
-                            //var idRecept = ((XmlElement)IdentidicacionRecept[0]).GetElementsByTagName("Numero").Item(0).InnerText;
-                            //var tipoIdRecept = ((XmlElement)IdentidicacionRecept[0]).GetElementsByTagName("Tipo").Item(0).InnerText;
-
-
-                            //var total = xDoc.GetElementsByTagName("ResumenFactura");
-                            //var imp = ((XmlElement)total[0]).GetElementsByTagName("TotalImpuesto").Item(0).InnerText;
-                            //var totalComprobante = ((XmlElement)total[0]).GetElementsByTagName("TotalComprobante").Item(0).InnerText;
-
-
-                            //if (idRecept != Global.Usuario.tbEmpresa.id.Trim())
-                            //{
-                            //    MessageBox.Show("La factura procesada emitida por: " + nombreEmisor + ", ID:" + xDoc.GetElementsByTagName("Clave").Item(0).InnerText + ", No se puede facturar ya que no corresponde a nuestra empresa, corresponde a: ID: " + idRecept + " Nombre: " + nombreRecepetor);
-                            //    continue;
-                            //}
-                            //tbReporteHacienda resp = new tbReporteHacienda();
-                            //resp.fecha = Utility.getDate();
-                            //resp.codigoActividadEmisor = actividad;
-                            //resp.claveDocEmisor = xDoc.GetElementsByTagName("Clave").Item(0).InnerText;
-                            //resp.idEmisor = numeroId;
-                            //resp.nombreEmisor = nombreEmisor;
-                            //resp.tipoIdEmisor = int.Parse(tipoId);
-                            //resp.fechaEmision = DateTime.Parse(fecha);
-                            //resp.totalImp = decimal.Parse(imp);
-                            //resp.totalFactura = decimal.Parse(totalComprobante);
-                            //resp.correoElectronico = correo;
-                            ////por defecto se indica como aceptado
-                            //resp.estadoRecibido = 1;
-
-                            //resp.mensajeRespHacienda = false;
-                            //resp.reporteAceptaHacienda = false;
-
-                            //resp.fecha_crea = Utility.getDate();
-                            //resp.fecha_ult_mod = Utility.getDate();
-                            //resp.usuario_crea = Global.Usuario.nombreUsuario;
-                            //resp.usuario_ult_mod = Global.Usuario.nombreUsuario;
-
-                            //resp.idEmpresa = idRecept;
-                            //resp.tipoIdEmpresa = int.Parse(tipoIdRecept);
-                            //resp.nombreReceptor = nombreRecepetor;
-
-                            //resp.nombreArchivo = file.Substring(file.LastIndexOf('\\'));
-                            //listaRespHacienda.Add(resp);
 
                         }
 
@@ -231,18 +148,18 @@ namespace PresentationLayer
 
             foreach (var item in listaCompras)
             {
-                //if (item.estadoRecibido != (int)Enums.Mensajes.Aceptado)
-                //{
-                //    if (item.razon.Trim() == string.Empty)
-                //    {
+                if (item.codigoMensaje != (int)Enums.Mensajes.Aceptado)
+                {
+                    if (item.razon.Trim() == string.Empty)
+                    {
 
-                //        MessageBox.Show($"Debe indicar una razón para el documento #{item.claveDocEmisor}, Emisor: {item.nombreEmisor}, ya que se encuentra en estado: {Enum.GetName(typeof(Enums.EstadoRespuestaHacienda), item.estadoRecibido).ToUpper()} ", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                //        return false;
+                        MessageBox.Show($"Debe indicar una razón para el documento #{item.numFactura}, Emisor: {item.nombreProveedor}, ya que se encuentra en estado: {Enum.GetName(typeof(Enums.EstadoRespuestaHacienda), item.codigoMensaje).ToUpper()} ", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return false;
 
-                //    }
+                    }
 
 
-                //}
+                }
             }
 
             return true;
@@ -250,20 +167,20 @@ namespace PresentationLayer
 
 
 
-        //private void limpiar()
-        //{
-        //    txtClave.Text = string.Empty;
-        //    txtID.Text = string.Empty;
-        //    txtFecha.Text = string.Empty;
-        //    txtEmisor.Text = string.Empty;
+        private void limpiar()
+        {
+            txtClave.Text = string.Empty;
+            txtID.Text = string.Empty;
+            txtFecha.Text = string.Empty;
+            txtEmisor.Text = string.Empty;
 
-        //    //cboEstado.SelectedIndex = 0;
+            cboEstado.SelectedIndex = 0;
 
-        //    txtImp.Text = string.Empty;
-        //    txtTotal.Text = string.Empty;
+            txtImp.Text = string.Empty;
+            txtTotal.Text = string.Empty;
 
 
-        //}
+        }
         private void lsvDoc_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -327,47 +244,84 @@ namespace PresentationLayer
         {
             try
             {
+
                 if (lsvDoc.SelectedItems.Count > 0)
                 {
 
-                    var clave = lsvDoc.SelectedItems[0].SubItems[2].Text;
-                    tbCompras compra = null;
-                    foreach (var item in listaCompras)
+                    var clave = (lsvDoc.SelectedItems.Count > 0 && lsvDoc.SelectedItems[0].SubItems.Count > 2)
+            ? lsvDoc.SelectedItems[0].SubItems[2].Text?.Trim()
+            : null;
+
+                if (string.IsNullOrWhiteSpace(clave))
+                    return;
+
+                // 2) Buscar la compra (evita foreach)
+                var compra = listaCompras.FirstOrDefault(c =>
+                    string.Equals(c.claveEmisor?.Trim(), clave, StringComparison.OrdinalIgnoreCase));
+
+                if (compra is null)
+                        return;
+
+                    //sino se han guardado cambios 
+                    if (txtFactura.Text != "")
                     {
-                        if (item.claveEmisor.Trim() == clave.Trim())
+
+                        var compraAct = listaCompras.FirstOrDefault(c =>
+                  string.Equals(c.numFactura?.Trim(), txtFactura.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                        // Obtener valores actuales
+                        int nuevoCodigo = (int)cboEstado.SelectedValue;
+                        string nuevaRazon = txtRazon.Text?.Trim().ToUpper() ?? string.Empty;
+                        string razonActual = compraAct.razon?.Trim().ToUpper() ?? string.Empty;
+
+                        // Verificar cambios antes de actualizar
+                        if (compraAct.codigoMensaje != nuevoCodigo || razonActual != nuevaRazon)
                         {
-                            compra = item;
-                            break;
+                            compraAct.codigoMensaje = nuevoCodigo;
 
+                            // Solo guardar razón si no es código 1
+                            compraAct.razon = (nuevoCodigo != 1) ? nuevaRazon : compraAct.razon;
                         }
-                    }
-                    if (compra != null)
-                    {
-                        txtFactura.Text = compra.numFactura;
-                        txtTipoDoc.Text = Enum.GetName(typeof(Enums.TipoDocumento), compra.tipoDoc);
-
-                        txtClave.Text = compra.claveEmisor;
-                        txtFecha.Text = compra.fechaCompra.ToString();
-
-                        txtID.Text = compra.idProveedor.Trim();
-                        txtEmisor.Text = compra.nombreProveedor.Trim().ToUpper();
-
-                        txtMoneda.Text = Enum.GetName(typeof(Enums.TipoMoneda), compra.tipoMoneda);
-                        txtCambio.Text = compra.tipoCambio == null ? "0" : compra.tipoCambio.ToString();
-                        txtImp.Text = compra.tbDetalleCompras.Sum(x => x.montoTotalImp).ToString();
-                        txtTotal.Text = compra.tbDetalleCompras.Sum(x => x.montoTotalLinea).ToString();
-
 
                     }
 
 
 
+
+
+
+
+                    // 3) Totales con null-safety (asumiendo decimal; use decimal? si aplica)
+                    var totalImp = compra.tbDetalleCompras?.Sum(x => (decimal?)x.montoTotalImp) ?? 0m;
+                    var totalLinea = compra.tbDetalleCompras?.Sum(x => (decimal?)x.montoTotalLinea) ?? 0m;
+
+                    // 4) Cultura de Costa Rica para formatos
+                    var cr = CultureInfo.GetCultureInfo("es-CR");
+
+                    // 5) Poblar controles
+                    txtFactura.Text = compra.numFactura ?? string.Empty;
+                    txtTipoDoc.Text = Enum.GetName(typeof(Enums.TipoDocumento), compra.tipoDoc) ?? string.Empty;
+
+                    txtClave.Text = compra.claveEmisor ?? string.Empty;
+                    txtFecha.Text = compra.fechaCompra.ToString("dd/MM/yyyy HH:mm", cr);
+
+                    txtID.Text = compra.idProveedor?.Trim() ?? string.Empty;
+                    txtEmisor.Text = (compra.nombreProveedor ?? string.Empty).Trim().ToUpperInvariant();
+
+                    txtMoneda.Text = Enum.GetName(typeof(Enums.TipoMoneda), compra.tipoMoneda) ?? string.Empty;
+                    txtCambio.Text = (compra.tipoCambio ?? 0m).ToString("N2", cr);
+                    txtImp.Text = totalImp.ToString("N2", cr);
+                    txtTotal.Text = totalLinea.ToString("N2", cr);
+
+                    cboEstado.SelectedItem = (Enums.Mensajes)compra.codigoMensaje;
+                    txtRazon.Text = compra.codigoMensaje == 1 ? string.Empty : compra.razon;
 
 
                 }
+                cargarLista();
             }
             catch (Exception ex)
-            {
+             {
 
                 MessageBox.Show(ex.Message);
             }
@@ -397,9 +351,42 @@ namespace PresentationLayer
         {
             try
             {
+
+                //ACTUALIZO EL ULTIMO CMBIO ANTES DE GUARDAR
+                if (txtFactura.Text != "")
+                {
+
+                    var compraAct = listaCompras.FirstOrDefault(c =>
+                    string.Equals(c.numFactura?.Trim(), txtFactura.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                    // Obtener valores actuales
+                    int nuevoCodigo = (int)cboEstado.SelectedValue;
+                    string nuevaRazon = txtRazon.Text?.Trim().ToUpper() ?? string.Empty;
+                    string razonActual = compraAct.razon?.Trim().ToUpper() ?? string.Empty;
+
+                    // Verificar cambios antes de actualizar
+                    if (compraAct.codigoMensaje != nuevoCodigo || razonActual != nuevaRazon)
+                    {
+                        compraAct.codigoMensaje = nuevoCodigo;
+
+                        // Solo guardar razón si no es código 1
+                        compraAct.razon = (nuevoCodigo != 1) ? nuevaRazon : compraAct.razon;
+                    }
+
+                }
+                cargarLista();
+
                 DialogResult resul = MessageBox.Show(" ¿Desea registrar los documentos?", "Guardar lista de compras", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                 if (resul == DialogResult.OK)
                 {
+
+                    if (!validarDatos())
+                    {
+                        return;
+                    }
+
+                  
+
                     bool bandera = true;
                     List<tbCompras> comprasListAux = new List<tbCompras>();
                     foreach (var compraGlobal in listaCompras)
@@ -480,10 +467,10 @@ namespace PresentationLayer
                     //limpiar();
                     //MessageBox.Show("Se han procesados los archivos, en segundo plano se enviarán los correos electrónicos", "Archivos procesados.", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    //BackgroundWorker tarea = new BackgroundWorker();
+                    BackgroundWorker tarea = new BackgroundWorker();
 
-                    //tarea.DoWork += reportarFacturacionElectronica;
-                    //tarea.RunWorkerAsync();
+                    tarea.DoWork += reportarFacturacionElectronica;
+                    tarea.RunWorkerAsync();
 
 
 
@@ -504,9 +491,12 @@ namespace PresentationLayer
         {
             try
             {
-                //List<tbReporteHacienda> lista = new List<tbReporteHacienda>();
-                //lista = listaCompras;
-                //facturaIns.reportarMensajesHacienda(lista);
+
+
+                facturaIns.reportarMensajesHacienda(listaCompras);
+
+            
+ 
 
 
 
@@ -830,6 +820,32 @@ namespace PresentationLayer
 
         private void label13_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((int)cboEstado.SelectedValue == 1)
+            {
+                txtRazon.Enabled = false;
+                txtRazon.Text = string.Empty;
+
+            }
+            else
+            {
+
+                //foreach (var item in listaCompras)
+                //{
+                //    if (item.claveDocEmisor.Trim() == txtClave.Text.Trim())
+                //    {
+                //        txtRazon.Text = item.razon;
+                //        break;
+
+                //    }
+                //}
+                txtRazon.Enabled = true;
+
+            }
 
         }
     }

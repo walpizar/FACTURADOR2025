@@ -984,7 +984,22 @@ namespace PresentationLayer
                     }
                     txtTel.Text = cliente.tbPersona.telefono.ToString().Trim().ToUpper();
                     txtCorreo.Text = cliente.tbPersona.correoElectronico.Trim();
-                    cargarActividades(cliente);
+                    if (cliente.contribuyente)
+                    {
+                        cargarActividades(cliente);
+                        cboActividadEconomica.Enabled = true;
+                        button1.Enabled = true;
+                    }
+                    else
+                    {
+                        cboActividadEconomica.DataSource = null;
+                        cboActividadEconomica.Items.Clear();
+
+                        cboActividadEconomica.Enabled = false;
+                        button1.Enabled = false;
+
+                    }
+
                     calcularMontosT();
 
                 }
@@ -1832,7 +1847,8 @@ namespace PresentationLayer
            
             documento.tipoMoneda = (int)Enums.TipoMoneda.CRC;
             documento.tipoCambio = 0;
-          
+
+                      
 
             documento.reporteElectronic = (bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.First().facturacionElectronica;
             documento.tipoVenta = (int)Enums.tipoVenta.Contado;
@@ -1850,10 +1866,24 @@ namespace PresentationLayer
 
             documento.codigoActividad = Global.actividadEconomic.CodActividad;
 
-            if (cboActividadEconomica.SelectedItem != null)
+            if (clienteGlo != null)
             {
-                documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                documento.idCliente = clienteGlo.id;
+                documento.tipoIdCliente = clienteGlo.tipoId;
+                documento.tbClientes = clienteGlo;
+
+
+
+                if (clienteGlo.contribuyente)
+                {
+                    if (cboActividadEconomica.SelectedItem != null)
+                    {
+                        documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                    }
+                }
+
             }
+
 
             documento.sucursal = Global.Configuracion.sucursal;
             documento.caja = Global.Configuracion.caja;
@@ -1866,14 +1896,7 @@ namespace PresentationLayer
 
             }
 
-            //cliente
-            if (clienteGlo != null)
-            {
-                documento.idCliente = clienteGlo.id;
-                documento.tipoIdCliente = clienteGlo.tipoId;
-                documento.tbClientes = clienteGlo;
-
-            }
+          
 
             if (documento.reporteElectronic)
             {

@@ -19,7 +19,7 @@ namespace PresentationLayer
         BCategoriaProducto CatProductIns = new BCategoriaProducto();
         List<tbCategoria9Cabys> lista;
 
-        public delegate void pasaDatos(string  codigo);
+        public delegate void pasaDatos(string  codigo, int tipo);
         public event pasaDatos pasarDatosEvent;
         private string codigo;
         public frmBuscarCategoriaCabys()
@@ -68,7 +68,7 @@ namespace PresentationLayer
                         item.SubItems.Add(p.impuesto.ToString().Trim());
                         string resultado = p.nombre.ToUpper().IndexOf("SERVICIO", StringComparison.OrdinalIgnoreCase) >= 0
                       ? "Servicios"
-                      : "Producto";
+                      : "Mercancía";
 
                         item.SubItems.Add(resultado);
 
@@ -132,7 +132,11 @@ namespace PresentationLayer
                 if (lstvBienServicios.SelectedItems.Count > 0)
                 {
                     codigo = lstvBienServicios.SelectedItems[0].Text;
-                    pasarDatosEvent(codigo);
+                    int tipo = lstvBienServicios.SelectedItems[0].SubItems[3].Text.Trim().ToUpper() == "SERVICIOS" ? 1 : 2;
+
+
+
+                    pasarDatosEvent(codigo, tipo);
                     this.Dispose();
 
                 }

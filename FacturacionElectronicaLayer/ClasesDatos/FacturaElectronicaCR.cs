@@ -10,6 +10,8 @@ namespace FacturacionElectronicaLayer.ClasesDatos
     using System.Diagnostics.Eventing.Reader;
     using System.Globalization;
     using System.Linq;
+    using System.Windows.Forms.VisualStyles;
+    using static CommonLayer.Enums;
     using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
     public class FacturaElectronicaCR
@@ -86,6 +88,12 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             _listaMedidas = listaMedida;
 
         }
+        public FacturaElectronicaCR(tbCompras compras)
+        {
+            _compras = compras;           
+
+        }
+
 
 
 
@@ -120,7 +128,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             }
         }
 
-        public XmlDocument CreaXMLMensajeHacienda()
+        public XmlDocument CreaXMLMensajeReceptor()
         {
             try
             {
@@ -130,7 +138,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
                 XmlDocument docXML = new XmlDocument();
 
-                GeneraXMLReceptorHacienda4_3(writer);
+                GeneraXMLMensajeReceptor4_4(writer);
 
                 mXML.Seek(0, System.IO.SeekOrigin.Begin);
 
@@ -339,11 +347,21 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
                 writer.WriteElementString("CodigoActividadEmisor", _doc.codigoActividad.Trim().PadLeft(6, '0'));
                 
+                
                 if (_doc.codigoActividadReceptor != null)
                 {
                     writer.WriteElementString("CodigoActividadReceptor", _doc.codigoActividadReceptor.Trim().PadLeft(6, '0'));
 
                 }
+                else
+                {
+                    if (_receptor != null)
+                    {
+                        _receptor.Identificacion_Tipo = "06";
+                    }
+                  
+                }
+              
             }
 
             
@@ -469,19 +487,48 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                     writer.WriteElementString("BaseImponible", (detalle.montoTotal - detalle.montoTotalDesc)
                     .ToString("F5", CultureInfo.InvariantCulture));
                 }
+
+                //valido el codigo cabys para ver el impuesto
+
+                var porcImpCabys=  detalle.tbProducto.codigoCabys;
+
                 writer.WriteStartElement("Impuesto");
                 writer.WriteElementString("Codigo", "01");
-                writer.WriteElementString("CodigoTarifaIVA", detalle.tbProducto.tbImpuestos.id.ToString().PadLeft(2, '0'));
+                var codigoExento = detalle.tbProducto.tbImpuestos.id == 1 ? 10 : detalle.tbProducto.tbImpuestos.id;
+                writer.WriteElementString("CodigoTarifaIVA", codigoExento.ToString().PadLeft(2, '0'));
                 writer.WriteElementString("Tarifa", (detalle.porcImp ?? 0m).ToString("F2", CultureInfo.InvariantCulture));
                 writer.WriteElementString("Monto", detalle.montoTotalImp.ToString("F5", CultureInfo.InvariantCulture));
                 if (detalle.montoTotalExo != 0)
                 {
                     writer.WriteStartElement("Exoneracion");
-                        writer.WriteElementString("TipoDocumento", _receptor.tipoExoneracion.PadLeft(2, '0'));
+
+                    string nombreInstitucion = (_receptor != null) ? _receptor.institucionExo : null;
+                    int codInst;
+                    if (!string.IsNullOrWhiteSpace(nombreInstitucion) && int.TryParse(nombreInstitucion, out codInst))
+                    {
+                        string friendly;
+                        if (Utility.InstitucionNombre.TryGetValue(codInst, out friendly))
+                            nombreInstitucion = friendly;
+                    }
+
+                    writer.WriteElementString("TipoDocumentoEX1", _receptor.tipoExoneracion.PadLeft(2, '0'));
                         writer.WriteElementString("NumeroDocumento", _receptor.docExoneracion.Trim());
-                        writer.WriteElementString("NombreInstitucion", _receptor.institucionExo.Trim());
-                        writer.WriteElementString("FechaEmision", _receptor.fechaEmisionExo.ToString("yyyy-MM-ddTHH:mm:sszzz"));
-                        writer.WriteElementString("PorcentajeExoneracion", (detalle.porcExo ?? 0m).ToString("F5", CultureInfo.InvariantCulture));
+
+                        if (_receptor.articulo != null)
+                        {
+                            writer.WriteElementString("Articulo", _receptor.articulo.Trim());
+
+                        }
+
+                        if (_receptor.inciso != null)
+                        {
+                            writer.WriteElementString("Inciso", _receptor.inciso.Trim());
+
+                        }
+
+                        writer.WriteElementString("NombreInstitucion", _receptor.institucionExo.Trim().PadLeft(2, '0'));
+                    writer.WriteElementString("FechaEmisionEX", _receptor.fechaEmisionExo.ToString("yyyy-MM-ddTHH:mm:sszzz"));
+                        writer.WriteElementString("TarifaExonerada", (detalle.porcExo ?? 0m).ToString("F5", CultureInfo.InvariantCulture));
                         writer.WriteElementString("MontoExoneracion", detalle.montoTotalExo.ToString("F5", CultureInfo.InvariantCulture));
                     writer.WriteEndElement();
                 }
@@ -492,7 +539,7 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 {
                     writer.WriteElementString("ImpuestoAsumidoEmisorFabrica", 0.ToString("F5", CultureInfo.InvariantCulture));
                 }
-                writer.WriteElementString("ImpuestoNeto", detalle.montoTotalImp.ToString("F5", CultureInfo.InvariantCulture));
+                writer.WriteElementString("ImpuestoNeto", (detalle.montoTotalImp- detalle.montoTotalExo).ToString("F5", CultureInfo.InvariantCulture));
 
 
 
@@ -516,58 +563,75 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
             foreach (var d in _listaDetalle)
             {
-                totalDescuento   += d.montoTotalDesc;
+
+  
+
+
+                totalDescuento += d.montoTotalDesc;
                 totalComprobante += d.totalLinea;
-                impuestosTotal   += d.montoTotalImp - d.montoTotalExo;
 
-                var porcExo = (decimal)(d.porcExo ?? 0m) / 100m;
-                var porcImp = (decimal)(d.porcImp ?? 0m) / 100m;
-                var factor = porcImp != 0m ? porcExo / porcImp : 0m;
+                var netoLinea = d.montoTotalImp - d.montoTotalExo;
+                if (netoLinea < 0) netoLinea = 0m;
+                impuestosTotal += netoLinea;
+
+                var porcExo = (decimal)(d.porcExo ?? 0m) / 100m;  // % EXO del impuesto
+                var porcImp = (decimal)(d.porcImp ?? 0m) / 100m;  // % IVA
+                var factor = (porcImp != 0m) ? (porcExo / porcImp) : 0m; // porción de base "exonerada" (0..1)
+                if (factor < 0) factor = 0m; if (factor > 1) factor = 1m;
+
                 bool isServ = _listaMedidas.Single(m => m.idTipoMedida == d.tbProducto.idMedida)
-                                     .nomenclatura.Trim().Equals("SP", StringComparison.OrdinalIgnoreCase);
+                                        .nomenclatura.Trim()
+                                        .Equals("SP", StringComparison.OrdinalIgnoreCase);
 
-                if (isServ)
+                bool esExento = (porcImp == 0m) || (d.tbProducto.esExento == true);
+                bool exonerada = (d.montoTotalExo > 0m);
+                bool noSujeto = d.tbProducto.esExento == true; // si existe esa bandera en su modelo
+
+                //if (noSujeto)
+                //{
+                //    if (isServ) totalServNoSujeta += d.montoTotal;
+                //    else totalMercNoSujeta += d.montoTotal;
+                //    continue;
+                //}
+
+                if (esExento)
                 {
-                    if (d.montoTotalImp != 0)
-                        totalServGrav += (1 - factor) * d.montoTotal;
-                    else if ((bool)d.tbProducto.esExento || porcImp==0)
+                    if (isServ) totalServExc += d.montoTotal;  // EXENTO
+                    else totalProdExc += d.montoTotal;
+                    continue;
+                }
+
+                if (exonerada && porcImp > 0m)
+                {
+                    var baseExo = factor * d.montoTotal;          // base afectada por exoneración
+                    var baseGrav = d.montoTotal - baseExo;         // parte que sigue gravada
+
+                    if (isServ)
                     {
-                        totalServNoSujeta= + d.montoTotal;
+                        totalServExo += baseExo;                  // EXONERADO
+                        totalServGrav += baseGrav;                 // GRAVADO
                     }
                     else
                     {
-                        totalServExc += d.montoTotal;
-                        totalServExo += factor * d.montoTotal;
-                    }                   
-                    
-                    //totalServExo += factor * d.montoTotal;
+                        totalProdExo += baseExo;
+                        totalProdGrav += baseGrav;
+                    }
+                    continue;
                 }
-                else
-                {
-                    if (d.montoTotalImp != 0)
-                        totalProdGrav += (1 - factor) * d.montoTotal;
-                    else if ((bool)d.tbProducto.esExento || porcImp == 0)
-                    {
-                        totalMercNoSujeta = +d.montoTotal;
 
-                    }
-                    else
-                    {
-                        totalProdExc += d.montoTotal;
-                        totalProdExo += factor * d.montoTotal;
-                    }
-               
-                }
+                // Gravado sin exoneración
+                if (isServ) totalServGrav += d.montoTotal;
+                else totalProdGrav += d.montoTotal;
             }
 
-            decimal totalGravado = totalProdGrav + totalServGrav;
-            decimal totalExento = totalProdExc  + totalServExc;
-            decimal totalExonerado = totalProdExo  + totalServExo;
-            decimal totalVenta = totalGravado + totalExento + totalExonerado;
-            decimal totalVentaNeta = totalVenta   - totalDescuento;
-            decimal totalNoSujeta = totalMercNoSujeta + totalServNoSujeta;
-            totalVenta += totalNoSujeta;
-            totalVentaNeta += totalNoSujeta;
+            // Totales
+            var totalGravado = totalProdGrav + totalServGrav;
+            var totalExento = totalProdExc + totalServExc;       // EXENTO
+            var totalExonerado = totalProdExo + totalServExo;       // EXONERADO
+            var totalNoSujeta = totalMercNoSujeta + totalServNoSujeta;
+
+            var totalVenta = totalGravado + totalExento + totalExonerado + totalNoSujeta;
+            var totalVentaNeta = totalVenta - totalDescuento;
 
             writer.WriteStartElement("ResumenFactura");
             
@@ -644,24 +708,36 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             })
             .ToList();
 
-
-        
-            foreach (var d in impuestosAgrupados)
+            // Construir items con NETO
+            var itemsImpuesto = _listaDetalle.Select(d => new
             {
+                CodigoTarifaIVA = d.tbProducto.tbImpuestos.id, // este va al XML
+                Neto = Math.Max(0m, d.montoTotalImp - d.montoTotalExo)
+            }).ToList();
 
-                writer.WriteStartElement("TotalDesgloseImpuesto");
-                writer.WriteElementString("Codigo", 01.ToString().PadLeft(2, '0'));
-                writer.WriteElementString("CodigoTarifaIVA", d.Impuestos[0].ToString().PadLeft(2, '0'));
-                writer.WriteElementString("TotalMontoImpuesto", String.Format("{0:F5}", d.Total));
-                writer.WriteEndElement();
 
+
+            var totalImpuestoNeto = itemsImpuesto.Sum(x => x.Neto);
+
+            // Escribir desglose SOLO si hay impuesto cobrado neto y no es REP
+            if ( _doc.tipoDocumento != (int)Enums.TipoDocumento.ReciboElectronicoPago)
+            {
+                foreach (var g in itemsImpuesto.GroupBy(x => x.CodigoTarifaIVA))
+                {
+                    var totalNetoTarifa = g.Sum(x => x.Neto);
+                    //if (totalNetoTarifa <= 0m &) continue; // NO generar bloques con 0
+                    var codigo = totalNetoTarifa == 0 ? "10" : g.Key.ToString().PadLeft(2, '0');
+                    writer.WriteStartElement("TotalDesgloseImpuesto");
+                    writer.WriteElementString("Codigo", "01"); // IVA
+                    writer.WriteElementString("CodigoTarifaIVA", codigo.ToString().PadLeft(2, '0'));
+                    writer.WriteElementString("TotalMontoImpuesto", totalNetoTarifa.ToString("F5", CultureInfo.InvariantCulture));
+                    writer.WriteEndElement();
+                }
             }
-        
 
+            // TotalImpuesto debe ser el neto
+            writer.WriteElementString("TotalImpuesto", totalImpuestoNeto.ToString("F5", CultureInfo.InvariantCulture));
 
-            writer.WriteElementString("TotalImpuesto", String.Format("{0:F5}", impuestosTotal));
-
-           
 
             //agrupa tipos de pago y los suma
             var pagosAgrupados = _doc.tbPagos
@@ -936,6 +1012,92 @@ namespace FacturacionElectronicaLayer.ClasesDatos
 
                 writer.WriteElementString("NumeroCedulaReceptor", _mensajeHacienda.idEmpresa.Trim());
                 writer.WriteElementString("NumeroConsecutivoReceptor", _mensajeHacienda.consecutivoReceptor.Trim());
+
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Flush();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void GeneraXMLMensajeReceptor4_4(System.Xml.XmlTextWriter writer) // As System.Xml.XmlTextWriter
+        {
+            try
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("MensajeReceptor");
+                writer.WriteAttributeString("xmlns",
+                    "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/mensajeReceptor");
+                writer.WriteAttributeString("xmlns", "ds", null,
+                    "http://www.w3.org/2000/09/xmldsig#");
+                writer.WriteAttributeString("xmlns", "vc", null,
+                    "http://www.w3.org/2007/XMLSchema-versioning");
+                writer.WriteAttributeString("xmlns", "xsi", null,
+                    "http://www.w3.org/2001/XMLSchema-instance");
+                writer.WriteAttributeString("xsi", "schemaLocation",
+                    "http://www.w3.org/2001/XMLSchema-instance",
+                    "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/mensajeReceptor " +
+                    @"C:\PCCentral\MinisterioHacienda\mhcr-xml-schemas\jaxb\MensajeReceptor\v4.4\MensajeReceptor.xsd");
+
+
+                // La clave se crea con la función CreaClave de la clase Datos
+                writer.WriteElementString("Clave", _compras.claveEmisor);
+
+                //emisor 
+                 writer.WriteElementString("NumeroCedulaEmisor", _compras.idProveedor);
+
+                
+                writer.WriteElementString("FechaEmisionDoc", _compras.fechaCompra.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
+
+
+                writer.WriteElementString("Mensaje", _compras.codigoMensaje.ToString());
+
+
+                if(_compras.codigoMensaje == 1)
+                {
+                    writer.WriteElementString("DetalleMensaje", "Documento recibido y aceptado en su totalidad.");
+
+                }
+                else
+                {
+                    writer.WriteElementString("DetalleMensaje", _compras.DetalleMensaje.ToString());
+
+                }
+
+                //totales
+
+
+                var totalImp = _compras.tbDetalleCompras.Sum(x => x.montoTotalImp);
+                var totalFact = _compras.tbDetalleCompras.Sum(x => x.montoTotalLinea);
+                if (totalImp > 0)
+                {
+                    writer.WriteElementString("MontoTotalImpuesto", totalImp.ToString("F5", CultureInfo.InvariantCulture));
+
+                }
+
+                writer.WriteElementString("CodigoActividad", _compras.CodActividad);
+                if (totalImp > 0)
+                {
+                    writer.WriteElementString("CondicionImpuesto", "01");
+
+
+                }
+
+
+                writer.WriteElementString("TotalFactura", totalFact.ToString("F5", CultureInfo.InvariantCulture));
+
+
+                //receptor
+                writer.WriteElementString("NumeroCedulaReceptor", _compras.idEmpresa);
+                writer.WriteElementString("NumeroConsecutivoReceptor", _compras.consecutivo);
+
+
+
+
 
                 writer.WriteEndElement();
                 writer.WriteEndDocument();

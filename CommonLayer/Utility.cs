@@ -19,6 +19,22 @@ namespace CommonLayer
 {
     public class Utility
     {
+        public static readonly Dictionary<int, string> InstitucionNombre = new Dictionary<int, string>
+        {
+            {1,  "Ministerio de Hacienda"},
+            {2,  "Ministerio de Relaciones Exteriores y Culto"},
+            {3,  "Ministerio de Agricultura y Ganadería"},
+            {4,  "Ministerio de Economía, Industria y Comercio"},
+            {5,  "Cruz Roja Costarricense"},
+            {6,  "Benemérito Cuerpo de Bomberos de Costa Rica"},
+            {7,  "Asociación Obras del Espíritu Santo"},
+            {8,  "Federación Cruzada Nacional de protección al Anciano (Fecrunapa)"},
+            {9,  "Escuela de Agricultura de la Región Húmeda (EARTH)"},
+            {10, "Instituto Centroamericano de Administración de Empresas (INCAE)"},
+            {11, "Junta de Protección Social (JPS)"},
+            {12, "Autoridad Reguladora de los Servicios Públicos (ARESEP)"},
+            {99, "Otros"}
+        };
         public static void ObtenerCorreosConAdjuntosXml(string email, string password)
         {
             using (var client = new ImapClient())

@@ -88,6 +88,8 @@ namespace PresentationLayer
 
                         facturaGlobal.notificarCorreo = chkCorreo.Checked;
 
+                        facturaGlobal.reporteElectronic = false;
+
                         facturacionIns.guadar(facturaGlobal);
                         try
                         {

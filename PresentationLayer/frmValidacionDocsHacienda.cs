@@ -541,7 +541,7 @@ namespace PresentationLayer
 
                 if (resp.reporteAceptaHacienda == false || resp.mensajeRespHacienda == false)
                 {
-                    facturaIns.reportarMensajesHacienda(lista);
+                  //  facturaIns.reportarMensajesHacienda(lista);
                 }
 
 
