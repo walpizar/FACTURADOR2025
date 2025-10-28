@@ -31,6 +31,9 @@ namespace PresentationLayer
             chkCierreCorreo.Visible = Global.Configuracion.aperturaCierre == 1 ? true : false ;
             lblCantComandas.Visible = chkComanda.Checked;
             mskCantComandas.Visible = chkComanda.Checked;
+            chkInvNegativo.Visible = chkManejaInventario.Checked;
+
+
             cargarDatos();
             //listainve = inveIns.GetListEntities(3);
         }
@@ -73,7 +76,10 @@ namespace PresentationLayer
                 txtPlazoCredMax.Text = parametros.plazoMaximoCredito.ToString();
                 txtPlazoMaxProf.Text = parametros.plazoMaximoProforma.ToString();
                 chkAprobDes.Checked = (bool)parametros.aprobacionDescuento;
+
                 chkManejaInventario.Checked = (bool)parametros.manejaInventario;
+                chkInvNegativo.Checked = (bool)(parametros.inventarioNegativo.HasValue ? parametros.inventarioNegativo : false);
+
                 txtPrecioBase.Text = parametros.precioBase.ToString();
                 chkFacturacionElectronica.Checked = (bool)parametros.facturacionElectronica;
                 chkObligaClienteFacturacion.Checked = (bool)parametros.clienteObligatorioFact;
@@ -88,7 +94,8 @@ namespace PresentationLayer
                 chkValidaCabys.Checked = (bool)parametros.validaCabys;
 
                 mskCantComandas.Text = parametros.cantComandas.ToString();
-
+                
+                
                 chkAprobacionEliminar.Checked = (bool)parametros.aprobarEliminar;
                 chkCierreCajaAdmin.Checked = (bool)parametros.cierreCajaAdmin;
                 chkPrecioVariable.Checked = (bool)parametros.precioVariable;
@@ -217,6 +224,7 @@ namespace PresentationLayer
                        // parametros.inicioCierreCaja = chkInicioCierreCaja.Checked;
                         parametros.aprobacionDescuento = chkAprobDes.Checked;
                         parametros.manejaInventario = chkManejaInventario.Checked;
+                        parametros.inventarioNegativo = chkInvNegativo.Checked;
                         parametros.facturacionElectronica = chkFacturacionElectronica.Checked;
                         parametros.clienteObligatorioFact = chkObligaClienteFacturacion.Checked;
 
@@ -452,6 +460,11 @@ namespace PresentationLayer
                 mskCantComandas.Text = parametrosGlobal.cantComandas.ToString();
             }
           
+        }
+
+        private void chkManejaInventario_CheckedChanged(object sender, EventArgs e)
+        {
+           chkInvNegativo.Visible= chkManejaInventario.Checked;
         }
     }
 }

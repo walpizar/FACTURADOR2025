@@ -44,6 +44,7 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tlsBtnSalir = new System.Windows.Forms.ToolStripButton();
             this.gbxDatos = new System.Windows.Forms.GroupBox();
+            this.chkValidaCabys = new System.Windows.Forms.CheckBox();
             this.chkEtiquetas = new System.Windows.Forms.CheckBox();
             this.chkPromociones = new System.Windows.Forms.CheckBox();
             this.chkPrecioVariable = new System.Windows.Forms.CheckBox();
@@ -90,7 +91,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkValidaCabys = new System.Windows.Forms.CheckBox();
+            this.chkInvNegativo = new System.Windows.Forms.CheckBox();
             this.tlsMenu.SuspendLayout();
             this.gbxDatos.SuspendLayout();
             this.SuspendLayout();
@@ -221,6 +222,7 @@
             // 
             // gbxDatos
             // 
+            this.gbxDatos.Controls.Add(this.chkInvNegativo);
             this.gbxDatos.Controls.Add(this.chkValidaCabys);
             this.gbxDatos.Controls.Add(this.chkEtiquetas);
             this.gbxDatos.Controls.Add(this.chkPromociones);
@@ -276,10 +278,21 @@
             this.gbxDatos.TabStop = false;
             this.gbxDatos.Text = "Parámetros Empresa";
             // 
+            // chkValidaCabys
+            // 
+            this.chkValidaCabys.AutoSize = true;
+            this.chkValidaCabys.Location = new System.Drawing.Point(262, 324);
+            this.chkValidaCabys.Margin = new System.Windows.Forms.Padding(2);
+            this.chkValidaCabys.Name = "chkValidaCabys";
+            this.chkValidaCabys.Size = new System.Drawing.Size(146, 17);
+            this.chkValidaCabys.TabIndex = 89;
+            this.chkValidaCabys.Text = "Valida CABYS al Facturar";
+            this.chkValidaCabys.UseVisualStyleBackColor = true;
+            // 
             // chkEtiquetas
             // 
             this.chkEtiquetas.AutoSize = true;
-            this.chkEtiquetas.Location = new System.Drawing.Point(234, 280);
+            this.chkEtiquetas.Location = new System.Drawing.Point(262, 281);
             this.chkEtiquetas.Margin = new System.Windows.Forms.Padding(2);
             this.chkEtiquetas.Name = "chkEtiquetas";
             this.chkEtiquetas.Size = new System.Drawing.Size(70, 17);
@@ -290,7 +303,7 @@
             // chkPromociones
             // 
             this.chkPromociones.AutoSize = true;
-            this.chkPromociones.Location = new System.Drawing.Point(234, 302);
+            this.chkPromociones.Location = new System.Drawing.Point(262, 303);
             this.chkPromociones.Margin = new System.Windows.Forms.Padding(2);
             this.chkPromociones.Name = "chkPromociones";
             this.chkPromociones.Size = new System.Drawing.Size(87, 17);
@@ -634,6 +647,7 @@
             this.chkManejaInventario.TabIndex = 49;
             this.chkManejaInventario.Text = "Maneja Inventario";
             this.chkManejaInventario.UseVisualStyleBackColor = true;
+            this.chkManejaInventario.CheckedChanged += new System.EventHandler(this.chkManejaInventario_CheckedChanged);
             // 
             // txtPlazoCredMax
             // 
@@ -717,16 +731,16 @@
             this.label15.TabIndex = 40;
             this.label15.Text = "Plazo Máximo Proformas:";
             // 
-            // chkValidaCabys
+            // chkInvNegativo
             // 
-            this.chkValidaCabys.AutoSize = true;
-            this.chkValidaCabys.Location = new System.Drawing.Point(234, 323);
-            this.chkValidaCabys.Margin = new System.Windows.Forms.Padding(2);
-            this.chkValidaCabys.Name = "chkValidaCabys";
-            this.chkValidaCabys.Size = new System.Drawing.Size(146, 17);
-            this.chkValidaCabys.TabIndex = 89;
-            this.chkValidaCabys.Text = "Valida CABYS al Facturar";
-            this.chkValidaCabys.UseVisualStyleBackColor = true;
+            this.chkInvNegativo.AutoSize = true;
+            this.chkInvNegativo.Location = new System.Drawing.Point(114, 301);
+            this.chkInvNegativo.Margin = new System.Windows.Forms.Padding(2);
+            this.chkInvNegativo.Name = "chkInvNegativo";
+            this.chkInvNegativo.Size = new System.Drawing.Size(119, 17);
+            this.chkInvNegativo.TabIndex = 90;
+            this.chkInvNegativo.Text = "Inventario Negativo";
+            this.chkInvNegativo.UseVisualStyleBackColor = true;
             // 
             // frmParametrosEmpresa
             // 
@@ -813,5 +827,6 @@
         private System.Windows.Forms.CheckBox chkEtiquetas;
         private System.Windows.Forms.CheckBox chkPromociones;
         private System.Windows.Forms.CheckBox chkValidaCabys;
+        private System.Windows.Forms.CheckBox chkInvNegativo;
     }
 }

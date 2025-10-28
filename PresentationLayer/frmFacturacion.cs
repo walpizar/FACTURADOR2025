@@ -1358,8 +1358,22 @@ namespace PresentationLayer
         {
             bool verificar = true;
             decimal cantidad = 0;
+            bool inventarioNeg = false;
 
             bool verificaInventario = (bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.First().manejaInventario;
+
+            if (verificaInventario)
+            {
+                inventarioNeg = Global.Usuario.tbEmpresa
+                 ?.tbParametrosEmpresa
+                 ?.FirstOrDefault()
+                 ?.inventarioNegativo ?? false;
+
+                if (inventarioNeg)
+                    return true;
+
+            }
+
             decimal cantidadInventario = (decimal)pro.tbInventario.cantidad;
             if (verificaInventario)
             {
@@ -1392,7 +1406,6 @@ namespace PresentationLayer
                 }
 
             }
-
 
             return verificar;
 
