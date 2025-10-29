@@ -445,7 +445,7 @@ namespace PresentationLayer
                     }
                     else
                     {
-                        Reporte = new rptFacturaESinCliente1();
+                        Reporte = new rptFacturaESinCliente();
                         Reportes.dsReportesTableAdapters.sp_FacturaElectronicaSinClienteTableAdapter dt = new Reportes.dsReportesTableAdapters.sp_FacturaElectronicaSinClienteTableAdapter();
                         dt.Connection = _SqlConnection;
                         dt.Fill(ds.sp_FacturaElectronicaSinCliente, doc.id, doc.tipoDocumento);

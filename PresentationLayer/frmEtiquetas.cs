@@ -1,6 +1,5 @@
 ﻿using BusinessLayer;
 using CommonLayer;
-using CrystalDecisions.ReportAppServer.ReportDefModel;
 using EntityLayer;
 using PresentationLayer.Reportes;
 using System;

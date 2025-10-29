@@ -16,9 +16,9 @@ namespace PresentationLayer.Reportes {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class rptFacturaESinCliente1 : ReportClass {
+    public class rptFacturaESinCliente : ReportClass {
         
-        public rptFacturaESinCliente1() {
+        public rptFacturaESinCliente() {
         }
         
         public override string ResourceName {
@@ -98,9 +98,9 @@ namespace PresentationLayer.Reportes {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedrptFacturaESinCliente1 : Component, ICachedReport {
+    public class CachedrptFacturaESinCliente : Component, ICachedReport {
         
-        public CachedrptFacturaESinCliente1() {
+        public CachedrptFacturaESinCliente() {
         }
         
         [Browsable(false)]
