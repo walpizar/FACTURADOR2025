@@ -376,6 +376,11 @@ namespace BusinessLayer
 
             return DFacturaIns.getEntityByKey(id, tipoDoc);
         }
+        public tbDocumento getEntityByKeyNumber(string id)
+        {
+
+            return DFacturaIns.getEntityByKeyNumber(id);
+        }
         public IEnumerable<tbDocumento> listaFacturas()
         {
 

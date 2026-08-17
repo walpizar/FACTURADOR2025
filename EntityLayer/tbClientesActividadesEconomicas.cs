@@ -12,24 +12,19 @@ namespace EntityLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class tbUsuarios
+    public partial class tbClientesActividadesEconomicas
     {
-        public int tipoId { get; set; }
-        public string id { get; set; }
-        public string nombreUsuario { get; set; }
-        public string contraseña { get; set; }
-        public int idRol { get; set; }
-        public string foto_url { get; set; }
-        public string idEmpresa { get; set; }
-        public Nullable<int> idTipoIdEmpresa { get; set; }
+        public int id { get; set; }
+        public string idCliente { get; set; }
+        public int tipoIdCliente { get; set; }
+        public string CodigoCIIU { get; set; }
+        public bool esPrincipal { get; set; }
         public bool estado { get; set; }
         public System.DateTime fecha_crea { get; set; }
-        public System.DateTime fecha_ult_mod { get; set; }
+        public Nullable<System.DateTime> fecha_ult_mod { get; set; }
         public string usuario_crea { get; set; }
         public string usuario_ult_mod { get; set; }
     
-        public virtual tbEmpresa tbEmpresa { get; set; }
-        public virtual tbRoles tbRoles { get; set; }
-        public virtual tbPersona tbPersona { get; set; }
+        public virtual tbClientes tbClientes { get; set; }
     }
 }

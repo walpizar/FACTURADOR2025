@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -19,6 +20,95 @@ namespace CommonLayer
 {
     public class Utility
     {
+
+        public static string ObtenerTipoCabys(string codigoCabys)
+        {
+            if (string.IsNullOrWhiteSpace(codigoCabys))
+                return "CABYS inválido";
+
+            codigoCabys = codigoCabys.Trim();
+
+            if (!codigoCabys.All(char.IsDigit) || codigoCabys.Length != 13)
+                return "CABYS inválido";
+
+            char primerDigito = codigoCabys[0];
+
+            if (primerDigito >= '0' && primerDigito <= '4')
+                return "Mercancía";
+
+            if (primerDigito >= '5' && primerDigito <= '9')
+                return "Servicio";
+
+            return "CABYS inválido";
+        }
+
+        // ============================================================
+        // Agregar este método dentro de la clase Utility existente en
+        // CommonLayer (junto a isValidEmail, getDate, ResetForm, etc.).
+        // Requiere: using System.Text.RegularExpressions;
+        // ============================================================
+
+        /// <summary>
+        /// Valida que el código CABYS tenga formato correcto (13 dígitos) y que
+        /// corresponda al tipo de unidad de medida seleccionada:
+        /// - Si la unidad de medida es "SERVICIOS PROFESIONALES", el CABYS debe
+        ///   ser de servicio (primer dígito 5-9).
+        /// - Para cualquier otra unidad de medida, el CABYS debe ser de mercancía
+        ///   (primer dígito 0-4).
+        ///
+        /// Regla de clasificación por primer dígito confirmada en el documento
+        /// oficial "Anexos y Estructuras V4.4" de Hacienda (campo Partida
+        /// Arancelaria): "...que el primer digito del código CABYS sea 0, 1, 2, 3
+        /// y 4 (bienes)." Por eliminación, 5-9 se consideran servicios.
+        /// </summary>
+        /// <param name="codigoCabys">Código CABYS ingresado en el producto (se espera 13 dígitos).</param>
+        /// <param name="nombreMedida">Texto de la unidad de medida seleccionada (cboMedida.Text).</param>
+        /// <param name="mensaje">Mensaje de error a mostrar si la validación falla; null si es válido.</param>
+        /// <returns>true si el código CABYS es válido y coherente con la unidad de medida.</returns>
+        public static bool ValidarCabysCategoria(string codigoCabys, string nombreMedida, out string mensaje)
+        {
+            // 1) Formato: 13 dígitos numéricos exactos (regla dura de Hacienda)
+            if (string.IsNullOrWhiteSpace(codigoCabys) ||
+                !System.Text.RegularExpressions.Regex.IsMatch(codigoCabys.Trim(), @"^\d{13}$"))
+            {
+                mensaje = "El código CABYS debe tener exactamente 13 dígitos numéricos.";
+                return false;
+            }
+
+            char primerDigito = codigoCabys.Trim()[0];
+            bool codigoEsMercancia = primerDigito >= '0' && primerDigito <= '4';
+            bool codigoEsServicio = primerDigito >= '5' && primerDigito <= '9';
+
+            // 2) La unidad de medida "Servicios Profesionales" (nomenclatura "Sp")
+            //    es la que marca que el producto/línea es de tipo servicio.
+            //    Si tenés más unidades de servicio (horas, otros servicios, etc.),
+            //    agregalas a este arreglo.
+            string[] medidasDeServicio = { "SERVICIOS PROFESIONALES" };
+
+            bool medidaEsDeServicio = !string.IsNullOrWhiteSpace(nombreMedida) &&
+                medidasDeServicio.Any(m => string.Equals(m, nombreMedida.Trim(), System.StringComparison.OrdinalIgnoreCase));
+
+            if (medidaEsDeServicio && !codigoEsServicio)
+            {
+                mensaje = "La unidad de medida es 'Servicios Profesionales', pero el código CABYS " +
+                          "ingresado corresponde a una Mercancía (su primer dígito debe ser 5-9 para servicios). " +
+                          "Verifique el código CABYS.";
+                return false;
+            }
+
+            if (!medidaEsDeServicio && !codigoEsMercancia)
+            {
+                mensaje = "El código CABYS ingresado corresponde a un Servicio (primer dígito 5-9), pero la " +
+                          "unidad de medida seleccionada no es 'Servicios Profesionales'. Verifique el código " +
+                          "CABYS o cambie la unidad de medida.";
+                return false;
+            }
+
+            mensaje = null;
+            return true;
+        }
+
+
         public static readonly Dictionary<int, string> InstitucionNombre = new Dictionary<int, string>
         {
             {1,  "Ministerio de Hacienda"},
@@ -149,6 +239,10 @@ namespace CommonLayer
             NumberFormatInfo formato = culture1.NumberFormat;
             return myNumber.ToString("N", formato);
 
+        }
+        public static string QuatityFormat(decimal myNumber)
+        {
+            return myNumber.ToString("N3", CultureInfo.CurrentCulture);
         }
         //public byte[] ImageToByteArray(System.Drawing.Image imageIn)
         //{

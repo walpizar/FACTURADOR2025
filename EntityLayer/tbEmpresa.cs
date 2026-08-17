@@ -45,7 +45,6 @@ namespace EntityLayer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbDocumento> tbDocumento { get; set; }
-        public virtual tbPersona tbPersona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbEmpresaActividades> tbEmpresaActividades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -56,5 +55,6 @@ namespace EntityLayer
         public virtual ICollection<tbReporteHacienda> tbReporteHacienda { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
+        public virtual tbPersona tbPersona { get; set; }
     }
 }

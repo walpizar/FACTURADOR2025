@@ -27,8 +27,8 @@ namespace EntityLayer
         public Nullable<int> porcExo { get; set; }
         public decimal montoTotalExo { get; set; }
         public decimal totalLinea { get; set; }
-        public string comentario { get; set; }
         public Nullable<decimal> precioCosto { get; set; }
+        public string comentario { get; set; }
     
         public virtual tbDocumentosPendiente tbDocumentosPendiente { get; set; }
         public virtual tbProducto tbProducto { get; set; }

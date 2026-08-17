@@ -2,11 +2,19 @@
 using CommonLayer.Exceptions.BussinessExceptions;
 using CommonLayer.Exceptions.PresentationsExceptions;
 using CommonLayer.Logs;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Xml;
+using static CommonLayer.Enums;
+
+
+
+
 
 namespace PresentationLayer.Clases
 {
@@ -104,12 +112,14 @@ namespace PresentationLayer.Clases
             }
             catch (EnvioCorreoException ex)
             {
-               
+                clsEvento evento = new clsEvento(ex.Message, "1");
                 throw ex;
             }
             
             catch (Exception ex)
             {
+
+                clsEvento evento = new clsEvento(ex.Message, "1");
                 // clsEvento evento = new clsEvento(ex.Message, "1");
                 throw ex;
             }
@@ -121,257 +131,316 @@ namespace PresentationLayer.Clases
 
         private static List<string> generarAdjuntos()
         {
-            List<string> adjuntos = new List<string>();
+            var adjuntos = new List<string>();
+
             try
             {
+                if (!_docImp.cargarAdjuntos)
+                    return adjuntos;
 
-
-                if (_docImp.cargarAdjuntos)
+                // FACTURA / TIQUETE / NC / ND / PROFORMA
+                if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.factura)
                 {
-                    if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.factura)
+                    string directorio = (Global.Usuario.tbEmpresa.rutaCertificado ?? string.Empty).Trim();
+                    AsegurarDirectorio(directorio);
+
+                    string nombreArchivo = _docImp.doc.consecutivo;
+                   string tipoDoc = Utility.getPrefixTypeDoc(_docImp.doc.tipoDocumento);
+
+                    // 1) PDF (puede venir bloqueado si el generador no liberó stream)
+                    string pdfFactura = clsPDF.generarPDFFactura(_docImp.doc, _precios);
+                    if (!string.IsNullOrWhiteSpace(pdfFactura))
                     {
-                       
-                        string directorio = Global.Usuario.tbEmpresa.rutaCertificado.Trim();
-                        string nombreArchivo = _docImp.doc.consecutivo;
-                        string tipoDoc = Utility.getPrefixTypeDoc(_docImp.doc.tipoDocumento);
-                        XmlDocument xml;
-
-
-                        string pdfFactura = clsPDF.generarPDFFactura(_docImp.doc, _precios);
-                        if (pdfFactura != string.Empty)
-                        {
-                            adjuntos.Add(pdfFactura);
-                        }
-                        if (_docImp.doc.tipoDocumento != (int)Enums.TipoDocumento.Proforma)
-                        {
-
-                            if (_docImp.doc.xmlFirmado != null)
-                            {
-                                xml = Utility.DecodeBase64ToXML(_docImp.doc.xmlFirmado);
-                                string archivo = (directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml"));
-                                if (!File.Exists(archivo))
-                                {
-                                    xml.Save((directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml")));
-                                    XmlTextWriter xmlTextWriter = new XmlTextWriter((directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml")), new System.Text.UTF8Encoding(false));
-                                    xml.WriteTo(xmlTextWriter);
-                                    xmlTextWriter.Close();
-
-                                }
-
-                                adjuntos.Add(archivo);
-                            }
-
-                            if (_docImp.doc.xmlRespuesta != null)
-                            {
-                                xml = Utility.DecodeBase64ToXML(_docImp.doc.xmlRespuesta);
-                                string archivo = (directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml"));
-                                if (!File.Exists(archivo))
-                                {
-                                    xml.Save((directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml")));
-                                    XmlTextWriter xmlTextWriter = new XmlTextWriter((directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml")), new System.Text.UTF8Encoding(false));
-                                    xml.WriteTo(xmlTextWriter);
-                                    xmlTextWriter.Close();
-
-                                }
-
-                                adjuntos.Add(archivo);
-
-                            }
-
-                        }
-
+                        // Reintento corto por si el PDF está “terminando de cerrarse”
+                        EsperarArchivoListo(pdfFactura, 4000);
+                        adjuntos.Add(pdfFactura);
                     }
-                    //adjuntos mensajes
-                    else if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.mensaje)
+
+                    // 2) XMLs (solo si NO es proforma)
+                    if (_docImp.doc.tipoDocumento != (int)Enums.TipoDocumento.Proforma)
                     {
-                        string directorio = Global.Usuario.tbEmpresa.rutaCertificado.Trim() + Global.Usuario.tbEmpresa.rutaXMLCompras.Trim();
-                        string nombreArchivo = _docImp.msj.consecutivoReceptor;
-                        string tipoDoc = "_MS";
-                        string reporte = _docImp.msj.estadoRecibido == (int)Enums.EstadoRespuestaHacienda.Aceptado ? Enum.GetName(typeof(Enums.EstadoRespuestaHacienda), _docImp.msj.estadoRecibido).ToUpper() : Enum.GetName(typeof(Enums.EstadoRespuestaHacienda), _docImp.msj.estadoRecibido).ToUpper() + ". Razón:" + _docImp.msj.razon.Trim().ToUpper() + ".Favor de emitir la respectiva NOTA DE CRÉDITO con su respectiva corrección. ";
-                        _mensaje = $"Se ha procesado el documento Clave: {_docImp.msj.claveDocEmisor}, con el Monto:{_docImp.msj.totalFactura} e impuestos:{_docImp.msj.totalImp}. Se ha reportado en un estado: {reporte}. Gracias.";
-                        _subject = $"Acuse documento recibido CLAVE:{_docImp.msj.claveDocEmisor}. " + _subject;
-                        XmlDocument xml;
-                        if (_docImp.msj.xmlFirmado != null)
+                        if (_docImp.doc.xmlFirmado != null)
                         {
-                            xml = Utility.DecodeBase64ToXML(_docImp.msj.xmlFirmado);
-                            string archivo = (directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml"));
-                            if (!File.Exists(archivo))
-                            {
-                                xml.Save((directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml")));
-                                XmlTextWriter xmlTextWriter = new XmlTextWriter((directorio + (nombreArchivo + tipoDoc + "_02_Firmado.xml")), new System.Text.UTF8Encoding(false));
-                                xml.WriteTo(xmlTextWriter);
-                                xmlTextWriter.Dispose();
-                            }
-
-                            adjuntos.Add(archivo);
+                            var xmlFirmado = Utility.DecodeBase64ToXML(_docImp.doc.xmlFirmado);
+                            string rutaFirmado = Path.Combine(directorio, nombreArchivo + tipoDoc + "_02_Firmado.xml");
+                            GuardarXmlSeguro(xmlFirmado, rutaFirmado);
+                            adjuntos.Add(rutaFirmado);
                         }
 
-                        if (_docImp.msj.xmlRespuesta != null)
+                        if (_docImp.doc.xmlRespuesta != null)
                         {
-
-
-                            xml = Utility.DecodeBase64ToXML(_docImp.msj.xmlRespuesta);
-                            string archivo = (directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml"));
-                            if (!File.Exists(archivo))
-                            {
-                                xml.Save((directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml")));
-                                XmlTextWriter xmlTextWriter = new XmlTextWriter((directorio + (nombreArchivo + tipoDoc + "_05_RESP.xml")), new System.Text.UTF8Encoding(false));
-                                xml.WriteTo(xmlTextWriter);
-                                xmlTextWriter.Dispose();
-
-                            }
-                            adjuntos.Add(archivo);
+                            var xmlResp = Utility.DecodeBase64ToXML(_docImp.doc.xmlRespuesta);
+                            string rutaResp = Path.Combine(directorio, nombreArchivo + tipoDoc + "_05_RESP.xml");
+                            GuardarXmlSeguro(xmlResp, rutaResp);
+                            adjuntos.Add(rutaResp);
                         }
-                    }
-                    else if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.ordenCompra)
-                    {
-
-                        _subject = "Orden de Compra #" + _docImp.ordenCompra.id;
-                        _mensaje = "Estimado proveedor, se adjunta orden de compra para su atención. Gracias.";
-
-
-
-
-                        string directorio = Global.Usuario.tbEmpresa.rutaCertificado.Trim();
-                        string nombreArchivo = _docImp.ordenCompra.id.ToString();
-                        string tipoDoc = Utility.getPrefixTypeDoc((int)Enums.TipoDocumento.OrdenCompra);
-
-
-                        string pdfFactura = clsPDF.generarPDFOrdenCompra(_docImp.ordenCompra);
-                        if (pdfFactura != string.Empty)
-                        {
-                            adjuntos.Add(pdfFactura);
-                        }
-
                     }
                 }
+                // MENSAJE (acuse)
+                else if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.mensaje)
+                {
+                    string directorioBase = (Global.Usuario.tbEmpresa.rutaCertificado ?? string.Empty).Trim();
+                    string subRuta = (Global.Usuario.tbEmpresa.rutaXMLCompras ?? string.Empty).Trim();
+
+                    string directorio = Path.Combine(directorioBase, subRuta);
+                    AsegurarDirectorio(directorio);
+
+                    string nombreArchivo = _docImp.msj.consecutivoReceptor;
+                    string tipoDoc = "_MS";
+
+                    string estado = Enum.GetName(typeof(Enums.EstadoRespuestaHacienda), _docImp.msj.estadoRecibido).ToUpper();
+                    string reporte = (_docImp.msj.estadoRecibido == (int)Enums.EstadoRespuestaHacienda.Aceptado)
+                        ? estado
+                        : estado + ". Razón:" + (_docImp.msj.razon ?? string.Empty).Trim().ToUpper() +
+                          ".Favor de emitir la respectiva NOTA DE CRÉDITO con su respectiva corrección. ";
+
+                    _mensaje = string.Format(
+                        "Se ha procesado el documento Clave: {0}, con el Monto:{1} e impuestos:{2}. Se ha reportado en un estado: {3}. Gracias.",
+                        _docImp.msj.claveDocEmisor,
+                        _docImp.msj.totalFactura,
+                        _docImp.msj.totalImp,
+                        reporte
+                    );
+
+                    _subject = "Acuse documento recibido CLAVE:" + _docImp.msj.claveDocEmisor + ". " + _subject;
+
+                    if (_docImp.msj.xmlFirmado != null)
+                    {
+                        var xmlFirmado = Utility.DecodeBase64ToXML(_docImp.msj.xmlFirmado);
+                        string rutaFirmado = Path.Combine(directorio, nombreArchivo + tipoDoc + "_02_Firmado.xml");
+                        GuardarXmlSeguro(xmlFirmado, rutaFirmado);
+                        adjuntos.Add(rutaFirmado);
+                    }
+
+                    if (_docImp.msj.xmlRespuesta != null)
+                    {
+                        var xmlResp = Utility.DecodeBase64ToXML(_docImp.msj.xmlRespuesta);
+                        string rutaResp = Path.Combine(directorio, nombreArchivo + tipoDoc + "_05_RESP.xml");
+                        GuardarXmlSeguro(xmlResp, rutaResp);
+                        adjuntos.Add(rutaResp);
+                    }
+                }
+                // ORDEN DE COMPRA
+                else if (_docImp.tipoAdjuntos == (int)Enums.tipoAdjunto.ordenCompra)
+                {
+                    _subject = "Orden de Compra #" + _docImp.ordenCompra.id;
+                    _mensaje = "Estimado proveedor, se adjunta orden de compra para su atención. Gracias.";
+
+                    string directorio = (Global.Usuario.tbEmpresa.rutaCertificado ?? string.Empty).Trim();
+                    AsegurarDirectorio(directorio);
+
+                    string pdf = clsPDF.generarPDFOrdenCompra(_docImp.ordenCompra);
+                    if (!string.IsNullOrWhiteSpace(pdf))
+                    {
+                        EsperarArchivoListo(pdf, 4000);
+                        adjuntos.Add(pdf);
+                    }
+                }
+
+                return adjuntos;
             }
             catch (Exception ex)
             {
                 clsEvento evento = new clsEvento(ex.Message, "1");
-                throw ex;
+                throw;
             }
-            return adjuntos;
+        }
+
+        private static void AsegurarDirectorio(string directorio)
+        {
+            if (string.IsNullOrWhiteSpace(directorio))
+                throw new DirectoryNotFoundException("Directorio no válido para guardar adjuntos.");
+
+            if (!Directory.Exists(directorio))
+                Directory.CreateDirectory(directorio);
+        }
+        private static void GuardarXmlSeguro(XmlDocument xml, string ruta)
+        {
+            // Si ya existe, igual se puede adjuntar; si quieres sobrescribir, cambia la lógica.
+            if (File.Exists(ruta))
+                return;
+
+            // Reintentos por si hay lock momentáneo (antivirus, indexador, etc.)
+            int intentos = 6;       // ~3 segundos (6 * 500ms)
+            int esperaMs = 500;
+
+            for (int i = 0; i < intentos; i++)
+            {
+                try
+                {
+                    using (var fs = new FileStream(ruta, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
+                    using (var writer = new XmlTextWriter(fs, new System.Text.UTF8Encoding(false)))
+                    {
+                        writer.Formatting = Formatting.Indented;
+                        xml.WriteTo(writer);
+                        writer.Flush();
+                    }
+                    return;
+                }
+                catch (IOException)
+                {
+                    System.Threading.Thread.Sleep(esperaMs);
+                }
+            }
+
+            // Último intento: si sigue fallando, explota con mensaje claro
+            throw new IOException("No se pudo guardar el XML porque el archivo está en uso o no se pudo crear: " + ruta);
+        }
+
+        private static void EsperarArchivoListo(string ruta, int msMax)
+        {
+            int transcurrido = 0;
+            while (transcurrido < msMax)
+            {
+                if (File.Exists(ruta) && !EstaBloqueado(ruta))
+                    return;
+
+                System.Threading.Thread.Sleep(300);
+                transcurrido += 300;
+            }
+            // No se lanza excepción aquí para no romper flujo; si quieres que sea estricto, lanza IOException
+        }
+        private static bool EstaBloqueado(string ruta)
+        {
+            FileStream fs = null;
+            try
+            {
+                fs = new FileStream(ruta, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                return false;
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (fs != null) fs.Dispose();
+            }
         }
 
 
 
+private static bool enviar()
+    {
+        List<string> archivosTemporales = new List<string>();
 
-        private static bool enviar()
+        try
         {
-            bool ok = false;
-            try
+            using (var mmsg = new System.Net.Mail.MailMessage())
             {
-                //Creamos un nuevo Objeto de mensaje
-                System.Net.Mail.MailMessage mmsg = new System.Net.Mail.MailMessage();
-
-                //Direccion de correo electronico a la que queremos enviar el mensaje
                 foreach (string item in _docImp.correoDestino)
-                {
                     mmsg.To.Add(item);
-                }
 
-
-                //Nota: La propiedad To es una colección que permite enviar el mensaje a más de un destinatario
-
-                //Asunto
                 mmsg.Subject = _subject;
                 mmsg.SubjectEncoding = System.Text.Encoding.UTF8;
 
-                ////Direccion de correo electronico que queremos que reciba una copia del mensaje
-                //mmsg.Bcc.Add(_destinoCorreo); //Opcional
-
-                //Cuerpo del Mensaje
                 mmsg.Body = _mensaje;
                 mmsg.BodyEncoding = System.Text.Encoding.UTF8;
-                mmsg.IsBodyHtml = false; //Si no queremos que se envíe como HTML
+                mmsg.IsBodyHtml = false;
 
-                //Correo electronico desde la que enviamos el mensaje
                 mmsg.From = new System.Net.Mail.MailAddress(_envioCorreo);
-                try
+
+                // ====== ADJUNTOS CON COPIA TEMPORAL ======
+                if (_adjuntos != null)
                 {
-                    if (_adjuntos != null)
+                    foreach (var rutaOriginal in _adjuntos)
                     {
+                        if (!File.Exists(rutaOriginal))
+                            throw new FileNotFoundException("No existe el archivo: " + rutaOriginal);
 
-                        foreach (var item in _adjuntos)
-                        {
-                            mmsg.Attachments.Add(new Attachment(item));
-                        }
+                            string baseName = Path.GetFileNameWithoutExtension(rutaOriginal);
+                            string ext = Path.GetExtension(rutaOriginal);
+                            string nombreTemp = $"{baseName}{ext}";
+                            string rutaTemp = Path.Combine(Path.GetTempPath(), nombreTemp);
 
+                            // Pequeña espera por si el generador aún está liberando el archivo
+                            System.Threading.Thread.Sleep(300);
+
+                        File.Copy(rutaOriginal, rutaTemp, true);
+
+                        archivosTemporales.Add(rutaTemp);
+
+                        mmsg.Attachments.Add(new Attachment(rutaTemp));
+                    }
+                }
+
+                // Convertir MailMessage -> MimeMessage (MailKit)
+                MimeMessage mensaje = MimeMessage.CreateFromMailMessage(mmsg);
+
+                // ====== AQUÍ SÍ: MailKit SmtpClient ======
+                using (var cliente = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    string host = "";
+                    int port = 0;
+                    SecureSocketOptions security = SecureSocketOptions.StartTls;
+
+                    if (_envioCorreo.Contains("hotmail.com") ||
+                        _envioCorreo.Contains("outlook.com") ||
+                        _envioCorreo.Contains("live.com"))
+                    {
+                        host = "smtp-mail.outlook.com";
+                        port = 587;
+                        security = SecureSocketOptions.StartTls;
+                    }
+                    else if (_envioCorreo.Contains("gmail.com"))
+                    {
+                        host = "smtp.gmail.com";
+                        port = 587;
+                        security = SecureSocketOptions.StartTls;
+                    }
+                    else if (_envioCorreo.Contains("espartanosolutions.com"))
+                    {
+                        host = "mail.espartanosolutions.com";
+                        port = 465; // recomendado por el proveedor
+                        security = SecureSocketOptions.SslOnConnect;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Dominio de correo no soportado para configuración SMTP: " + _envioCorreo);
                     }
 
+                        // (Opcional) evita algunos fallos por OAuth2/modern auth cuando usted usa usuario/clave
+                        cliente.CheckCertificateRevocation = false;
+                        cliente.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                    cliente.Connect(host, port, security);
+
+                    // Autenticación requerida según el proveedor
+                    cliente.Authenticate(_envioCorreo, _contrasena);
+
+                    cliente.Send(mensaje);
+
+                    cliente.Disconnect(true);
                 }
-                catch (Exception)
+            }
 
-                {
-
-
-                }
-
-                /*-------------------------CLIENTE DE CORREO----------------------*/
-
-
-                //Creamos un objeto de cliente de correo
-                System.Net.Mail.SmtpClient cliente = new System.Net.Mail.SmtpClient();
-
-                //Hay que crear las credenciales del correo emisor
-                cliente.Credentials =
-                    new System.Net.NetworkCredential(_envioCorreo, _contrasena);
-                cliente.EnableSsl = true;
-                //Lo siguiente es obligatorio si enviamos el mensaje desde Gmail
-                if (_envioCorreo.Contains("hotmail.com") || _envioCorreo.Contains("outlook.com") || _envioCorreo.Contains("live.com"))
-                {
-                    cliente.Port = 587;
-                    cliente.Host = "smtp-mail.outlook.com";
-                }
-                else if (_envioCorreo.Contains("gmail.com"))
-                {
-                    cliente.Port = 587;
-                    cliente.Host = "smtp.gmail.com"; //Para Gmail "smtp.gmail.com";
-
-
-                }else if (_envioCorreo.Contains("espartanosolutions.com"))
-                {
-                    cliente.Port = 26;
-                    cliente.Host = "mail.espartanosolutions.com"; //Para Gmail "smtp.gmail.com";
-                    cliente.EnableSsl = false;
-
-                }
-               
-
-                //cliente.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //cliente.UseDefaultCredentials = false;
-                /*-------------------------ENVIO DE CORREO----------------------*/
-
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // visor de sucesos
+            clsEvento evento = new clsEvento(ex.Message, "1");
+            throw new EnvioCorreoException(ex);
+        }
+        finally
+        {
+            // ====== LIMPIEZA DE ARCHIVOS TEMPORALES ======
+            foreach (var temp in archivosTemporales)
+            {
                 try
                 {
-                    //Enviamos el mensaje      
-                    cliente.Send(mmsg);
+                    if (File.Exists(temp))
+                        File.Delete(temp);
                 }
-                catch (System.Net.Mail.SmtpException ex)
+                catch
                 {
-                    mmsg.Attachments.Dispose();
-                    mmsg.Dispose();
-                    cliente = null;
-                    throw new EnvioCorreoException(ex);
+                    // Si no se puede borrar, no bloqueamos el proceso
                 }
-
-
-                mmsg.Attachments.Dispose();
-                mmsg.Dispose();
-                cliente = null;
-                ok = true;
-
             }
-            catch (Exception ex)
-            {
-
-                throw new EnvioCorreoException(ex);
-
-            }
-
-            return ok;
         }
-
     }
+
+
+
+}
 }

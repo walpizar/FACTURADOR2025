@@ -1,5 +1,6 @@
 ﻿using CommonLayer;
 using System;
+using System.Globalization;
 
 namespace CommonLayer
 {
@@ -42,7 +43,7 @@ namespace CommonLayer
         }
         public void EncabezadoVenta()
         {
-            ticket = "Producto        Cant   P.Unit    Importe\n";   // agrega lineas de  encabezados
+            ticket = "Producto       Cant  P.Unit     Importe\n";   // agrega lineas de  encabezados
             RawPrinterHelper.SendStringToPrinter(impresora, ticket); // imprime texto
         }
         public void VariasLineas(string par1)                          // agrega texto a la izquierda
@@ -223,6 +224,91 @@ namespace CommonLayer
             }
         }
         public void AgregaArticulo(string par1, decimal cant, decimal precio, decimal total, string imp)
+        {
+            const int anchoLinea = 40;
+
+            const int anchoDesc = 13;
+            const int anchoCant = 5;
+            const int anchoPrecio = 8;
+            const int anchoTotal = 9;
+            const int anchoImp = 1; // UNA letra
+
+            // ==== 1) Truncar a 1 decimal (SIN redondear) ====
+            cant = TruncaADecimales(cant, 1);
+            precio = TruncaADecimales(precio, 1);
+            total = TruncaADecimales(total, 1);
+
+            // ==== 2) Formatear SIEMPRE con 1 decimal ====
+            // Usar cultura actual (Costa Rica suele usar coma), si ocupa punto fijo use InvariantCulture
+            var culture = CultureInfo.CurrentCulture;
+            string cantStr = cant.ToString("0.0", culture);
+            string precioStr = precio.ToString("0.0", culture);
+            string totalStr = total.ToString("0.0", culture);
+
+            // ==== 3) Recortar a la columna si excede ====
+            cantStr = RecortaColumnaNumerica(cantStr, anchoCant);
+            precioStr = RecortaColumnaNumerica(precioStr, anchoPrecio);
+            totalStr = RecortaColumnaNumerica(totalStr, anchoTotal);
+
+            // ==== 4) Impuesto (1 letra) dentro de los 40 ====
+            if (imp == null) imp = "";
+            imp = imp.Trim();
+          
+            if (imp.Length == 0) imp = " ";           // para no perder el char final
+            else if (imp.Length > anchoImp) imp = imp.Substring(0, 1);
+
+            // ==== 5) Descripción y 2 líneas ====
+            if (par1 == null) par1 = "";
+
+            string desc1 = par1.Length > anchoDesc ? par1.Substring(0, anchoDesc) : par1;
+            string desc2 = par1.Length > anchoDesc ? par1.Substring(anchoDesc).TrimStart() : null;
+
+            // ================= LÍNEA 1 (40 exactos, incluye imp) =================
+            // 15 + 1 + 5 + 1 + 9 + 1 + 8 + 1 = 40
+            string line1 =
+                desc1.PadRight(anchoDesc) + " " +
+                cantStr.PadLeft(anchoCant) + " " +
+                precioStr.PadLeft(anchoPrecio) + " " +
+                totalStr.PadLeft(anchoTotal) + " "+
+                imp;
+
+            // Con estos anchos SIEMPRE debe dar 40.
+            // Si por alguna razón no da 40, se fuerza SIN cortar el imp:
+            if (line1.Length < anchoLinea) line1 = line1.PadRight(anchoLinea);
+            else if (line1.Length > anchoLinea) line1 = line1.Substring(0, anchoLinea);
+
+            RawPrinterHelper.SendStringToPrinter(impresora, line1 + "\n");
+
+            // ================= LÍNEA 2 (40 exactos, SIN imp) =================
+            if (!string.IsNullOrWhiteSpace(desc2))
+            {
+                string line2 = desc2.Length > anchoLinea ? desc2.Substring(0, anchoLinea) : desc2.PadRight(anchoLinea);
+                RawPrinterHelper.SendStringToPrinter(impresora, line2 + "\n");
+            }
+        }
+
+        // Trunca a N decimales sin redondear
+        private static decimal TruncaADecimales(decimal valor, int decimales)
+        {
+            decimal factor = 1m;
+            for (int i = 0; i < decimales; i++) factor *= 10m;
+
+            return Math.Truncate(valor * factor) / factor;
+        }
+
+        // Recorta conservando el final (para mantener el decimal y la parte final del número)
+        private static string RecortaColumnaNumerica(string valor, int ancho)
+        {
+            if (string.IsNullOrEmpty(valor)) return "";
+            valor = valor.Trim();
+
+            if (valor.Length > ancho)
+                return valor.Substring(valor.Length - ancho, ancho);
+
+            return valor;
+        }
+
+        public void AgregaArticulo1(string par1, decimal cant, decimal precio, decimal total, string imp)
         {
             // Formatear sin redondear
             string cantStr = Utility.TruncFormat(cant);

@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BAcompanamiento.cs" />
+    <Compile Include="BActividades.cs" />
+    <Compile Include="BClienteActividadEconomica.cs" />
     <Compile Include="BPagos.cs" />
     <Compile Include="BActividadesEconomicas.cs" />
     <Compile Include="BActualizaciones.cs" />

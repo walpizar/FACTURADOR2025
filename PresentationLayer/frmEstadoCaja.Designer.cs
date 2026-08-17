@@ -34,6 +34,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtSinpe = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.txtTransf = new System.Windows.Forms.TextBox();
             this.txtCredito = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -77,8 +79,8 @@
             this.lblCaja = new System.Windows.Forms.Label();
             this.lblSucursal = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.txtSinpe = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.txtNCSinpe = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -91,7 +93,7 @@
             // 
             this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
-            this.btnAceptar.Location = new System.Drawing.Point(532, 435);
+            this.btnAceptar.Location = new System.Drawing.Point(532, 446);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(2);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(82, 73);
@@ -154,6 +156,27 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ventas";
+            // 
+            // txtSinpe
+            // 
+            this.txtSinpe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSinpe.Location = new System.Drawing.Point(153, 47);
+            this.txtSinpe.Margin = new System.Windows.Forms.Padding(2);
+            this.txtSinpe.Name = "txtSinpe";
+            this.txtSinpe.ReadOnly = true;
+            this.txtSinpe.Size = new System.Drawing.Size(128, 26);
+            this.txtSinpe.TabIndex = 10;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(91, 50);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(61, 20);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "SINPE:";
             // 
             // txtTransf
             // 
@@ -222,7 +245,7 @@
             this.groupBox3.Controls.Add(this.txtTotalVentas);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Location = new System.Drawing.Point(12, 279);
+            this.groupBox3.Location = new System.Drawing.Point(12, 294);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
@@ -458,6 +481,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtNCSinpe);
+            this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.txtNCTarjeta);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.txtNCTransf);
@@ -468,7 +493,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(295, 114);
+            this.groupBox2.Size = new System.Drawing.Size(295, 137);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Notas de Crédito";
@@ -476,7 +501,7 @@
             // txtNCTarjeta
             // 
             this.txtNCTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNCTarjeta.Location = new System.Drawing.Point(136, 49);
+            this.txtNCTarjeta.Location = new System.Drawing.Point(136, 73);
             this.txtNCTarjeta.Margin = new System.Windows.Forms.Padding(2);
             this.txtNCTarjeta.Name = "txtNCTarjeta";
             this.txtNCTarjeta.ReadOnly = true;
@@ -487,7 +512,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(67, 51);
+            this.label19.Location = new System.Drawing.Point(67, 75);
             this.label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(62, 20);
@@ -497,7 +522,7 @@
             // txtNCTransf
             // 
             this.txtNCTransf.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNCTransf.Location = new System.Drawing.Point(136, 78);
+            this.txtNCTransf.Location = new System.Drawing.Point(136, 102);
             this.txtNCTransf.Margin = new System.Windows.Forms.Padding(2);
             this.txtNCTransf.Name = "txtNCTransf";
             this.txtNCTransf.ReadOnly = true;
@@ -507,7 +532,7 @@
             // txtNCContado
             // 
             this.txtNCContado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNCContado.Location = new System.Drawing.Point(136, 21);
+            this.txtNCContado.Location = new System.Drawing.Point(136, 16);
             this.txtNCContado.Margin = new System.Windows.Forms.Padding(2);
             this.txtNCContado.Name = "txtNCContado";
             this.txtNCContado.ReadOnly = true;
@@ -518,7 +543,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(19, 81);
+            this.label16.Location = new System.Drawing.Point(19, 105);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(110, 20);
@@ -529,7 +554,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(59, 24);
+            this.label18.Location = new System.Drawing.Point(59, 19);
             this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(70, 20);
@@ -540,7 +565,7 @@
             // 
             this.btnCerrarCaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrarCaja.Image = global::PresentationLayer.Properties.Resources.cerrarCaja;
-            this.btnCerrarCaja.Location = new System.Drawing.Point(420, 435);
+            this.btnCerrarCaja.Location = new System.Drawing.Point(420, 446);
             this.btnCerrarCaja.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarCaja.Name = "btnCerrarCaja";
             this.btnCerrarCaja.Size = new System.Drawing.Size(82, 73);
@@ -556,7 +581,7 @@
             this.btnReImprimir.ForeColor = System.Drawing.Color.Black;
             this.btnReImprimir.Image = ((System.Drawing.Image)(resources.GetObject("btnReImprimir.Image")));
             this.btnReImprimir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnReImprimir.Location = new System.Drawing.Point(333, 436);
+            this.btnReImprimir.Location = new System.Drawing.Point(333, 447);
             this.btnReImprimir.Name = "btnReImprimir";
             this.btnReImprimir.Size = new System.Drawing.Size(82, 72);
             this.btnReImprimir.TabIndex = 88;
@@ -641,26 +666,26 @@
             this.groupBox4.TabIndex = 98;
             this.groupBox4.TabStop = false;
             // 
-            // txtSinpe
+            // txtNCSinpe
             // 
-            this.txtSinpe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSinpe.Location = new System.Drawing.Point(153, 47);
-            this.txtSinpe.Margin = new System.Windows.Forms.Padding(2);
-            this.txtSinpe.Name = "txtSinpe";
-            this.txtSinpe.ReadOnly = true;
-            this.txtSinpe.Size = new System.Drawing.Size(128, 26);
-            this.txtSinpe.TabIndex = 10;
+            this.txtNCSinpe.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNCSinpe.Location = new System.Drawing.Point(136, 45);
+            this.txtNCSinpe.Margin = new System.Windows.Forms.Padding(2);
+            this.txtNCSinpe.Name = "txtNCSinpe";
+            this.txtNCSinpe.ReadOnly = true;
+            this.txtNCSinpe.Size = new System.Drawing.Size(139, 26);
+            this.txtNCSinpe.TabIndex = 9;
             // 
-            // label15
+            // label21
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(91, 50);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(61, 20);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "SINPE:";
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(68, 48);
+            this.label21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(61, 20);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "SINPE:";
             // 
             // frmEstadoCaja
             // 
@@ -754,5 +779,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtSinpe;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtNCSinpe;
+        private System.Windows.Forms.Label label21;
     }
 }

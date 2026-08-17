@@ -73,6 +73,10 @@ namespace PresentationLayer
                 txtUtilidadBase.Text = parametros.utilidadBase.ToString();
                 txtDescBase.Text = parametros.descuentoBase.ToString();
                 txtCambioDolar.Text = parametros.cambioDolar.ToString();
+                txtMargenDolar.Text = parametros.margenGananciaDolar.ToString();
+                chkActualizaTipoCambio.Checked = parametros.actualizarTipoCambioAutomatico;
+
+
                 txtPlazoCredMax.Text = parametros.plazoMaximoCredito.ToString();
                 txtPlazoMaxProf.Text = parametros.plazoMaximoProforma.ToString();
                 chkAprobDes.Checked = (bool)parametros.aprobacionDescuento;
@@ -215,7 +219,10 @@ namespace PresentationLayer
 
                         parametros.utilidadBase = float.Parse(txtUtilidadBase.Text.Trim());
                         parametros.descuentoBase = decimal.Parse(txtDescBase.Text.Trim());
+
                         parametros.cambioDolar = decimal.Parse(txtCambioDolar.Text.Trim());
+                        parametros.margenGananciaDolar = decimal.Parse(txtMargenDolar.Text.Trim());
+                        parametros.actualizarTipoCambioAutomatico = chkActualizaTipoCambio.Checked;
 
                         parametros.plazoMaximoCredito = int.Parse(txtPlazoCredMax.Text.Trim());
                         parametros.plazoMaximoProforma = int.Parse(txtPlazoMaxProf.Text.Trim());
@@ -343,6 +350,12 @@ namespace PresentationLayer
                 txtCambioDolar.Focus();
                 return false;
             }
+            else if (txtMargenDolar.Text.Trim() == string.Empty)
+            {
+                MessageBox.Show("Debe completar el campo de Margen Dólar", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtMargenDolar.Focus();
+                return false;
+            }
             else if (!Utility.isNumeroDecimal(txtCambioDolar.Text.Trim()))
             {
 
@@ -389,7 +402,7 @@ namespace PresentationLayer
                 }
 
             }
-            else if (chkComanda.Checked && mskCantComandas.Text==string.Empty)
+            else if (chkComanda.Checked && mskCantComandas.Text == string.Empty)
             {
                 MessageBox.Show("Debe indicar la cantidad de comandas a imprimir", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 mskCantComandas.Focus();

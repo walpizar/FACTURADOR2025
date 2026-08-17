@@ -66,11 +66,11 @@ namespace PresentationLayer
                         item.Text = p.idCategoria9.Trim();
                         item.SubItems.Add(p.nombre.Trim());
                         item.SubItems.Add(p.impuesto.ToString().Trim());
-                        string resultado = p.nombre.ToUpper().IndexOf("SERVICIO", StringComparison.OrdinalIgnoreCase) >= 0
-                      ? "Servicios"
-                      : "Mercancía";
+                      //  string resultado = p.nombre.ToUpper().IndexOf("SERVICIO", StringComparison.OrdinalIgnoreCase) >= 0
+                      //? "Servicios"
+                      //: "Mercancía";
 
-                        item.SubItems.Add(resultado);
+                        item.SubItems.Add(Utility.ObtenerTipoCabys(p.idCategoria9));
 
                         lstvBienServicios.Items.Add(item);
 

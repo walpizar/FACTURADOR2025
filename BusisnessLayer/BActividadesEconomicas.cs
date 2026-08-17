@@ -7,6 +7,15 @@ namespace BusinessLayer
     public class BActividadesEconomicas
     {
         DActividadesEconomicas DActIns = new DActividadesEconomicas();
+
+        public List<tbClientesActividadesEconomicas> ObtenerPorCliente(string idCliente, int tipoIdCliente)
+          => DActIns.ObtenerPorCliente(idCliente, tipoIdCliente);
+
+        public void GuardarActividades(string idCliente, int tipoIdCliente,
+            List<tbClientesActividadesEconomicas> actividades, string usuario)
+            => DActIns.Guardar(idCliente, tipoIdCliente, actividades, usuario);
+
+      
         public List<tbActividades> GetListEntities(int estado)
         {
             return DActIns.GetListEntities(estado);
@@ -17,6 +26,11 @@ namespace BusinessLayer
         }
 
         public List<tbEmpresaActividades> getListaEmpresaActividad(string id, int tipo)
+        {
+            return DActIns.getListaEmpresaActividad(id, tipo);
+        }
+
+        public List<tbEmpresaActividades> getActividadesEconomicasCliente(string id, int tipo)
         {
             return DActIns.getListaEmpresaActividad(id, tipo);
         }

@@ -4,6 +4,7 @@ using CommonLayer;
 using EntityLayer;
 using Microsoft.WindowsAPICodePack.Shell;
 using Newtonsoft.Json;
+using PresentationLayer.Clases;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Printing;
 using System.Runtime.InteropServices;
@@ -36,6 +38,10 @@ namespace PresentationLayer
         List<tbEmpresaActividades> listaAct;
         BActividadesEconomicas actIns = new BActividadesEconomicas();
         BActualizaciones actualiIns = new BActualizaciones();
+
+        BEmpresa empresaIns = new BEmpresa();
+
+
         bool cerrando = false;
         public string pathArchivoConfig { get; set; }
 
@@ -224,18 +230,90 @@ namespace PresentationLayer
 
 
         }
+        private async Task ActualizarTipoCambioAsync()
+        {
+            try
+            {
+                ServicioTipoCambioHacienda servicio =
+                    new ServicioTipoCambioHacienda();
 
+                decimal? tipoCambioVenta =
+                    await servicio.ObtenerTipoCambioVentaAsync();
+
+                if (!tipoCambioVenta.HasValue ||
+                    tipoCambioVenta.Value <= 0m)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "Hacienda no devolvió un tipo de cambio válido.");
+
+                    return;
+                }
+
+                var parametros = Global.Usuario?
+                    .tbEmpresa?
+                    .tbParametrosEmpresa?
+                    .FirstOrDefault();
+
+                if (parametros == null)
+                {
+                    return;
+                }
+
+
+
+                parametros.cambioDolar = tipoCambioVenta;
+
+                var parametrosGuardados = empresaIns.modificarParamtros(parametros);
+                var parametro = Global.Usuario?.tbEmpresa?.tbParametrosEmpresa?.FirstOrDefault();
+
+                if (parametro != null)
+                {
+                    parametro.cambioDolar = tipoCambioVenta.Value;
+                }
+
+            }
+            catch (TaskCanceledException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "La consulta del tipo de cambio agotó el tiempo: " +
+                    ex.Message);
+            }
+            catch (HttpRequestException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "No fue posible consultar Hacienda: " +
+                    ex.Message);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "Error actualizando el tipo de cambio: " +
+                    ex.Message);
+            }
+        }
 
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
             try
-            {              
+            {
+                // Se inicia de forma asíncrona y el formulario continúa cargando.
+                
+
+
                 timer1.Start();
                 this.WindowState = FormWindowState.Maximized;
                 Global.cerrar = false;
                 inicio();
-              
-    
+                
+                var parametros = Global.Usuario?.tbEmpresa?.tbParametrosEmpresa?.FirstOrDefault();
+               
+
+                if (parametros != null &&
+                    parametros.actualizarTipoCambioAutomatico)
+                {
+                    _ = ActualizarTipoCambioAsync();
+                }
+
 
             }
             catch (Exception ex)
@@ -928,6 +1006,9 @@ namespace PresentationLayer
 
             if (mov == null || mov.fechaCierre != null)
             {
+                clsImpresionFactura imprimir = new clsImpresionFactura();
+                imprimir.abrirCajon();
+
                 frmInicioCaja frm = new frmInicioCaja();
                 frm.ShowDialog();
             }

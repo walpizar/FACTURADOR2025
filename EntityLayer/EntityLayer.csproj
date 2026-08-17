@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CIIU4.cs">
+      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="dbEntitiesContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,6 +94,10 @@
     <Compile Include="tbClientes.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbClientesActividadesEconomicas.cs">
+      <DependentUpon>dbEntitiesContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbClientesActividadesEconomicas.Extensions.cs" />
     <Compile Include="tbCompras.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>

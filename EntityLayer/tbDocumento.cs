@@ -60,13 +60,14 @@ namespace EntityLayer
         public string xmlSinFirma { get; set; }
         public string xmlFirmado { get; set; }
         public string xmlRespuesta { get; set; }
-        public string codigoActividad { get; set; }
         public Nullable<int> sucursal { get; set; }
         public Nullable<int> caja { get; set; }
+        public string codigoActividad { get; set; }
         public Nullable<int> estadoCorreo { get; set; }
         public string codigoActividadReceptor { get; set; }
     
         public virtual tbActividades tbActividades { get; set; }
+        public virtual tbClientes tbClientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbDetalleDocumento> tbDetalleDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -76,6 +77,5 @@ namespace EntityLayer
         public virtual tbTipoMoneda tbTipoMoneda { get; set; }
         public virtual tbTipoPago tbTipoPago { get; set; }
         public virtual tbTipoVenta tbTipoVenta { get; set; }
-        public virtual tbClientes tbClientes { get; set; }
     }
 }

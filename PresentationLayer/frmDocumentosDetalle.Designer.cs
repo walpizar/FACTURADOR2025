@@ -49,6 +49,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkEnvioCorreo = new System.Windows.Forms.CheckBox();
+            this.lblEstadoCorreo = new System.Windows.Forms.Label();
+            this.txtEstadoCorreo = new System.Windows.Forms.TextBox();
             this.chkDetalleProforma = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtFechaVence = new System.Windows.Forms.TextBox();
@@ -96,9 +99,6 @@
             this.btnCancelarFactura = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.lblHecha = new System.Windows.Forms.Label();
-            this.txtEstadoCorreo = new System.Windows.Forms.TextBox();
-            this.lblEstadoCorreo = new System.Windows.Forms.Label();
-            this.chkEnvioCorreo = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -309,6 +309,40 @@
             this.groupBox1.TabIndex = 79;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos de Factura";
+            // 
+            // chkEnvioCorreo
+            // 
+            this.chkEnvioCorreo.AutoSize = true;
+            this.chkEnvioCorreo.Checked = true;
+            this.chkEnvioCorreo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkEnvioCorreo.Enabled = false;
+            this.chkEnvioCorreo.Location = new System.Drawing.Point(79, 126);
+            this.chkEnvioCorreo.Margin = new System.Windows.Forms.Padding(2);
+            this.chkEnvioCorreo.Name = "chkEnvioCorreo";
+            this.chkEnvioCorreo.Size = new System.Drawing.Size(105, 17);
+            this.chkEnvioCorreo.TabIndex = 93;
+            this.chkEnvioCorreo.Text = "Envio por Correo";
+            this.chkEnvioCorreo.UseVisualStyleBackColor = true;
+            // 
+            // lblEstadoCorreo
+            // 
+            this.lblEstadoCorreo.AutoSize = true;
+            this.lblEstadoCorreo.Location = new System.Drawing.Point(311, 150);
+            this.lblEstadoCorreo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEstadoCorreo.Name = "lblEstadoCorreo";
+            this.lblEstadoCorreo.Size = new System.Drawing.Size(77, 13);
+            this.lblEstadoCorreo.TabIndex = 92;
+            this.lblEstadoCorreo.Text = "Estado Correo:";
+            // 
+            // txtEstadoCorreo
+            // 
+            this.txtEstadoCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEstadoCorreo.ForeColor = System.Drawing.Color.Red;
+            this.txtEstadoCorreo.Location = new System.Drawing.Point(393, 144);
+            this.txtEstadoCorreo.Name = "txtEstadoCorreo";
+            this.txtEstadoCorreo.ReadOnly = true;
+            this.txtEstadoCorreo.Size = new System.Drawing.Size(142, 24);
+            this.txtEstadoCorreo.TabIndex = 91;
             // 
             // chkDetalleProforma
             // 
@@ -663,7 +697,7 @@
             this.txtObser.Multiline = true;
             this.txtObser.Name = "txtObser";
             this.txtObser.ReadOnly = true;
-            this.txtObser.Size = new System.Drawing.Size(419, 59);
+            this.txtObser.Size = new System.Drawing.Size(402, 59);
             this.txtObser.TabIndex = 74;
             // 
             // label8
@@ -712,7 +746,7 @@
             this.btnAnularDocumento.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnAnularDocumento.Image = ((System.Drawing.Image)(resources.GetObject("btnAnularDocumento.Image")));
             this.btnAnularDocumento.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAnularDocumento.Location = new System.Drawing.Point(509, 551);
+            this.btnAnularDocumento.Location = new System.Drawing.Point(533, 551);
             this.btnAnularDocumento.Name = "btnAnularDocumento";
             this.btnAnularDocumento.Size = new System.Drawing.Size(68, 67);
             this.btnAnularDocumento.TabIndex = 89;
@@ -727,7 +761,7 @@
             this.btnReporte.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnReporte.Image = ((System.Drawing.Image)(resources.GetObject("btnReporte.Image")));
             this.btnReporte.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnReporte.Location = new System.Drawing.Point(628, 549);
+            this.btnReporte.Location = new System.Drawing.Point(627, 549);
             this.btnReporte.Name = "btnReporte";
             this.btnReporte.Size = new System.Drawing.Size(68, 69);
             this.btnReporte.TabIndex = 88;
@@ -742,7 +776,7 @@
             this.btnReImprimir.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnReImprimir.Image = ((System.Drawing.Image)(resources.GetObject("btnReImprimir.Image")));
             this.btnReImprimir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnReImprimir.Location = new System.Drawing.Point(702, 549);
+            this.btnReImprimir.Location = new System.Drawing.Point(701, 549);
             this.btnReImprimir.Name = "btnReImprimir";
             this.btnReImprimir.Size = new System.Drawing.Size(68, 69);
             this.btnReImprimir.TabIndex = 87;
@@ -757,7 +791,7 @@
             this.btnEnviarCorreo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnEnviarCorreo.Image = global::PresentationLayer.Properties.Resources.correoEnvio;
             this.btnEnviarCorreo.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnEnviarCorreo.Location = new System.Drawing.Point(776, 548);
+            this.btnEnviarCorreo.Location = new System.Drawing.Point(775, 548);
             this.btnEnviarCorreo.Name = "btnEnviarCorreo";
             this.btnEnviarCorreo.Size = new System.Drawing.Size(68, 70);
             this.btnEnviarCorreo.TabIndex = 84;
@@ -772,7 +806,7 @@
             this.btnCancelarFactura.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnCancelarFactura.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelarFactura.Image")));
             this.btnCancelarFactura.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelarFactura.Location = new System.Drawing.Point(435, 550);
+            this.btnCancelarFactura.Location = new System.Drawing.Point(459, 550);
             this.btnCancelarFactura.Name = "btnCancelarFactura";
             this.btnCancelarFactura.Size = new System.Drawing.Size(68, 68);
             this.btnCancelarFactura.TabIndex = 83;
@@ -800,40 +834,6 @@
             this.lblHecha.Size = new System.Drawing.Size(46, 13);
             this.lblHecha.TabIndex = 89;
             this.lblHecha.Text = "Sin dato";
-            // 
-            // txtEstadoCorreo
-            // 
-            this.txtEstadoCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEstadoCorreo.ForeColor = System.Drawing.Color.Red;
-            this.txtEstadoCorreo.Location = new System.Drawing.Point(393, 144);
-            this.txtEstadoCorreo.Name = "txtEstadoCorreo";
-            this.txtEstadoCorreo.ReadOnly = true;
-            this.txtEstadoCorreo.Size = new System.Drawing.Size(142, 24);
-            this.txtEstadoCorreo.TabIndex = 91;
-            // 
-            // lblEstadoCorreo
-            // 
-            this.lblEstadoCorreo.AutoSize = true;
-            this.lblEstadoCorreo.Location = new System.Drawing.Point(311, 150);
-            this.lblEstadoCorreo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblEstadoCorreo.Name = "lblEstadoCorreo";
-            this.lblEstadoCorreo.Size = new System.Drawing.Size(77, 13);
-            this.lblEstadoCorreo.TabIndex = 92;
-            this.lblEstadoCorreo.Text = "Estado Correo:";
-            // 
-            // chkEnvioCorreo
-            // 
-            this.chkEnvioCorreo.AutoSize = true;
-            this.chkEnvioCorreo.Checked = true;
-            this.chkEnvioCorreo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEnvioCorreo.Enabled = false;
-            this.chkEnvioCorreo.Location = new System.Drawing.Point(79, 126);
-            this.chkEnvioCorreo.Margin = new System.Windows.Forms.Padding(2);
-            this.chkEnvioCorreo.Name = "chkEnvioCorreo";
-            this.chkEnvioCorreo.Size = new System.Drawing.Size(105, 17);
-            this.chkEnvioCorreo.TabIndex = 93;
-            this.chkEnvioCorreo.Text = "Envio por Correo";
-            this.chkEnvioCorreo.UseVisualStyleBackColor = true;
             // 
             // frmDocumentosDetalle
             // 

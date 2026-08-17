@@ -113,43 +113,51 @@ namespace CommonLayer
         {
             try
             {
-                // Crear la URL de la API con el identificador
-                string url = $"https://api.hacienda.go.cr/fe/ae?identificacion={identificacion}";
+                if (string.IsNullOrWhiteSpace(identificacion))
+                    return null;
+
+                identificacion = identificacion.Trim();
+
+                string url =
+                    $"https://api.hacienda.go.cr/fe/ae?identificacion={identificacion}";
+
                 using (HttpClient client = new HttpClient())
                 {
-                    try
-                    {
-                        HttpResponseMessage response = await client.GetAsync(url);
+                    client.Timeout = TimeSpan.FromSeconds(15);
 
-                        // Verificar si la respuesta es exitosa
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // Leer la respuesta como una cadena JSON
-                            string jsonResponse = await response.Content.ReadAsStringAsync();
+                    HttpResponseMessage response = await client.GetAsync(url);
 
-                            // Deserializar la respuesta JSON en un objeto C#
-                            ClienteResponseDTO consultaResponse = JsonConvert.DeserializeObject<ClienteResponseDTO>(jsonResponse);
-
-                            return consultaResponse;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Error: {response.StatusCode}");
-                            return null;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Exception: " + e.Message);
+                    if (!response.IsSuccessStatusCode)
                         return null;
-                    }
-                }
 
-                
+                    string jsonResponse =
+                        await response.Content.ReadAsStringAsync();
+
+                    if (string.IsNullOrWhiteSpace(jsonResponse))
+                        return null;
+
+                    return JsonConvert.DeserializeObject<ClienteResponseDTO>(
+                        jsonResponse
+                    );
+                }
             }
-            catch (Exception ex)
+            catch (TaskCanceledException)
             {
-                Console.WriteLine($"Excepción: {ex.Message}");
+                // Timeout de Hacienda
+                return null;
+            }
+            catch (HttpRequestException)
+            {
+                // Error de conexión
+                return null;
+            }
+            catch (JsonException)
+            {
+                // Respuesta con formato inesperado
+                return null;
+            }
+            catch (Exception)
+            {
                 return null;
             }
         }

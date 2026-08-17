@@ -314,14 +314,14 @@ namespace PresentationLayer
                 Global.Usuario = usuarioIns.getLoginUsuario(Global.Usuario);
                 producto = BProducto.GetEntity(producto, (int)Enums.EstadoBusqueda.Activo);
 
-                if (producto == null)
-                {
+                //if (producto == null)
+                //{
 
-                    producto = null;
-                    MessageBox.Show("El producto digitado no se encuentra en la base datos.", "Producto Inexistente", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                //    producto = null;
+                //    MessageBox.Show("El producto digitado no se encuentra en la base datos.", "Producto Inexistente", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
 
-                }
+                //}
             }
             else
             {
@@ -381,6 +381,15 @@ namespace PresentationLayer
                 bool banderaExitProd = false;
                 medida.idTipoMedida = pro.idMedida;
                 medida = medidaIns.GetEnityById(medida);
+
+                // Validación: el código CABYS debe corresponder al tipo de unidad
+                // de medida (Mercancía vs Servicio), para evitar rechazo de Hacienda.
+                if (!Utility.ValidarCabysCategoria(pro.codigoCabys, medida.nombre, out string mensajeCabys))
+                {
+                    MessageBox.Show(mensajeCabys, "Error en código CABYS", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (!isActualizacion)
                 {
                     if (medida.nomenclatura.Trim().ToUpper() == Enum.GetName(typeof(Enums.TipoMedida), Enums.TipoMedida.kg).Trim().ToUpper())
@@ -976,7 +985,8 @@ namespace PresentationLayer
                     }
 
                 }
-                row.Cells[4].Value = Utility.priceFormat(detalle.cantidad);
+                //Utility.priceFormat(detalle.descuento);
+                row.Cells[4].Value = Utility.QuatityFormat(detalle.cantidad);
                 row.Cells[5].Value = Utility.priceFormat(detalle.descuento);
                 row.Cells[6].Value = Utility.priceFormat(utilidad);
                 row.Cells[7].Value = Utility.priceFormat(detalle.montoTotal);
@@ -1215,23 +1225,165 @@ namespace PresentationLayer
 
         private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            tbProducto prod = null;
-            if ((int)e.KeyChar == (int)Keys.Enter)
+            if (e.KeyChar != (char)Keys.Enter)
+                return;
+
+            e.Handled = true;
+
+            string codigo = txtCodigo.Text.Trim();
+
+            try
             {
-                string codigo = txtCodigo.Text;
-                if (codigo != string.Empty)
+                if (string.IsNullOrWhiteSpace(codigo))
+                    return;
+
+                // 1. Buscar primero utilizando el código completo.
+                tbProducto producto = buscarProducto(codigo);
+
+                if (producto != null)
                 {
-                    prod = buscarProducto(codigo);
-                    if (prod != null)
+                    // Es un código normal.
+                    agregarProductoDetalleFactura(producto);
+                    return;
+                }
+
+                // 2. Si no existe el código completo, intentar interpretarlo
+                // como un EAN-13 generado por la romana.
+                if (TryInterpretarCodigoRomana(
+                    codigo,
+                    out string plu,
+                    out decimal precioProducto))
+                {
+                    // 3. Buscar el producto mediante el PLU.
+                    producto = buscarProducto(plu);
+
+                    // Búsqueda alternativa si el PLU está almacenado sin ceros.
+                    if (producto == null)
                     {
-                        agregarProductoDetalleFactura(prod);
+                        string pluSinCeros = plu.TrimStart('0');
+
+                        if (string.IsNullOrEmpty(pluSinCeros))
+                            pluSinCeros = "0";
+
+                        producto = buscarProducto(pluSinCeros);
                     }
 
+                    if (producto != null)
+                    {
+                        // 4. Agregar el producto utilizando el peso como cantidad.
+
+
+                        var pesoKilogramos = precioProducto / producto.precioVenta1;
+                        agregarProductoDetalleFactura(producto, 1, pesoKilogramos, 0, true, true);
+
+
+                        return;
+                    }
+
+                    MessageBox.Show(
+                        $"El código corresponde a un producto de peso variable, " +
+                        $"pero no se encontró el PLU {plu}.",
+                        "Producto no encontrado",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
                 }
-                txtCodigo.Text = string.Empty;
-                txtCodigo.Select();
+
+                MessageBox.Show(
+                    $"No se encontró ningún producto con el código {codigo}.",
+                    "Producto no encontrado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al procesar el código:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                txtCodigo.Clear();
+                txtCodigo.Focus();
             }
         }
+
+        private bool TryInterpretarCodigoRomana(
+    string codigo,
+    out string plu,
+    out decimal precioProducto)
+        {
+            plu = string.Empty;
+            precioProducto = 0;
+
+            if (string.IsNullOrWhiteSpace(codigo))
+                return false;
+
+            codigo = codigo.Trim();
+
+            // Debe contener exactamente 13 caracteres.
+            if (codigo.Length != 13)
+                return false;
+
+            // Debe contener únicamente números.
+            if (!codigo.All(char.IsDigit))
+                return false;
+
+            // Prefijo utilizado por la romana.
+            if (codigo[0] != '2')
+                return false;
+
+            // Validar el dígito verificador EAN-13.
+            if (!ValidarEAN13(codigo))
+                return false;
+
+            // Posiciones 2 a 6: código PLU.
+            plu = codigo.Substring(1, 6);
+
+            // Posiciones 7 a 12: peso en gramos.
+            string precioTexto = codigo.Substring(7, 5);
+
+            if (!int.TryParse(precioTexto, out int precioPro))
+                return false;
+
+            if (precioPro <= 0)
+                return false;
+
+            precioProducto = precioPro;
+
+            return true;
+        }
+
+        private bool ValidarEAN13(string codigo)
+        {
+            if (string.IsNullOrWhiteSpace(codigo) ||
+                codigo.Length != 13 ||
+                !codigo.All(char.IsDigit))
+            {
+                return false;
+            }
+
+            int suma = 0;
+
+            for (int i = 0; i < 12; i++)
+            {
+                int digito = codigo[i] - '0';
+
+                if (i % 2 == 0)
+                    suma += digito;
+                else
+                    suma += digito * 3;
+            }
+
+            int digitoCalculado = (10 - (suma % 10)) % 10;
+            int digitoRecibido = codigo[12] - '0';
+
+            return digitoCalculado == digitoRecibido;
+        }
+
 
         private void dtgvDetalleFactura_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

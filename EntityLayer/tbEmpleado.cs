@@ -27,7 +27,7 @@ namespace EntityLayer
         public bool esContraDefinido { get; set; }
         public string direccion { get; set; }
     
-        public virtual tbPersona tbPersona { get; set; }
         public virtual tbTipoPuesto tbTipoPuesto { get; set; }
+        public virtual tbPersona tbPersona { get; set; }
     }
 }

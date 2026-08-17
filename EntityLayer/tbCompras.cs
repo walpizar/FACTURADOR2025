@@ -57,15 +57,15 @@ namespace EntityLayer
         public string correo1 { get; set; }
         public Nullable<int> tipoMoneda { get; set; }
         public Nullable<decimal> tipoCambio { get; set; }
+        public Nullable<int> sucursal { get; set; }
+        public Nullable<int> caja { get; set; }
+        public Nullable<bool> cambiarColon { get; set; }
         public string codigoActividadEmpresa { get; set; }
         public Nullable<int> tipoDocRef { get; set; }
         public string claveRef { get; set; }
         public Nullable<System.DateTime> fechaRef { get; set; }
         public Nullable<int> codigoRef { get; set; }
         public string razon { get; set; }
-        public Nullable<int> sucursal { get; set; }
-        public Nullable<int> caja { get; set; }
-        public Nullable<bool> cambiarColon { get; set; }
         public string nombreProveedor { get; set; }
         public Nullable<int> codigoMensaje { get; set; }
         public string EstadoMensaje { get; set; }

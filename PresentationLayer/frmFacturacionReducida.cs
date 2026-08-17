@@ -987,6 +987,15 @@ namespace PresentationLayer
                 bool banderaExitProd = false;
                 medida.idTipoMedida = pro.idMedida;
                 medida = medidaIns.GetEnityById(medida);
+
+                // Validación: el código CABYS debe corresponder al tipo de unidad
+                // de medida (Mercancía vs Servicio), para evitar rechazo de Hacienda.
+                if (!Utility.ValidarCabysCategoria(pro.codigoCabys, medida.nombre, out string mensajeCabys))
+                {
+                    MessageBox.Show(mensajeCabys, "Error en código CABYS", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (!isActualizacion)
                 {
                     if (medida.nomenclatura.Trim().ToUpper() == Enum.GetName(typeof(Enums.TipoMedida), Enums.TipoMedida.kg).Trim().ToUpper())
@@ -1294,22 +1303,163 @@ namespace PresentationLayer
 
         private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            tbProducto prod = null;
-            if ((int)e.KeyChar == (int)Keys.Enter)
+            if (e.KeyChar != (char)Keys.Enter)
+                return;
+
+            e.Handled = true;
+
+            string codigo = txtCodigo.Text.Trim();
+
+            try
             {
-                string codigo = txtCodigo.Text;
-                if (codigo != string.Empty)
+                if (string.IsNullOrWhiteSpace(codigo))
+                    return;
+
+                // 1. Buscar primero utilizando el código completo.
+                tbProducto producto = buscarProducto(codigo);
+
+                if (producto != null)
                 {
-                    prod = buscarProducto(codigo);
-                    if (prod != null)
+                    // Es un código normal.
+                    agregarProductoDetalleFactura(producto);
+                    return;
+                }
+
+                // 2. Si no existe el código completo, intentar interpretarlo
+                // como un EAN-13 generado por la romana.
+                if (TryInterpretarCodigoRomana(
+                    codigo,
+                    out string plu,
+                    out decimal precioProducto))
+                {
+                    // 3. Buscar el producto mediante el PLU.
+                    producto = buscarProducto(plu);
+
+                    // Búsqueda alternativa si el PLU está almacenado sin ceros.
+                    if (producto == null)
                     {
-                        agregarProductoDetalleFactura(prod);
+                        string pluSinCeros = plu.TrimStart('0');
+
+                        if (string.IsNullOrEmpty(pluSinCeros))
+                            pluSinCeros = "0";
+
+                        producto = buscarProducto(pluSinCeros);
                     }
 
+                    if (producto != null)
+                    {
+                        // 4. Agregar el producto utilizando el peso como cantidad.
+
+
+                        var pesoKilogramos = precioProducto / producto.precioVenta1;
+                        agregarProductoDetalleFactura(producto, 1, pesoKilogramos, 0, true, true);
+
+
+                        return;
+                    }
+
+                    MessageBox.Show(
+                        $"El código corresponde a un producto de peso variable, " +
+                        $"pero no se encontró el PLU {plu}.",
+                        "Producto no encontrado",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    return;
                 }
-                txtCodigo.Text = string.Empty;
-                txtCodigo.Select();
+
+                MessageBox.Show(
+                    $"No se encontró ningún producto con el código {codigo}.",
+                    "Producto no encontrado",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al procesar el código:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                txtCodigo.Clear();
+                txtCodigo.Focus();
+            }
+        }
+
+        private bool TryInterpretarCodigoRomana(
+    string codigo,
+    out string plu,
+    out decimal precioProducto)
+        {
+            plu = string.Empty;
+            precioProducto = 0;
+
+            if (string.IsNullOrWhiteSpace(codigo))
+                return false;
+
+            codigo = codigo.Trim();
+
+            // Debe contener exactamente 13 caracteres.
+            if (codigo.Length != 13)
+                return false;
+
+            // Debe contener únicamente números.
+            if (!codigo.All(char.IsDigit))
+                return false;
+
+            // Prefijo utilizado por la romana.
+            if (codigo[0] != '2')
+                return false;
+
+            // Validar el dígito verificador EAN-13.
+            if (!ValidarEAN13(codigo))
+                return false;
+
+            // Posiciones 2 a 6: código PLU.
+            plu = codigo.Substring(1, 6);
+
+            // Posiciones 7 a 12: peso en gramos.
+            string precioTexto = codigo.Substring(7, 5);
+
+            if (!int.TryParse(precioTexto, out int precioPro))
+                return false;
+
+            if (precioPro <= 0)
+                return false;
+
+            precioProducto = precioPro;
+
+            return true;
+        }
+
+        private bool ValidarEAN13(string codigo)
+        {
+            if (string.IsNullOrWhiteSpace(codigo) ||
+                codigo.Length != 13 ||
+                !codigo.All(char.IsDigit))
+            {
+                return false;
+            }
+
+            int suma = 0;
+
+            for (int i = 0; i < 12; i++)
+            {
+                int digito = codigo[i] - '0';
+
+                if (i % 2 == 0)
+                    suma += digito;
+                else
+                    suma += digito * 3;
+            }
+
+            int digitoCalculado = (10 - (suma % 10)) % 10;
+            int digitoRecibido = codigo[12] - '0';
+
+            return digitoCalculado == digitoRecibido;
         }
 
         private tbProducto buscarProducto(string idProd)
@@ -1322,12 +1472,14 @@ namespace PresentationLayer
                 Global.Usuario = usuarioIns.getLoginUsuario(Global.Usuario);
                 producto = BProducto.GetEntity(producto, (int)Enums.EstadoBusqueda.Activo);
 
-                if (producto == null)
-                {
-                    producto = null;
-                    MessageBox.Show("El producto digitado no se encuentra en la base datos.", "Producto Inexistente", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                //if (producto == null)
+                //{
 
-                }
+                //    producto = null;
+                //    MessageBox.Show("El producto digitado no se encuentra en la base datos.", "Producto Inexistente", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
+
+                //}
             }
             else
             {
@@ -1338,7 +1490,6 @@ namespace PresentationLayer
             return producto;
 
         }
-
         private void txtIdCliente_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((int)e.KeyChar == (int)Keys.Enter)
@@ -1812,13 +1963,14 @@ namespace PresentationLayer
 
                 if (clienteGlo.contribuyente)
                 {
-                    if (cboActividadEconomica.SelectedItem != null)
+                    if (cboActividadEconomica.SelectedValue != null)
                     {
-                        documento.codigoActividadReceptor = ((Actividad)cboActividadEconomica.SelectedItem).Codigo;
+                        documento.codigoActividadReceptor =
+                            cboActividadEconomica.SelectedValue.ToString();
                     }
                 }
-
             }
+
 
             documento.sucursal = Global.Configuracion.sucursal;
             documento.caja = Global.Configuracion.caja;
@@ -3342,38 +3494,73 @@ namespace PresentationLayer
         {
 
         }
-        private async Task cargarActividades(tbClientes cliente)
+        private BClienteActividadEconomica actividadEconomicaInst =
+            new BClienteActividadEconomica();
+        private void cargarActividades(tbClientes cliente)
         {
             try
             {
                 cboActividadEconomica.DataSource = null;
                 cboActividadEconomica.Items.Clear();
-                if (cliente != null)
+                cboActividadEconomica.Text = string.Empty;
+
+                if (cliente == null)
+                    return;
+
+                // Obtener las actividades que ya están guardadas
+                // localmente para este cliente.
+                List<tbClientesActividadesEconomicas> actividades =
+                    actividadEconomicaInst.ObtenerPorCliente(
+                        cliente.id,
+                        cliente.tipoId);
+
+                if (actividades == null || actividades.Count == 0)
                 {
-                    List<Actividad> lista = await Utility.obtnerActividadesPorCliente(cliente.id);
-                    if (lista != null && lista.Count > 0)
-                    {
-                        cboActividadEconomica.DataSource = lista;
-                        cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
-                        cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
-                    }
-                    //else
-                    //{
-                    //    MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    //}
+                    cboActividadEconomica.Text =
+                        "Sin actividades asignadas";
 
-
-
+                    return;
                 }
+
+                // Principal primero.
+                var lista = actividades
+                    .OrderByDescending(a => a.esPrincipal)
+                    .ThenBy(a => a.CodigoCIIU)
+                    .Select(a => new
+                    {
+                        Codigo = a.CodigoCIIU,
+
+                        Display = a.esPrincipal
+                            ? $"{a.CodigoCIIU.Trim()} - {a.NombreActividad.Trim()} (Principal)"
+                            : $"{a.CodigoCIIU.Trim()} - {a.NombreActividad.Trim()}",
+
+
+                        EsPrincipal = a.esPrincipal
+                    })
+                    .ToList();
+
+                cboActividadEconomica.DataSource = lista;
+                cboActividadEconomica.DisplayMember = "Display";
+                cboActividadEconomica.ValueMember = "Codigo";
+
+                // Como la principal está ordenada de primera,
+                // queda seleccionada automáticamente.
+                cboActividadEconomica.SelectedIndex = 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                cboActividadEconomica.DataSource = null;
                 cboActividadEconomica.Items.Clear();
-                cboActividadEconomica.Text = "";
+                cboActividadEconomica.Text = string.Empty;
 
-                MessageBox.Show("No se logró consultar las actividades económicas del cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(
+                    "No se lograron cargar las actividades económicas " +
+                    "guardadas del cliente.\n\n" +
+                    ex.Message,
+                    "Actividades económicas",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
             }
-
         }
 
         private void btnActividadesCarga_Click(object sender, EventArgs e)

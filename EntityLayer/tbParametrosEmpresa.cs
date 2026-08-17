@@ -38,13 +38,15 @@ namespace EntityLayer
         public Nullable<int> comandasTipo { get; set; }
         public Nullable<int> cantComandas { get; set; }
         public Nullable<bool> correoCierre { get; set; }
+        public Nullable<bool> promociones { get; set; }
+        public Nullable<bool> etiquetas { get; set; }
         public Nullable<bool> aprobarEliminar { get; set; }
         public Nullable<bool> cierreCajaAdmin { get; set; }
         public Nullable<bool> precioVariable { get; set; }
-        public Nullable<bool> promociones { get; set; }
-        public Nullable<bool> etiquetas { get; set; }
         public Nullable<bool> validaCabys { get; set; }
         public Nullable<bool> inventarioNegativo { get; set; }
+        public decimal margenGananciaDolar { get; set; }
+        public bool actualizarTipoCambioAutomatico { get; set; }
     
         public virtual tbEmpresa tbEmpresa { get; set; }
     }

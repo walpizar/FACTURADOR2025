@@ -281,7 +281,7 @@ namespace PresentationLayer
             return isOK;
 
         }
-
+        
         /// <summary>
         /// Validamos los campos en el formulario de producto.
         /// </summary>
@@ -289,6 +289,7 @@ namespace PresentationLayer
         private bool validarCampos()
         {
             bool isOK = true;
+            string mensaje = string.Empty;
 
             //if (txtCodigoProducto.Text == string.Empty)
             //{
@@ -344,7 +345,18 @@ namespace PresentationLayer
                 isOK = false;
 
             }
-            else if (txtPrecioVenta1.Text == string.Empty)
+            else if (!Utility.ValidarCabysCategoria(txtCategoriaCabys.Text, cboMedida.Text, out  mensaje))
+            {
+                MessageBox.Show(mensaje, "Error en categoria CABYS", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isOK = false;
+
+            }
+
+           
+
+
+
+            if (txtPrecioVenta1.Text == string.Empty)
             {
                 MessageBox.Show("Debe ingresar el precio de venta 1.", "Error");
                 isOK = false;
@@ -471,6 +483,9 @@ namespace PresentationLayer
                     inventario.usuario_ult_mod = Global.Usuario.nombreUsuario.Trim().ToUpper();   // Global.Usuario.nombreUsuario;
 
                     productoNuevo.tbInventario = inventario;
+
+              
+
 
 
 

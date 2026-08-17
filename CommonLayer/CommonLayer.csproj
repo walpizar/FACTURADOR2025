@@ -261,6 +261,7 @@
     <Compile Include="clsMensajeXMLHaciendaRespuesta.cs" />
     <Compile Include="clsMovimientos.cs" />
     <Compile Include="clsProductoExportImport.cs" />
+    <Compile Include="clsServicioTipoCambioHacienda.cs" />
     <Compile Include="clsTerminal.cs" />
     <Compile Include="ConsultasAPI.cs" />
     <Compile Include="CorreoElectronicoU.cs" />

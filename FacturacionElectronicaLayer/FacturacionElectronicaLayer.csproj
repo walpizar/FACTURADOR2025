@@ -62,6 +62,7 @@
     <Compile Include="ClasesDatos\Receptor.cs" />
     <Compile Include="Clases\ClasesJson.cs" />
     <Compile Include="Clases\Comunicacion.cs" />
+    <Compile Include="Clases\ConsultasHacienda.cs" />
     <Compile Include="Clases\Firma.cs" />
     <Compile Include="Clases\TokenHacienda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

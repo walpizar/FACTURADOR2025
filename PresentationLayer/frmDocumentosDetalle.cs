@@ -9,7 +9,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static CommonLayer.Enums;
+using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Runtime.InteropServices;
+using System.IO;
+
 
 
 namespace PresentationLayer
@@ -580,7 +586,57 @@ namespace PresentationLayer
 
         }
 
-        private bool validarCampos()
+
+
+public static bool EnviarConOutlookSinVentana(tbDocumento doc, List<string> adjuntos)
+    {
+        Outlook.Application outlookApp = null;
+        Outlook.MailItem mailItem = null;
+
+        try
+        {
+            outlookApp = new Outlook.Application();
+            mailItem = (Outlook.MailItem)outlookApp.CreateItem(Outlook.OlItemType.olMailItem);
+
+            foreach (string correo in adjuntos)
+                mailItem.Recipients.Add(correo);
+
+            mailItem.Subject = "Factura";
+            mailItem.Body = "Correo";
+            mailItem.BodyFormat = Outlook.OlBodyFormat.olFormatPlain;
+
+            if (adjuntos != null)
+            {
+                foreach (string ruta in adjuntos)
+                {
+                    if (File.Exists(ruta))
+                    {
+                        mailItem.Attachments.Add(
+                            ruta,
+                            Outlook.OlAttachmentType.olByValue,
+                            Type.Missing,
+                            Type.Missing);
+                    }
+                }
+            }
+
+            mailItem.Send();
+            return true;
+        }
+        finally
+        {
+            if (mailItem != null) Marshal.ReleaseComObject(mailItem);
+            if (outlookApp != null) Marshal.ReleaseComObject(outlookApp);
+
+            mailItem = null;
+            outlookApp = null;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+    }
+
+    private bool validarCampos()
         {
             bool ok = true;
             if (txtCorreo.Text == string.Empty && txtCorreo2.Text == string.Empty)
@@ -692,6 +748,56 @@ namespace PresentationLayer
             frmNotaCredito frmNota = new frmNotaCredito();
             frmNota._doc = _doc;
             frmNota.ShowDialog();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+                if (Utility.AccesoInternet())
+                {
+                    DialogResult result = MessageBox.Show("Se enviará por correo electrónico el documento seleccionado, Desea continuar?", "Envio de correo electrónico", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        if (validarCampos())
+                        {
+                            List<string> correos = new List<string>();
+                            correos.Add(txtCorreo.Text.Trim());
+
+                            if (txtCorreo2.Text != String.Empty)
+                            {
+                                correos.Add(txtCorreo2.Text.Trim());
+
+                            }
+                            EnviarConOutlookSinVentana(_doc, correos);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No hay acceso a internet", "Sin Internet", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+
+
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                MessageBox.Show(
+                    "No se pudo iniciar Outlook. Verifique que Outlook esté instalado y configurado con una cuenta.",
+                    "Outlook no disponible",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+
+            {
+                //visor de sucesos      
+                         clsEvento evento = new clsEvento(ex.Message, "1");
+                MessageBox.Show("Error al enviar correo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

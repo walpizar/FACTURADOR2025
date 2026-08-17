@@ -405,8 +405,42 @@ namespace DataLayer
             }
         }
 
+        public tbDocumento getEntityByKeyNumber(string id)
+        {
+            try
+            {
+                using (Entities context = new Entities())
+                {
 
-        
+                    var last = (from p in context.tbDocumento.Include("tbDetalleDocumento.tbProducto.tbImpuestos").Include("tbPagos")
+                                where p.clave.ToString()== id.ToString() 
+
+                                select p).ToList().LastOrDefault();
+
+
+                    if (last.idCliente != null)
+                    {
+                        last.tbClientes = clienteIns.GetClienteById((int)last.tipoIdCliente, last.idCliente);
+
+                    }
+                    foreach (var item in last.tbDetalleDocumento)
+                    {
+
+                        item.tbProducto.tbCategoriaProducto = cateIns.GetEntityById(item.tbProducto.id_categoria);
+                        item.tbProducto.tbTipoMedidas = medidaIns.GetEnityById(item.tbProducto.idMedida);
+                    }
+                    return last;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
 
         public tbDocumento getEntityByKey(int id, int tipoDocumento)
         {

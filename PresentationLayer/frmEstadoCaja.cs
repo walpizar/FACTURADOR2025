@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace PresentationLayer
@@ -121,7 +122,7 @@ namespace PresentationLayer
                 IEnumerable<tbPagos> listaPagos = new List<tbPagos>();
                 IEnumerable<tbMovimientos> listaMov = new List<tbMovimientos>();
           
-                decimal inicioCaja = 0, entradaDinero = 0, salidaDinero = 0, notasCredito = 0, notasCreditoContado = 0, notasCreditoTransf = 0, notasCreditoTarjeta = 0,
+                decimal inicioCaja = 0, entradaDinero = 0, salidaDinero = 0, notasCredito = 0, notasCreditoContado = 0,notasCreditoSinpe=0, notasCreditoTransf = 0, notasCreditoTarjeta = 0,
                     contado = 0, tarjeta = 0, credito = 0, transf = 0, sinpe=0;
 
                 #region ELIMINADO
@@ -197,24 +198,37 @@ namespace PresentationLayer
                 foreach (var item in listaNC)
                 {
 
-                    if (item.tipoPago == (int)Enums.TipoPago.Efectivo)
+                    var docRef= facturaIns.getEntityByKeyNumber(item.claveRef);
+
+                    foreach (var itemPago in docRef.tbPagos)
                     {
-                        notasCreditoContado += item.tbDetalleDocumento.Sum(y => y.totalLinea);
-                    }
-                    else if (item.tipoPago == (int)Enums.TipoPago.Tarjeta)
-                    {
-                        notasCreditoTarjeta += item.tbDetalleDocumento.Sum(y => y.totalLinea);
+
+                        if (itemPago.tipoPago == (int)Enums.TipoPago.Efectivo)
+                        {
+                            notasCreditoContado += (decimal)itemPago.monto;
+                        }
+                        else if (itemPago.tipoPago == (int)Enums.TipoPago.Tarjeta)
+                        {
+                            notasCreditoTarjeta += (decimal)itemPago.monto;
+
+                        }
+                        else if (itemPago.tipoPago == (int)Enums.TipoPago.Transferencia)
+                        {
+                            notasCreditoTransf += (decimal)itemPago.monto;
+
+                        }
+                        else if (itemPago.tipoPago == (int)Enums.TipoPago.sinpe)
+                        {
+                            notasCreditoSinpe += (decimal)itemPago.monto;
+
+                        }
 
                     }
-                    else if (item.tipoPago == (int)Enums.TipoPago.Transferencia)
-                    {
-                        notasCreditoTransf += item.tbDetalleDocumento.Sum(y => y.totalLinea);
 
-                    }
 
                 }
 
-                notasCredito = notasCreditoContado + notasCreditoTransf + notasCreditoTarjeta;
+                notasCredito = notasCreditoContado + notasCreditoTransf + notasCreditoTarjeta+ notasCreditoSinpe;
 
                 txtIncioCaja.Text = Utility.priceFormat(inicioCaja);
 
@@ -227,7 +241,7 @@ namespace PresentationLayer
                 txtNCContado.Text = Utility.priceFormat(notasCreditoContado);
                 txtNCTransf.Text = Utility.priceFormat(notasCreditoTransf);
                 txtNCTarjeta.Text = Utility.priceFormat(notasCreditoTarjeta);
-
+                txtNCSinpe.Text = Utility.priceFormat(notasCreditoSinpe);
 
                 txtEntradaDinero.Text = Utility.priceFormat(entradaDinero);
                 txtSalidaDinero.Text = Utility.priceFormat(salidaDinero);
@@ -239,7 +253,7 @@ namespace PresentationLayer
 
 
                 txtTotalNeto.Text = Utility.priceFormat(((contado + tarjeta + credito + transf + sinpe + entradaDinero+ inicioCaja) - (salidaDinero + notasCredito)));
-                txtTotalBanco.Text = Utility.priceFormat(((tarjeta + transf + sinpe) - (notasCreditoTransf + notasCreditoTarjeta)));
+                txtTotalBanco.Text = Utility.priceFormat(((tarjeta + transf + sinpe) - (notasCreditoTransf + notasCreditoTarjeta+notasCreditoSinpe)));
                 txtTotalCaja.Text = Utility.priceFormat(((contado + entradaDinero+ inicioCaja) - (salidaDinero + notasCreditoContado)));
 
 
@@ -273,6 +287,7 @@ namespace PresentationLayer
             lista.Add("SALTO");
             lista.Add("NOTAS DE CRÉDITO");
             lista.Add("Efectivo: " + txtNCContado.Text.Trim());
+            lista.Add("SINPE: " + txtNCSinpe.Text.Trim());
             lista.Add("Tarjeta: " + txtNCTarjeta.Text.Trim());
             lista.Add("Transferencia: " + txtNCTransf.Text.Trim());
             lista.Add("SALTO");
@@ -309,6 +324,10 @@ namespace PresentationLayer
                 DialogResult result = MessageBox.Show("Desea realizar el cierre de la caja?", "Cierre de Caja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result== DialogResult.Yes)
                 {
+                    clsImpresionFactura imprimir = new clsImpresionFactura();
+                    imprimir.abrirCajon();
+
+
                     bool adminCierra = (bool)Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().cierreCajaAdmin;
 
                     if (adminCierra)
@@ -341,13 +360,13 @@ namespace PresentationLayer
                         {
                             String mensaje = string.Format("Empresa:{18}{0}Fecha:{17}{0}Sucursal:{19}{0}Caja:{20}{0}Usuario:{21}{0}{0}VENTAS:{0}Contado: {1}{0}SINPE: {22}{0}Tarjeta: {2}{0}Créditos: {3}{0}Transferencia:{4}{0}{0}ENTRADA/SALIDA CAJA:{0}" +
                                 "Entrada Dinero: {5}{0}Salida Dinero: {6}{0}{0}" +
-                                "NOTAS DE CRÉDITO:{0}Efectivo: {7}{0}Tarjeta: {8}{0}Transferencia: {9}{0}{0}GENERAL{0}Inicio de Caja: {10}{0}Total de Ventas: {11}{0}" +
+                                "NOTAS DE CRÉDITO:{0}Efectivo: {7}{0}SINPE: {23}{0}Tarjeta: {8}{0}Transferencia: {9}{0}{0}GENERAL{0}Inicio de Caja: {10}{0}Total de Ventas: {11}{0}" +
                                 "Total Notas de Crédito: {12}{0}Total Entrada/Salida: {13}{0}Total Neto: {14}{0}Total Banco: {15}{0}Total Caja: {16}{0}",
                                 Environment.NewLine, txtContado.Text.Trim(), txtTarjeta.Text.Trim(), txtCredito.Text.Trim(), txtTransf.Text.Trim()
                                 , txtEntradaDinero.Text.Trim(), txtSalidaDinero.Text.Trim(), txtNCContado.Text.Trim(), txtNCTarjeta.Text.Trim(), txtNCTransf.Text.Trim()
                                 , txtIncioCaja.Text.Trim(), txtTotalVentas.Text.Trim(), txtTotalNC.Text.Trim(), txtEntradaSalida.Text.Trim(), txtTotalNeto.Text.Trim()
                                 , txtTotalBanco.Text.Trim(), txtTotalCaja.Text.Trim(), Utility.getDate(), Global.actividadEconomic.nombreComercial.Trim().ToUpper(),
-                                Global.Configuracion.sucursal.ToString(), Global.Configuracion.caja.ToString(), Global.Usuario.nombreUsuario, txtSinpe.Text);
+                                Global.Configuracion.sucursal.ToString(), Global.Configuracion.caja.ToString(), Global.Usuario.nombreUsuario, txtSinpe.Text, txtNCSinpe.Text);
 
                             List<string> correos = new List<string>();
                             correos.Add(Global.actividadEconomic.correoCompras.Trim());
@@ -355,7 +374,12 @@ namespace PresentationLayer
                             clsDocumentoCorreo _docImp = new clsDocumentoCorreo(correos);
                             string subject = string.Format("ESTADO CIERRE CAJA ({0}) SUCURSAL: {1} CAJA: {2} - ESPARTANO FACTURADOR", Utility.getDate().ToString(), Global.Configuracion.sucursal.ToString(), Global.Configuracion.caja.ToString());
 
+                        
+
+
                             CorreoElectronico.enviarCorreoCierreCaja(_docImp, mensaje, subject);
+
+                            //
 
                         }
                         aprobacionAdmin = false;

@@ -44,6 +44,7 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tlsBtnSalir = new System.Windows.Forms.ToolStripButton();
             this.gbxDatos = new System.Windows.Forms.GroupBox();
+            this.chkInvNegativo = new System.Windows.Forms.CheckBox();
             this.chkValidaCabys = new System.Windows.Forms.CheckBox();
             this.chkEtiquetas = new System.Windows.Forms.CheckBox();
             this.chkPromociones = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkInvNegativo = new System.Windows.Forms.CheckBox();
+            this.txtMargenDolar = new System.Windows.Forms.TextBox();
+            this.chkActualizaTipoCambio = new System.Windows.Forms.CheckBox();
             this.tlsMenu.SuspendLayout();
             this.gbxDatos.SuspendLayout();
             this.SuspendLayout();
@@ -222,6 +224,8 @@
             // 
             // gbxDatos
             // 
+            this.gbxDatos.Controls.Add(this.chkActualizaTipoCambio);
+            this.gbxDatos.Controls.Add(this.txtMargenDolar);
             this.gbxDatos.Controls.Add(this.chkInvNegativo);
             this.gbxDatos.Controls.Add(this.chkValidaCabys);
             this.gbxDatos.Controls.Add(this.chkEtiquetas);
@@ -273,15 +277,26 @@
             this.gbxDatos.Margin = new System.Windows.Forms.Padding(2);
             this.gbxDatos.Name = "gbxDatos";
             this.gbxDatos.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxDatos.Size = new System.Drawing.Size(425, 502);
+            this.gbxDatos.Size = new System.Drawing.Size(425, 517);
             this.gbxDatos.TabIndex = 14;
             this.gbxDatos.TabStop = false;
             this.gbxDatos.Text = "Parámetros Empresa";
             // 
+            // chkInvNegativo
+            // 
+            this.chkInvNegativo.AutoSize = true;
+            this.chkInvNegativo.Location = new System.Drawing.Point(114, 301);
+            this.chkInvNegativo.Margin = new System.Windows.Forms.Padding(2);
+            this.chkInvNegativo.Name = "chkInvNegativo";
+            this.chkInvNegativo.Size = new System.Drawing.Size(119, 17);
+            this.chkInvNegativo.TabIndex = 90;
+            this.chkInvNegativo.Text = "Inventario Negativo";
+            this.chkInvNegativo.UseVisualStyleBackColor = true;
+            // 
             // chkValidaCabys
             // 
             this.chkValidaCabys.AutoSize = true;
-            this.chkValidaCabys.Location = new System.Drawing.Point(262, 324);
+            this.chkValidaCabys.Location = new System.Drawing.Point(252, 321);
             this.chkValidaCabys.Margin = new System.Windows.Forms.Padding(2);
             this.chkValidaCabys.Name = "chkValidaCabys";
             this.chkValidaCabys.Size = new System.Drawing.Size(146, 17);
@@ -292,7 +307,7 @@
             // chkEtiquetas
             // 
             this.chkEtiquetas.AutoSize = true;
-            this.chkEtiquetas.Location = new System.Drawing.Point(262, 281);
+            this.chkEtiquetas.Location = new System.Drawing.Point(252, 278);
             this.chkEtiquetas.Margin = new System.Windows.Forms.Padding(2);
             this.chkEtiquetas.Name = "chkEtiquetas";
             this.chkEtiquetas.Size = new System.Drawing.Size(70, 17);
@@ -303,7 +318,7 @@
             // chkPromociones
             // 
             this.chkPromociones.AutoSize = true;
-            this.chkPromociones.Location = new System.Drawing.Point(262, 303);
+            this.chkPromociones.Location = new System.Drawing.Point(252, 300);
             this.chkPromociones.Margin = new System.Windows.Forms.Padding(2);
             this.chkPromociones.Name = "chkPromociones";
             this.chkPromociones.Size = new System.Drawing.Size(87, 17);
@@ -572,9 +587,9 @@
             this.label4.Location = new System.Drawing.Point(231, 162);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.Size = new System.Drawing.Size(46, 13);
             this.label4.TabIndex = 57;
-            this.label4.Text = "Colones";
+            this.label4.Text = "Márgen:";
             // 
             // label3
             // 
@@ -731,23 +746,31 @@
             this.label15.TabIndex = 40;
             this.label15.Text = "Plazo Máximo Proformas:";
             // 
-            // chkInvNegativo
+            // txtMargenDolar
             // 
-            this.chkInvNegativo.AutoSize = true;
-            this.chkInvNegativo.Location = new System.Drawing.Point(114, 301);
-            this.chkInvNegativo.Margin = new System.Windows.Forms.Padding(2);
-            this.chkInvNegativo.Name = "chkInvNegativo";
-            this.chkInvNegativo.Size = new System.Drawing.Size(119, 17);
-            this.chkInvNegativo.TabIndex = 90;
-            this.chkInvNegativo.Text = "Inventario Negativo";
-            this.chkInvNegativo.UseVisualStyleBackColor = true;
+            this.txtMargenDolar.Location = new System.Drawing.Point(281, 159);
+            this.txtMargenDolar.Margin = new System.Windows.Forms.Padding(2);
+            this.txtMargenDolar.Name = "txtMargenDolar";
+            this.txtMargenDolar.Size = new System.Drawing.Size(90, 20);
+            this.txtMargenDolar.TabIndex = 91;
+            // 
+            // chkActualizaTipoCambio
+            // 
+            this.chkActualizaTipoCambio.AutoSize = true;
+            this.chkActualizaTipoCambio.Location = new System.Drawing.Point(4, 496);
+            this.chkActualizaTipoCambio.Margin = new System.Windows.Forms.Padding(2);
+            this.chkActualizaTipoCambio.Name = "chkActualizaTipoCambio";
+            this.chkActualizaTipoCambio.Size = new System.Drawing.Size(228, 17);
+            this.chkActualizaTipoCambio.TabIndex = 92;
+            this.chkActualizaTipoCambio.Text = "Actualizar tipo de cambio automáticamente";
+            this.chkActualizaTipoCambio.UseVisualStyleBackColor = true;
             // 
             // frmParametrosEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(447, 535);
+            this.ClientSize = new System.Drawing.Size(447, 562);
             this.Controls.Add(this.gbxDatos);
             this.Controls.Add(this.tlsMenu);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -828,5 +851,7 @@
         private System.Windows.Forms.CheckBox chkPromociones;
         private System.Windows.Forms.CheckBox chkValidaCabys;
         private System.Windows.Forms.CheckBox chkInvNegativo;
+        private System.Windows.Forms.TextBox txtMargenDolar;
+        private System.Windows.Forms.CheckBox chkActualizaTipoCambio;
     }
 }

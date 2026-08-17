@@ -27,21 +27,21 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tbClienteActividad> tbClienteActividad { get; set; }
+        public virtual DbSet<CIIU4> CIIU4 { get; set; }
         public virtual DbSet<tbAcompanamiento> tbAcompanamiento { get; set; }
         public virtual DbSet<tbActividades> tbActividades { get; set; }
-        public virtual DbSet<tbBarrios> tbBarrios { get; set; }
         public virtual DbSet<tbCajasMovimientos> tbCajasMovimientos { get; set; }
-        public virtual DbSet<tbCanton> tbCanton { get; set; }
         public virtual DbSet<tbCategoria9Cabys> tbCategoria9Cabys { get; set; }
         public virtual DbSet<tbCategoriaProducto> tbCategoriaProducto { get; set; }
         public virtual DbSet<tbCategoriaRequerimiento> tbCategoriaRequerimiento { get; set; }
-        public virtual DbSet<tbClienteActividad> tbClienteActividad { get; set; }
+        public virtual DbSet<tbClientes> tbClientes { get; set; }
+        public virtual DbSet<tbClientesActividadesEconomicas> tbClientesActividadesEconomicas { get; set; }
         public virtual DbSet<tbCompras> tbCompras { get; set; }
         public virtual DbSet<tbDetalleCompras> tbDetalleCompras { get; set; }
         public virtual DbSet<tbDetalleDocumento> tbDetalleDocumento { get; set; }
         public virtual DbSet<tbDetalleDocumentoPendiente> tbDetalleDocumentoPendiente { get; set; }
         public virtual DbSet<tbDetalleOrdenCompra> tbDetalleOrdenCompra { get; set; }
-        public virtual DbSet<tbDistrito> tbDistrito { get; set; }
         public virtual DbSet<tbDocumento> tbDocumento { get; set; }
         public virtual DbSet<tbDocumentosPendiente> tbDocumentosPendiente { get; set; }
         public virtual DbSet<tbEmpleado> tbEmpleado { get; set; }
@@ -54,12 +54,10 @@ namespace DataLayer
         public virtual DbSet<tbOrdenCompra> tbOrdenCompra { get; set; }
         public virtual DbSet<tbPagos> tbPagos { get; set; }
         public virtual DbSet<tbParametrosEmpresa> tbParametrosEmpresa { get; set; }
-        public virtual DbSet<tbPersona> tbPersona { get; set; }
         public virtual DbSet<tbPersonasTribunalS> tbPersonasTribunalS { get; set; }
         public virtual DbSet<tbProducto> tbProducto { get; set; }
         public virtual DbSet<tbPromociones> tbPromociones { get; set; }
         public virtual DbSet<tbProveedores> tbProveedores { get; set; }
-        public virtual DbSet<tbProvincia> tbProvincia { get; set; }
         public virtual DbSet<tbReporteHacienda> tbReporteHacienda { get; set; }
         public virtual DbSet<tbRequerimientos> tbRequerimientos { get; set; }
         public virtual DbSet<tbRoles> tbRoles { get; set; }
@@ -73,6 +71,10 @@ namespace DataLayer
         public virtual DbSet<tbTipoPuesto> tbTipoPuesto { get; set; }
         public virtual DbSet<tbTipoVenta> tbTipoVenta { get; set; }
         public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
-        public virtual DbSet<tbClientes> tbClientes { get; set; }
+        public virtual DbSet<tbBarrios> tbBarrios { get; set; }
+        public virtual DbSet<tbCanton> tbCanton { get; set; }
+        public virtual DbSet<tbDistrito> tbDistrito { get; set; }
+        public virtual DbSet<tbPersona> tbPersona { get; set; }
+        public virtual DbSet<tbProvincia> tbProvincia { get; set; }
     }
 }

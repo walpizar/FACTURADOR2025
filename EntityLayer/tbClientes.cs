@@ -18,6 +18,7 @@ namespace EntityLayer
         public tbClientes()
         {
             this.tbClienteActividad = new HashSet<tbClienteActividad>();
+            this.tbClientesActividadesEconomicas = new HashSet<tbClientesActividadesEconomicas>();
             this.tbDocumento = new HashSet<tbDocumento>();
         }
     
@@ -46,17 +47,19 @@ namespace EntityLayer
         public string contacto { get; set; }
         public bool contribuyente { get; set; }
         public Nullable<bool> aplicaDescAuto { get; set; }
+        public string codigoActDefault { get; set; }
         public Nullable<System.DateTime> fechaVencExo { get; set; }
         public string incisoExo { get; set; }
         public string articuloExo { get; set; }
-        public string codigoActDefault { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbClienteActividad> tbClienteActividad { get; set; }
         public virtual tbExoneraciones tbExoneraciones { get; set; }
-        public virtual tbPersona tbPersona { get; set; }
         public virtual tbTipoClientes tbTipoClientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbClientesActividadesEconomicas> tbClientesActividadesEconomicas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbDocumento> tbDocumento { get; set; }
+        public virtual tbPersona tbPersona { get; set; }
     }
 }

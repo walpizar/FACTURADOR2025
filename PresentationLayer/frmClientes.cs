@@ -10,6 +10,7 @@ using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CommonLayer.Enums;
@@ -24,6 +25,13 @@ namespace PresentationLayer
         BProvincias provinciasIns = new BProvincias();
         BTipoId tipoIdIns = new BTipoId();
         BExoneraciones exoneraIns = new BExoneraciones();
+
+        // Actividades económicas asignadas al cliente que se está editando.
+        // La selección/edición de esta lista vive en frmBuscarActividadEconomica;
+        // acá solo se guarda, se carga y se refleja en cboActividadEconomica.
+        private List<tbClientesActividadesEconomicas> actividadesAsignadas = new List<tbClientesActividadesEconomicas>();
+        private BClienteActividadEconomica actividadEconomicaInst = new BClienteActividadEconomica();
+
 
         public delegate void pasaDatos(tbClientes entity);
         public event pasaDatos pasarDatosEvent;
@@ -40,6 +48,7 @@ namespace PresentationLayer
         public frmClientes()
         {
             InitializeComponent();
+
         }
 
 
@@ -242,16 +251,32 @@ namespace PresentationLayer
 
             if (chkContribuyente.Checked)
             {
-                if (cboActividadEconomica.Text == string.Empty)
+                if (actividadesAsignadas.Count == 0)
                 {
-                    MessageBox.Show("Debe indicar la actividad económica del cliente");
-                    cboActividadEconomica.Focus();
-                    return false;
+                    MessageBox.Show(
+                        "Debe asignar al menos una actividad económica y seleccionar una como principal.",
+                        "Actividades económicas",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
+                    buscarActividad.Focus();
+                    return false;
+                }
+
+                if (!actividadesAsignadas.Any(a => a.esPrincipal))
+                {
+                    MessageBox.Show(
+                        "Debe seleccionar una actividad económica como principal.",
+                        "Actividades económicas",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    buscarActividad.Focus();
+                    return false;
                 }
             }
 
-                return true;
+            return true;
         }
 
 
@@ -342,12 +367,9 @@ namespace PresentationLayer
                     }
                     cliente.contribuyente = chkContribuyente.Checked;
 
-                    if (chkContribuyente.Checked)
-                    {
-                        cliente.codigoActDefault= cboActividadEconomica.SelectedValue.ToString().Trim();
-
-
-                    }
+                    cliente.codigoActDefault = chkContribuyente.Checked
+                        ? actividadesAsignadas.FirstOrDefault(a => a.esPrincipal)?.CodigoCIIU
+                        : null;
 
                     cliente.correoElectConta = txtCorreoContabilidad.Text;
                     cliente.creditoMax = int.Parse(txtCreditoMaxInt.Text);
@@ -368,6 +390,12 @@ namespace PresentationLayer
                     // CON NUESTRA INSTACIA LLAMAMOS AL METODO GUARDAR.... Y LE MANDAMOS A CLIENTE...
 
                     cliente = clienteInst.Guardar(cliente);
+
+                    if (chkContribuyente.Checked)
+                    {
+                        actividadEconomicaInst.GuardarActividades(
+                            cliente.id, cliente.tipoId, actividadesAsignadas, Global.Usuario.nombreUsuario);
+                    }
 
                     if (id != string.Empty)
                     {
@@ -681,19 +709,17 @@ namespace PresentationLayer
                             if (chkContribuyente.Checked)
                             {
                                 gbxAct.Enabled = true;
-                                cargarActividades();
-                                cboActividadEconomica.SelectedValue= clienteGlobal.codigoActDefault;
-
-
+                                actividadesAsignadas = actividadEconomicaInst.ObtenerPorCliente(
+                                    clienteGlobal.id, clienteGlobal.tipoId);
+                                CargarComboActividades();
                             }
                             else
                             {
                                 gbxAct.Enabled = false;
-                                cboActividadEconomica.DataSource = null;
-                                cboActividadEconomica.Items.Clear();
+                                LimpiarComboActividades();
                             }
 
-                                if (chkAplicaExo.Checked)
+                            if (chkAplicaExo.Checked)
                             {
                                 gbxExoneracion.Enabled = true;
                                 // --- Institución (string tipo "04") ---
@@ -862,12 +888,9 @@ namespace PresentationLayer
 
                     clienteGlobal.contribuyente = chkContribuyente.Checked;
 
-                    if (chkContribuyente.Checked)
-                    {
-                        clienteGlobal.codigoActDefault = cboActividadEconomica.SelectedValue.ToString().Trim();
-
-
-                    }
+                    clienteGlobal.codigoActDefault = chkContribuyente.Checked
+                        ? actividadesAsignadas.FirstOrDefault(a => a.esPrincipal)?.CodigoCIIU
+                        : null;
 
 
                     clienteGlobal.correoElectConta = txtCorreoContabilidad.Text.Trim();
@@ -883,6 +906,13 @@ namespace PresentationLayer
                     clienteGlobal.usuario_ult_crea = Global.Usuario.nombreUsuario;
                     clienteGlobal.fecha_ult_mod = Utility.getDate();
                     clienteGlobal = clienteInst.Modificar(clienteGlobal);
+
+                    if (chkContribuyente.Checked)
+                    {
+                        actividadEconomicaInst.GuardarActividades(
+                            clienteGlobal.id, clienteGlobal.tipoId, actividadesAsignadas, Global.Usuario.nombreUsuario);
+                    }
+
                     MessageBox.Show("Los datos han sido actualizados en la base de datos.", "Actualización.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     processOk = true;
                 }
@@ -902,6 +932,9 @@ namespace PresentationLayer
         {// AQUI ES DONDE  SE INICIAN LOS COMANDOS DEL DE TODO EL APLICATIVO....
 
             CargarCombos();
+            chkContribuyente.Checked = false;
+            buscarActividad.Enabled = false;
+
             MenuGenerico.CambioEstadoMenu(ref tlsMenu, (int)EnumMenu.OpcionMenu.Nuevo);
             Utility.EnableDisableForm(ref gbxCliente, false);
             // Y SE COMIENZAN A  LLAMAR LOS METODOS....
@@ -913,7 +946,7 @@ namespace PresentationLayer
                 Utility.EnableDisableForm(ref gbxCliente, true);
                 limpiar();
                 mskidentificacion.Text = id;
-                buscarClienteTribunal();
+              //  buscarClienteTribunal();
 
             }
 
@@ -931,8 +964,7 @@ namespace PresentationLayer
             txtCreditoMaxInt.Text = "100000";
             txtPlazoMaxInt.Text = Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().plazoMaximoCredito.ToString();
             chkDescAuto.Checked = false;
-            cboActividadEconomica.DataSource = null;
-            cboActividadEconomica.Items.Clear();
+            LimpiarComboActividades();
         }
 
         private void CargarCombos()
@@ -1074,7 +1106,7 @@ namespace PresentationLayer
 
             }
         }
-       
+
         private async void buscarClienteTribunal()
         {
 
@@ -1084,21 +1116,21 @@ namespace PresentationLayer
 
 
 
-                if( cliente == null)
+                if (cliente == null)
                 {
                     MessageBox.Show("No se encontraron datos del cliente en el Tribunal, verifique la identificación.", "Cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 var (nombre, apellido1, apellido2) = Utility.ObtenerNombreYApellidos(cliente.Nombre);
-               
+
 
                 if (cliente != null)
                 {
-                    
-                    txtapellido1.Text = apellido1.Trim(); 
+
+                    txtapellido1.Text = apellido1.Trim();
                     txtapellido2.Text = apellido2.Trim();
                     txtnombre.Text = nombre.Trim();
-                  
+
 
 
                     //if (int.Parse(cliente.SEXO.Trim()) == 1)
@@ -1130,14 +1162,14 @@ namespace PresentationLayer
                     txtapellido1.Text = string.Empty;
                     txtapellido2.Text = string.Empty;
                 }
-              
+
             }
 
         }
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
 
-            buscarClienteTribunal();
+            buscarClienteHacienda();
         }
 
 
@@ -1193,15 +1225,15 @@ namespace PresentationLayer
         {
             try
             {
-                if (txtDocExo.Text!= string.Empty)
+                if (txtDocExo.Text != string.Empty)
                 {
                     Comunicacion comunicacion = new Comunicacion();
                     comunicacion.ConsultaExoneracionXAutorizacion(txtDocExo.Text.Trim());
 
-                    if(comunicacion.exoneracion != null)
+                    if (comunicacion.exoneracion != null)
                     {
                         txtDocExo.Text = comunicacion.exoneracion.numeroDocumento;
-                        cboInstitucionExo.Text= comunicacion.exoneracion.nombreInstitucion.Trim();
+                        cboInstitucionExo.Text = comunicacion.exoneracion.nombreInstitucion.Trim();
                         dtpFechaEmisionExo.Text = comunicacion.exoneracion.fechaEmision;
                         dtpVencimiento.Text = comunicacion.exoneracion.fechaVencimiento;
                         cboPorcExo.Text = comunicacion.exoneracion.porcentajeExoneracion;
@@ -1220,7 +1252,7 @@ namespace PresentationLayer
                     else
                     {
                         txtDocExo.Text = string.Empty;
-                      //  txtInstitucionExo.Text = string.Empty;
+                        //  txtInstitucionExo.Text = string.Empty;
                         dtpFechaEmisionExo.Text = string.Empty;
                         dtpVencimiento.Text = string.Empty;
                         cboPorcExo.Text = "13";
@@ -1229,7 +1261,7 @@ namespace PresentationLayer
 
                     }
                 }
-            
+
 
 
             }
@@ -1250,50 +1282,205 @@ namespace PresentationLayer
 
         private void buscarActividad_Click(object sender, EventArgs e)
         {
-            cargarActividades();
+            using (var frm = new frmBuscarActividadEconomica1(actividadesAsignadas, ObtenerIdentificacionCliente()))
+            {
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                {
+                    actividadesAsignadas = frm.ActividadesResultado;
+                    CargarComboActividades();
+                }
+            }
         }
 
-        private async Task cargarActividades()
+
+        private async void buscarClienteHacienda()
         {
             try
             {
-                cboActividadEconomica.DataSource = null;
-                cboActividadEconomica.Items.Clear();
+                if (cbotipoId.SelectedValue == null)
+                    return;
 
-                var id = (int)cbotipoId.SelectedValue == (int)Enums.TipoId.Fisica ? mskidentificacion.Text.Trim() : txtIdentificacion.Text.Trim();
-               
-                if (id != null)
+                int tipoId = Convert.ToInt32(cbotipoId.SelectedValue);
+
+                string identificacion =
+                    tipoId == (int)Enums.TipoId.Fisica
+                    ? mskidentificacion.Text.Trim()
+                    : txtIdentificacion.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(identificacion))
                 {
-                    List<Actividad> lista = await Utility.obtnerActividadesPorCliente(id);
-                    if (lista != null && lista.Count > 0)
-                    {
-                        cboActividadEconomica.DataSource = lista;
-                        cboActividadEconomica.DisplayMember = "Display"; // lo que verá el usuario
-                        cboActividadEconomica.ValueMember = "Codigo";    // el valor interno
-                    }
-                    //else
-                    //{
-                    //    MessageBox.Show("No hay actividades económicas registradas al cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    //}
+                    MessageBox.Show(
+                        "Debe ingresar una identificación.",
+                        "Cliente",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
 
-
-
+                    return;
                 }
+
+                ClienteResponseDTO respuesta =
+                    await ConsultasAPI.ObtenerCliente(identificacion);
+
+                if (respuesta == null)
+                {
+                    MessageBox.Show(
+                        "No se encontraron datos en Hacienda.",
+                        "Cliente",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    chkContribuyente.Checked = false;
+                    LimpiarComboActividades();
+                    return;
+                }
+
+                // ========================
+                // NOMBRE
+                // ========================
+
+                if (tipoId == (int)Enums.TipoId.Fisica)
+                {
+                    var (nombre, apellido1, apellido2) =
+                        Utility.ObtenerNombreYApellidos(respuesta.Nombre);
+
+                    txtnombre.Text = nombre?.Trim() ?? string.Empty;
+                    txtapellido1.Text = apellido1?.Trim() ?? string.Empty;
+                    txtapellido2.Text = apellido2?.Trim() ?? string.Empty;
+                }
+                else
+                {
+                    txtnombre.Text =
+                        respuesta.Nombre?.Trim() ?? string.Empty;
+
+                    txtapellido1.Clear();
+                    txtapellido2.Clear();
+                }
+
+                // ========================
+                // CONTRIBUYENTE
+                // ========================
+
+                bool tieneActividades =
+                    respuesta.Actividades != null &&
+                    respuesta.Actividades.Any();
+
+                bool estaActivo =
+                    !string.IsNullOrWhiteSpace(respuesta.Situacion.Estado) &&
+                    respuesta.Situacion.Estado.Trim().Equals(
+                        "INSCRITO",
+                        StringComparison.OrdinalIgnoreCase);
+
+                chkContribuyente.Checked =
+                    tieneActividades && estaActivo;
+
+                //// ========================
+                //// ACTIVIDADES ECONÓMICAS
+                //// ========================
+
+                //if (chkContribuyente.Checked)
+                //{
+                //    gbxAct.Enabled = true;
+
+                //    actividadesAsignadas =
+                //        respuesta.Actividades
+                //            .Select(a =>
+                //                new tbClientesActividadesEconomicas
+                //                {
+                //                    CodigoCIIU = a.Codigo,
+                //                    NombreActividad = a.Descripcion,
+                //                    esPrincipal = a.EsPrincipal
+                //                })
+                //            .ToList();
+
+                ////    CargarComboActividades();
+                //}
+                //else
+                //{
+                //    gbxAct.Enabled = false;
+                //    LimpiarComboActividades();
+                //}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                cboActividadEconomica.Items.Clear();
-                cboActividadEconomica.Text = "";
+                chkContribuyente.Checked = false;
+                LimpiarComboActividades();
 
-                MessageBox.Show("No se logró consultar las actividades económicas del cliente.", "Sin actividades económicas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(
+                    "Error consultando Hacienda.\n\n" + ex.Message,
+                    "Consulta Hacienda",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+        private string ObtenerIdentificacionCliente()
+        {
+            if (cbotipoId.SelectedValue == null)
+            {
+                return string.Empty;
             }
 
+            return Convert.ToInt32(cbotipoId.SelectedValue) == (int)Enums.TipoId.Fisica
+                ? mskidentificacion.Text.Trim()
+                : txtIdentificacion.Text.Trim();
         }
 
-        private void chkContribuyente_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Pinta el combo de solo lectura con las actividades asignadas.
+        /// La principal siempre queda primera y marcada como tal.
+        /// </summary>
+        private void CargarComboActividades()
+        {
+            cboActividadEconomica.DataSource = null;
+            cboActividadEconomica.Items.Clear();
+
+            if (actividadesAsignadas == null || actividadesAsignadas.Count == 0)
+            {
+                cboActividadEconomica.Text = "Sin actividades asignadas";
+                return;
+            }
+
+            var ordenadas = actividadesAsignadas
+                .OrderByDescending(a => a.esPrincipal)
+                .ThenBy(a => a.CodigoCIIU)
+                .ToList();
+
+            foreach (var act in ordenadas)
+            {
+                string nombre = act.NombreActividad ?? act.CodigoCIIU;
+                string etiqueta = act.esPrincipal
+                    ? $"{act.CodigoCIIU} - {nombre} (Principal)"
+                    : $"{act.CodigoCIIU} - {nombre}";
+                cboActividadEconomica.Items.Add(etiqueta);
+            }
+
+            cboActividadEconomica.SelectedIndex = 0; // la principal siempre queda al frente
+        }
+
+        private void LimpiarComboActividades()
+        {
+            actividadesAsignadas = new List<tbClientesActividadesEconomicas>();
+            cboActividadEconomica.DataSource = null;
+            cboActividadEconomica.Items.Clear();
+            cboActividadEconomica.Text = "Sin actividades asignadas";
+        }
+
+        private void chkContribuyente_CheckedChanged(
+            object sender,
+            EventArgs e)
         {
             gbxAct.Enabled = chkContribuyente.Checked;
+            buscarActividad.Enabled = chkContribuyente.Checked;
+
+            if (!chkContribuyente.Checked)
+            {
+                gbxAct.Enabled = false;
+                LimpiarComboActividades();
+            }
+            else
+            {
+                gbxAct.Enabled = true;
+                buscarActividad.Enabled = true;
+            }
         }
     }
 }
-

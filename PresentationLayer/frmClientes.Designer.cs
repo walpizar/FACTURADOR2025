@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             this.gbxCliente = new System.Windows.Forms.GroupBox();
+            this.gbxAct = new System.Windows.Forms.GroupBox();
+            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.buscarActividad = new System.Windows.Forms.Button();
+            this.chkContribuyente = new System.Windows.Forms.CheckBox();
             this.chkDescAuto = new System.Windows.Forms.CheckBox();
             this.txtIdentificacion = new System.Windows.Forms.MaskedTextBox();
             this.gbxExoneracion = new System.Windows.Forms.GroupBox();
@@ -118,16 +123,11 @@
             this.tlsBtnCancelar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tlsBtnSalir = new System.Windows.Forms.ToolStripButton();
-            this.chkContribuyente = new System.Windows.Forms.CheckBox();
-            this.gbxAct = new System.Windows.Forms.GroupBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.buscarActividad = new System.Windows.Forms.Button();
-            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
             this.gbxCliente.SuspendLayout();
+            this.gbxAct.SuspendLayout();
             this.gbxExoneracion.SuspendLayout();
             this.gboSexo.SuspendLayout();
             this.tlsMenu.SuspendLayout();
-            this.gbxAct.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbxCliente
@@ -195,6 +195,63 @@
             this.gbxCliente.TabIndex = 5;
             this.gbxCliente.TabStop = false;
             this.gbxCliente.Text = "Datos del Cliente";
+            // 
+            // gbxAct
+            // 
+            this.gbxAct.Controls.Add(this.cboActividadEconomica);
+            this.gbxAct.Controls.Add(this.label27);
+            this.gbxAct.Controls.Add(this.buscarActividad);
+            this.gbxAct.Enabled = false;
+            this.gbxAct.Location = new System.Drawing.Point(64, 522);
+            this.gbxAct.Margin = new System.Windows.Forms.Padding(2);
+            this.gbxAct.Name = "gbxAct";
+            this.gbxAct.Padding = new System.Windows.Forms.Padding(2);
+            this.gbxAct.Size = new System.Drawing.Size(608, 48);
+            this.gbxAct.TabIndex = 90;
+            this.gbxAct.TabStop = false;
+            // 
+            // cboActividadEconomica
+            // 
+            // Solo lectura: la selección de actividades se hace en frmBuscarActividadEconomica.
+            // Este combo únicamente refleja el resultado (principal primero) que devuelve esa pantalla.
+            this.cboActividadEconomica.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboActividadEconomica.Enabled = false;
+            this.cboActividadEconomica.FormattingEnabled = true;
+            this.cboActividadEconomica.Location = new System.Drawing.Point(153, 16);
+            this.cboActividadEconomica.Name = "cboActividadEconomica";
+            this.cboActividadEconomica.Size = new System.Drawing.Size(415, 21);
+            this.cboActividadEconomica.TabIndex = 99;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(5, 19);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(149, 13);
+            this.label27.TabIndex = 92;
+            this.label27.Text = "Actividad Económica defecto:";
+            // 
+            // buscarActividad
+            // 
+            this.buscarActividad.Image = ((System.Drawing.Image)(resources.GetObject("buscarActividad.Image")));
+            this.buscarActividad.Location = new System.Drawing.Point(573, 11);
+            this.buscarActividad.Margin = new System.Windows.Forms.Padding(2);
+            this.buscarActividad.Name = "buscarActividad";
+            this.buscarActividad.Size = new System.Drawing.Size(27, 28);
+            this.buscarActividad.TabIndex = 91;
+            this.buscarActividad.UseVisualStyleBackColor = true;
+            this.buscarActividad.Click += new System.EventHandler(this.buscarActividad_Click);
+            // 
+            // chkContribuyente
+            // 
+            this.chkContribuyente.AutoSize = true;
+            this.chkContribuyente.Location = new System.Drawing.Point(63, 508);
+            this.chkContribuyente.Name = "chkContribuyente";
+            this.chkContribuyente.Size = new System.Drawing.Size(91, 17);
+            this.chkContribuyente.TabIndex = 76;
+            this.chkContribuyente.Text = "Contribuyente";
+            this.chkContribuyente.UseVisualStyleBackColor = true;
+            this.chkContribuyente.CheckedChanged += new System.EventHandler(this.chkContribuyente_CheckedChanged);
             // 
             // chkDescAuto
             // 
@@ -954,7 +1011,7 @@
             this.tlsBtnSalir});
             this.tlsMenu.Location = new System.Drawing.Point(0, 0);
             this.tlsMenu.Name = "tlsMenu";
-            this.tlsMenu.Size = new System.Drawing.Size(709, 39);
+            this.tlsMenu.Size = new System.Drawing.Size(713, 39);
             this.tlsMenu.TabIndex = 11;
             this.tlsMenu.Text = "toolStrip";
             this.tlsMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tlsMenu_ItemClicked);
@@ -1059,66 +1116,13 @@
             this.tlsBtnSalir.Size = new System.Drawing.Size(36, 36);
             this.tlsBtnSalir.Text = "Salir";
             // 
-            // chkContribuyente
-            // 
-            this.chkContribuyente.AutoSize = true;
-            this.chkContribuyente.Location = new System.Drawing.Point(63, 508);
-            this.chkContribuyente.Name = "chkContribuyente";
-            this.chkContribuyente.Size = new System.Drawing.Size(91, 17);
-            this.chkContribuyente.TabIndex = 76;
-            this.chkContribuyente.Text = "Contribuyente";
-            this.chkContribuyente.UseVisualStyleBackColor = true;
-            this.chkContribuyente.CheckedChanged += new System.EventHandler(this.chkContribuyente_CheckedChanged);
-            // 
-            // gbxAct
-            // 
-            this.gbxAct.Controls.Add(this.cboActividadEconomica);
-            this.gbxAct.Controls.Add(this.label27);
-            this.gbxAct.Controls.Add(this.buscarActividad);
-            this.gbxAct.Enabled = false;
-            this.gbxAct.Location = new System.Drawing.Point(64, 522);
-            this.gbxAct.Margin = new System.Windows.Forms.Padding(2);
-            this.gbxAct.Name = "gbxAct";
-            this.gbxAct.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxAct.Size = new System.Drawing.Size(608, 48);
-            this.gbxAct.TabIndex = 90;
-            this.gbxAct.TabStop = false;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(5, 19);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(110, 13);
-            this.label27.TabIndex = 92;
-            this.label27.Text = "Actividad Económica:";
-            // 
-            // buscarActividad
-            // 
-            this.buscarActividad.Image = ((System.Drawing.Image)(resources.GetObject("buscarActividad.Image")));
-            this.buscarActividad.Location = new System.Drawing.Point(563, 11);
-            this.buscarActividad.Margin = new System.Windows.Forms.Padding(2);
-            this.buscarActividad.Name = "buscarActividad";
-            this.buscarActividad.Size = new System.Drawing.Size(27, 28);
-            this.buscarActividad.TabIndex = 91;
-            this.buscarActividad.UseVisualStyleBackColor = true;
-            this.buscarActividad.Click += new System.EventHandler(this.buscarActividad_Click);
-            // 
-            // cboActividadEconomica
-            // 
-            this.cboActividadEconomica.FormattingEnabled = true;
-            this.cboActividadEconomica.Location = new System.Drawing.Point(116, 16);
-            this.cboActividadEconomica.Name = "cboActividadEconomica";
-            this.cboActividadEconomica.Size = new System.Drawing.Size(442, 21);
-            this.cboActividadEconomica.TabIndex = 99;
-            // 
             // frmClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(709, 718);
+            this.ClientSize = new System.Drawing.Size(713, 737);
             this.Controls.Add(this.tlsMenu);
             this.Controls.Add(this.gbxCliente);
             this.Name = "frmClientes";
@@ -1128,14 +1132,14 @@
             this.Load += new System.EventHandler(this.frmClientes_Load);
             this.gbxCliente.ResumeLayout(false);
             this.gbxCliente.PerformLayout();
+            this.gbxAct.ResumeLayout(false);
+            this.gbxAct.PerformLayout();
             this.gbxExoneracion.ResumeLayout(false);
             this.gbxExoneracion.PerformLayout();
             this.gboSexo.ResumeLayout(false);
             this.gboSexo.PerformLayout();
             this.tlsMenu.ResumeLayout(false);
             this.tlsMenu.PerformLayout();
-            this.gbxAct.ResumeLayout(false);
-            this.gbxAct.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

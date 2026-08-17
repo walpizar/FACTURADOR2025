@@ -591,7 +591,9 @@ namespace PresentationLayer.Clases
             }
 
             Ticket1.LineasGuion(); // imprime una linea de guiones
+
             Ticket1.EncabezadoVenta(); // imprime encabezados
+            Ticket1.LineasGuion(); // imprime una linea de guiones
             foreach (tbDetalleDocumento item in _doc.tbDetalleDocumento)
             {
 
