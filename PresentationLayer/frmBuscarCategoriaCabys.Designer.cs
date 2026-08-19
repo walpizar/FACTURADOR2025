@@ -10,21 +10,23 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">
+        /// true if managed resources should be disposed; otherwise, false.
+        /// </param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support.
         /// </summary>
         private void InitializeComponent()
         {
@@ -33,10 +35,13 @@
             this.colID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colImpuesto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colProductoServ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtbusqueda = new System.Windows.Forms.TextBox();
             this.lblNombreProducto = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.colProductoServ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.lblPagina = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lstvBienServicios
@@ -74,6 +79,11 @@
             this.colImpuesto.Text = "%Impuesto";
             this.colImpuesto.Width = 90;
             // 
+            // colProductoServ
+            // 
+            this.colProductoServ.Text = "Tipo";
+            this.colProductoServ.Width = 150;
+            // 
             // txtbusqueda
             // 
             this.txtbusqueda.Location = new System.Drawing.Point(92, 31);
@@ -95,9 +105,10 @@
             // 
             // btnBuscar
             // 
+            this.btnBuscar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscar.BackgroundImage")));
+            this.btnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.ForeColor = System.Drawing.Color.Transparent;
-            this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
             this.btnBuscar.Location = new System.Drawing.Point(455, 12);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(52, 48);
@@ -106,21 +117,51 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // colProductoServ
+            // btnAnterior
             // 
-            this.colProductoServ.Text = "Tipo";
-            this.colProductoServ.Width = 150;
+            this.btnAnterior.Location = new System.Drawing.Point(310, 376);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(110, 32);
+            this.btnAnterior.TabIndex = 36;
+            this.btnAnterior.Text = "<< Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(650, 376);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(110, 32);
+            this.btnSiguiente.TabIndex = 38;
+            this.btnSiguiente.Text = "Siguiente >>";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // lblPagina
+            // 
+            this.lblPagina.AutoSize = true;
+            this.lblPagina.Location = new System.Drawing.Point(438, 386);
+            this.lblPagina.Name = "lblPagina";
+            this.lblPagina.Size = new System.Drawing.Size(73, 13);
+            this.lblPagina.TabIndex = 37;
+            this.lblPagina.Text = "Página 1 de 1";
             // 
             // frmBuscarCategoriaCabys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1031, 374);
+            this.ClientSize = new System.Drawing.Size(1031, 420);
+            this.Controls.Add(this.btnAnterior);
+            this.Controls.Add(this.lblPagina);
+            this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtbusqueda);
             this.Controls.Add(this.lblNombreProducto);
             this.Controls.Add(this.lstvBienServicios);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmBuscarCategoriaCabys";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Categorías CABYS";
             this.Load += new System.EventHandler(this.frmBuscarCategoriaCabys_Load);
             this.ResumeLayout(false);
@@ -134,9 +175,14 @@
         private System.Windows.Forms.ColumnHeader colID;
         private System.Windows.Forms.ColumnHeader colName;
         private System.Windows.Forms.ColumnHeader colImpuesto;
+        private System.Windows.Forms.ColumnHeader colProductoServ;
+
         private System.Windows.Forms.TextBox txtbusqueda;
         private System.Windows.Forms.Label lblNombreProducto;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.ColumnHeader colProductoServ;
+
+        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Label lblPagina;
     }
 }

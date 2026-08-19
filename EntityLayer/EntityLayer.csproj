@@ -101,6 +101,7 @@
     <Compile Include="tbCompras.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbCompras.Extensions.cs" />
     <Compile Include="tbDetalleCompras.cs">
       <DependentUpon>dbEntitiesContext.tt</DependentUpon>
     </Compile>

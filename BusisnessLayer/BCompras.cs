@@ -18,6 +18,11 @@ namespace BusinessLayer
             return comprasIns.Actualizar(entity);
         }
 
+        public List<tbCompras> ObtenerPendientesConfirmar()
+        {
+            return comprasIns.GetPendientesConfirmar();
+        }
+
         public tbCompras GetEntityComprasByClave(string clave)
         {
             return comprasIns.GetEntityComprasByClave(clave);

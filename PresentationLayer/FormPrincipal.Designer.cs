@@ -32,9 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             this.panelformularios = new System.Windows.Forms.Panel();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.btnEmpresa = new System.Windows.Forms.Button();
             this.btnValidacionHAC = new System.Windows.Forms.Button();
-            this.btnCajas = new System.Windows.Forms.Button();
             this.btnDocumentos = new System.Windows.Forms.Button();
             this.btnProcesos = new System.Windows.Forms.Button();
             this.btnSeguridad = new System.Windows.Forms.Button();
@@ -131,7 +131,6 @@
             this.mnuEstadoCuentaGeneralFechas = new System.Windows.Forms.ToolStripMenuItem();
             this.promocionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPromocioPorEstado = new System.Windows.Forms.ToolStripMenuItem();
-            this.axShockwaveFlash1 = new FlashControlV71.AxShockwaveFlash();
             this.mnuCaja = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuEntradaDinero = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSalidaDinero = new System.Windows.Forms.ToolStripMenuItem();
@@ -197,7 +196,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMenu)).BeginInit();
             this.mnuReportes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).BeginInit();
             this.mnuCaja.SuspendLayout();
             this.mnuSeguridad.SuspendLayout();
             this.mnuMantenimiento.SuspendLayout();
@@ -220,9 +218,9 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(41)))), ((int)(((byte)(68)))));
+            this.panelMenu.Controls.Add(this.button1);
             this.panelMenu.Controls.Add(this.btnEmpresa);
             this.panelMenu.Controls.Add(this.btnValidacionHAC);
-            this.panelMenu.Controls.Add(this.btnCajas);
             this.panelMenu.Controls.Add(this.btnDocumentos);
             this.panelMenu.Controls.Add(this.btnProcesos);
             this.panelMenu.Controls.Add(this.btnSeguridad);
@@ -246,6 +244,24 @@
             this.panelMenu.TabIndex = 1;
             this.panelMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMenu_Paint);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(21, 378);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(174, 32);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "Aceptar Documentos Hacienda";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // btnEmpresa
             // 
             this.btnEmpresa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
@@ -256,7 +272,7 @@
             this.btnEmpresa.ForeColor = System.Drawing.Color.White;
             this.btnEmpresa.Image = ((System.Drawing.Image)(resources.GetObject("btnEmpresa.Image")));
             this.btnEmpresa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEmpresa.Location = new System.Drawing.Point(14, 450);
+            this.btnEmpresa.Location = new System.Drawing.Point(18, 450);
             this.btnEmpresa.Name = "btnEmpresa";
             this.btnEmpresa.Size = new System.Drawing.Size(179, 32);
             this.btnEmpresa.TabIndex = 35;
@@ -274,31 +290,13 @@
             this.btnValidacionHAC.ForeColor = System.Drawing.Color.White;
             this.btnValidacionHAC.Image = ((System.Drawing.Image)(resources.GetObject("btnValidacionHAC.Image")));
             this.btnValidacionHAC.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnValidacionHAC.Location = new System.Drawing.Point(14, 411);
+            this.btnValidacionHAC.Location = new System.Drawing.Point(18, 414);
             this.btnValidacionHAC.Name = "btnValidacionHAC";
             this.btnValidacionHAC.Size = new System.Drawing.Size(179, 32);
             this.btnValidacionHAC.TabIndex = 34;
             this.btnValidacionHAC.Text = "Validar Documentos";
             this.btnValidacionHAC.UseVisualStyleBackColor = false;
             this.btnValidacionHAC.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnCajas
-            // 
-            this.btnCajas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.btnCajas.FlatAppearance.BorderSize = 0;
-            this.btnCajas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.btnCajas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCajas.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCajas.ForeColor = System.Drawing.Color.White;
-            this.btnCajas.Image = ((System.Drawing.Image)(resources.GetObject("btnCajas.Image")));
-            this.btnCajas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCajas.Location = new System.Drawing.Point(14, 341);
-            this.btnCajas.Name = "btnCajas";
-            this.btnCajas.Size = new System.Drawing.Size(179, 32);
-            this.btnCajas.TabIndex = 33;
-            this.btnCajas.Text = "Caja";
-            this.btnCajas.UseVisualStyleBackColor = false;
-            this.btnCajas.Click += new System.EventHandler(this.button2_Click);
             // 
             // btnDocumentos
             // 
@@ -310,7 +308,7 @@
             this.btnDocumentos.ForeColor = System.Drawing.Color.White;
             this.btnDocumentos.Image = ((System.Drawing.Image)(resources.GetObject("btnDocumentos.Image")));
             this.btnDocumentos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDocumentos.Location = new System.Drawing.Point(14, 376);
+            this.btnDocumentos.Location = new System.Drawing.Point(16, 342);
             this.btnDocumentos.Name = "btnDocumentos";
             this.btnDocumentos.Size = new System.Drawing.Size(179, 32);
             this.btnDocumentos.TabIndex = 32;
@@ -328,7 +326,7 @@
             this.btnProcesos.ForeColor = System.Drawing.Color.White;
             this.btnProcesos.Image = ((System.Drawing.Image)(resources.GetObject("btnProcesos.Image")));
             this.btnProcesos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProcesos.Location = new System.Drawing.Point(14, 552);
+            this.btnProcesos.Location = new System.Drawing.Point(18, 552);
             this.btnProcesos.Name = "btnProcesos";
             this.btnProcesos.Size = new System.Drawing.Size(179, 32);
             this.btnProcesos.TabIndex = 31;
@@ -346,7 +344,7 @@
             this.btnSeguridad.ForeColor = System.Drawing.Color.White;
             this.btnSeguridad.Image = ((System.Drawing.Image)(resources.GetObject("btnSeguridad.Image")));
             this.btnSeguridad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSeguridad.Location = new System.Drawing.Point(14, 484);
+            this.btnSeguridad.Location = new System.Drawing.Point(18, 484);
             this.btnSeguridad.Name = "btnSeguridad";
             this.btnSeguridad.Size = new System.Drawing.Size(179, 32);
             this.btnSeguridad.TabIndex = 30;
@@ -364,7 +362,7 @@
             this.btnConsultas.ForeColor = System.Drawing.Color.White;
             this.btnConsultas.Image = ((System.Drawing.Image)(resources.GetObject("btnConsultas.Image")));
             this.btnConsultas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnConsultas.Location = new System.Drawing.Point(14, 586);
+            this.btnConsultas.Location = new System.Drawing.Point(18, 586);
             this.btnConsultas.Name = "btnConsultas";
             this.btnConsultas.Size = new System.Drawing.Size(179, 32);
             this.btnConsultas.TabIndex = 29;
@@ -382,7 +380,7 @@
             this.btnMantenimiento.ForeColor = System.Drawing.Color.White;
             this.btnMantenimiento.Image = ((System.Drawing.Image)(resources.GetObject("btnMantenimiento.Image")));
             this.btnMantenimiento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMantenimiento.Location = new System.Drawing.Point(14, 518);
+            this.btnMantenimiento.Location = new System.Drawing.Point(18, 518);
             this.btnMantenimiento.Name = "btnMantenimiento";
             this.btnMantenimiento.Size = new System.Drawing.Size(179, 32);
             this.btnMantenimiento.TabIndex = 28;
@@ -394,9 +392,9 @@
             // 
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 658);
+            this.panel2.Location = new System.Drawing.Point(0, 671);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 122);
+            this.panel2.Size = new System.Drawing.Size(200, 109);
             this.panel2.TabIndex = 27;
             // 
             // panel5
@@ -417,7 +415,7 @@
             this.panel5.Controls.Add(this.btnCambiarUser);
             this.panel5.Controls.Add(this.pictureBox1);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 25);
+            this.panel5.Location = new System.Drawing.Point(0, 12);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(200, 97);
             this.panel5.TabIndex = 34;
@@ -595,7 +593,7 @@
             this.btnReportes.ForeColor = System.Drawing.Color.White;
             this.btnReportes.Image = ((System.Drawing.Image)(resources.GetObject("btnReportes.Image")));
             this.btnReportes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReportes.Location = new System.Drawing.Point(14, 622);
+            this.btnReportes.Location = new System.Drawing.Point(14, 621);
             this.btnReportes.Name = "btnReportes";
             this.btnReportes.Size = new System.Drawing.Size(179, 32);
             this.btnReportes.TabIndex = 22;
@@ -1300,13 +1298,6 @@
             this.mnuPromocioPorEstado.Text = "Por Estado";
             this.mnuPromocioPorEstado.Click += new System.EventHandler(this.porEstadoToolStripMenuItem_Click);
             // 
-            // axShockwaveFlash1
-            // 
-            this.axShockwaveFlash1.Enabled = true;
-            this.axShockwaveFlash1.Location = new System.Drawing.Point(0, 0);
-            this.axShockwaveFlash1.Name = "axShockwaveFlash1";
-            this.axShockwaveFlash1.TabIndex = 0;
-            // 
             // mnuCaja
             // 
             this.mnuCaja.BackColor = System.Drawing.Color.Blue;
@@ -1529,7 +1520,7 @@
             this.mnuEstadoCaja});
             this.mnuProcesos.Name = "mnuReportes";
             this.mnuProcesos.ShowImageMargin = false;
-            this.mnuProcesos.Size = new System.Drawing.Size(245, 220);
+            this.mnuProcesos.Size = new System.Drawing.Size(245, 242);
             // 
             // mnuFacturacion
             // 
@@ -1704,7 +1695,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMenu)).EndInit();
             this.mnuReportes.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).EndInit();
             this.mnuCaja.ResumeLayout(false);
             this.mnuSeguridad.ResumeLayout(false);
             this.mnuMantenimiento.ResumeLayout(false);
@@ -1757,8 +1747,7 @@
         private System.Windows.Forms.Button btnConsultas;
         private System.Windows.Forms.Button btnMantenimiento;
         private System.Windows.Forms.Button btnDocumentos;
-        private System.Windows.Forms.Button btnCajas;
-        private FlashControlV71.AxShockwaveFlash axShockwaveFlash1;
+       // private FlashControlV71.AxShockwaveFlash axShockwaveFlash1;
         private System.Windows.Forms.ContextMenuStrip mnuCaja;
         private System.Windows.Forms.ToolStripMenuItem mnuEntradaDinero;
         private System.Windows.Forms.ToolStripMenuItem menuSalidaDinero;
@@ -1860,6 +1849,7 @@
         private System.Windows.Forms.ToolStripMenuItem gastosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuReporteGastosFechas;
         private System.Windows.Forms.ToolStripMenuItem mnuReporteGastosXProveedor;
+        private System.Windows.Forms.Button button1;
     }
 }
 

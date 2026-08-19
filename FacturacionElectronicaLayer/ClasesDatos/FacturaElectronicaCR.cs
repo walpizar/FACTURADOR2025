@@ -1024,7 +1024,22 @@ namespace FacturacionElectronicaLayer.ClasesDatos
             }
         }
 
-        private void GeneraXMLMensajeReceptor4_4(System.Xml.XmlTextWriter writer) // As System.Xml.XmlTextWriter
+        // ============================================================
+        // AJUSTES NECESARIOS EN LA ENTIDAD tbCompras (nullable, no rompen
+        // nada de lo ya guardado/cargado hasta ahora):
+        //
+        //   public string condicionImpuesto { get; set; }        // "01".."05", null = no aplica
+        //   public decimal? montoImpuestoAcreditar { get; set; } // null = no aplica
+        //   public decimal? montoGastoAplicable { get; set; }    // null = no aplica
+        //
+        // Si tu UI (frmGastos) todavía no permite capturar estos 3 valores,
+        // podés dejarlos en null por ahora: el XML simplemente no incluirá
+        // esos nodos opcionales, que es exactamente lo que Hacienda permite
+        // cuando no aplican. Más abajo un combo simple que podés agregar a
+        // frmGastos si más adelante querés capturarlo manualmente.
+        // ============================================================
+
+        private void GeneraXMLMensajeReceptor4_4(System.Xml.XmlTextWriter writer)
         {
             try
             {
@@ -1041,68 +1056,90 @@ namespace FacturacionElectronicaLayer.ClasesDatos
                 writer.WriteAttributeString("xsi", "schemaLocation",
                     "http://www.w3.org/2001/XMLSchema-instance",
                     "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/mensajeReceptor " +
-                    @"C:\PCCentral\MinisterioHacienda\mhcr-xml-schemas\jaxb\MensajeReceptor\v4.4\MensajeReceptor.xsd");
-
+                    "https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/MensajeReceptor.xsd");
+                // Cambiado: antes apuntaba a una ruta local fija en disco
+                // (C:\PCCentral\...) que no existe en producción. schemaLocation
+                // no lo valida Hacienda al recibir el documento, pero mejor
+                // apuntar a la ubicación oficial por si alguna herramienta
+                // local sí la usa para validar antes de enviar.
 
                 // La clave se crea con la función CreaClave de la clase Datos
                 writer.WriteElementString("Clave", _compras.claveEmisor);
 
-                //emisor 
-                 writer.WriteElementString("NumeroCedulaEmisor", _compras.idProveedor);
+                // emisor
+                writer.WriteElementString("NumeroCedulaEmisor", _compras.idProveedor);
 
-                
-                writer.WriteElementString("FechaEmisionDoc", _compras.fechaCompra.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
-
+                writer.WriteElementString("FechaEmisionDoc",
+                    _compras.fechaCompra.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
 
                 writer.WriteElementString("Mensaje", _compras.codigoMensaje.ToString());
 
+                bool esRechazo = _compras.codigoMensaje == (int)Enums.Mensajes.Rechazado;
 
-                if(_compras.codigoMensaje == 1)
+                if (_compras.codigoMensaje == (int)Enums.Mensajes.Aceptado)
                 {
                     writer.WriteElementString("DetalleMensaje", "Documento recibido y aceptado en su totalidad.");
-
                 }
                 else
                 {
-                    writer.WriteElementString("DetalleMensaje", _compras.DetalleMensaje.ToString());
-
+                    writer.WriteElementString("DetalleMensaje", _compras.DetalleMensaje?.ToString() ?? string.Empty);
                 }
 
-                //totales
-
-
+                // totales
                 var totalImp = _compras.tbDetalleCompras.Sum(x => x.montoTotalImp);
                 var totalFact = _compras.tbDetalleCompras.Sum(x => x.montoTotalLinea);
+
                 if (totalImp > 0)
                 {
                     writer.WriteElementString("MontoTotalImpuesto", totalImp.ToString("F5", CultureInfo.InvariantCulture));
-
                 }
 
-                writer.WriteElementString("CodigoActividad", _compras.CodActividad);
-                if (totalImp > 0)
+                // Los campos condicionales de impuesto (CodigoActividad, CondicionImpuesto,
+                // MontoTotalImpuestoAcreditar, MontoTotalDeGastoAplicable) solo tienen sentido
+                // cuando hay impuesto Y el mensaje NO es un rechazo (según nota oficial:
+                // "En el caso que el mensaje de confirmación es de rechazo no es necesario su uso").
+                if (totalImp > 0 && !esRechazo)
                 {
-                    writer.WriteElementString("CondicionImpuesto", "01");
+                    // CondicionImpuesto: ya NO se hardcodea "01" — viene del dato real de la compra.
+                    // Si no se indicó ninguna, se usa "01" (General Crédito IVA) como default razonable,
+                    // pero queda abierto a que la UI lo capture cuando corresponda un valor distinto.
+                    string condicionImpuesto = string.IsNullOrWhiteSpace(_compras.condicionImpuesto)
+                        ? "01"
+                        : _compras.condicionImpuesto.Trim();
 
+                    // CodigoActividad: la nota oficial dice explícitamente que NO debe usarse
+                    // cuando la condición es "05" (Proporcionalidad).
+                    if (condicionImpuesto != "05")
+                    {
+                        writer.WriteElementString("CodigoActividad", _compras.CodActividad);
+                    }
 
+                    writer.WriteElementString("CondicionImpuesto", condicionImpuesto);
+
+                    // MontoTotalImpuestoAcreditar: opcional. No se usa si la condición es "05".
+                    if (condicionImpuesto != "05" && _compras.montoImpuestoAcreditar.HasValue)
+                    {
+                        writer.WriteElementString("MontoTotalImpuestoAcreditar",
+                            _compras.montoImpuestoAcreditar.Value.ToString("F5", CultureInfo.InvariantCulture));
+                    }
+
+                    // MontoTotalDeGastoAplicable: opcional, independiente de la condición.
+                    if (_compras.montoGastoAplicable.HasValue)
+                    {
+                        writer.WriteElementString("MontoTotalDeGastoAplicable",
+                            _compras.montoGastoAplicable.Value.ToString("F5", CultureInfo.InvariantCulture));
+                    }
                 }
-
 
                 writer.WriteElementString("TotalFactura", totalFact.ToString("F5", CultureInfo.InvariantCulture));
 
-
-                //receptor
+                // receptor
                 writer.WriteElementString("NumeroCedulaReceptor", _compras.idEmpresa);
                 writer.WriteElementString("NumeroConsecutivoReceptor", _compras.consecutivo);
-
-
-
-
 
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
                 writer.Flush();
-
             }
             catch (Exception ex)
             {

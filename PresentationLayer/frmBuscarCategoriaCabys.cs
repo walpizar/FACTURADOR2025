@@ -9,121 +9,225 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
-
     public partial class frmBuscarCategoriaCabys : Form
     {
-        BCategoriaProducto CatProductIns = new BCategoriaProducto();
-        List<tbCategoria9Cabys> lista;
+        private BCategoriaProducto CatProductIns = new BCategoriaProducto();
 
-        public delegate void pasaDatos(string  codigo, int tipo);
+        private List<tbCategoria9Cabys> lista;
+        private List<tbCategoria9Cabys> listaFiltrada;
+
+        // PAGINACIÓN
+        private int paginaActual = 1;
+        private int registrosPorPagina = 100;
+        private int totalPaginas = 1;
+
+        public delegate void pasaDatos(string codigo, int tipo);
         public event pasaDatos pasarDatosEvent;
+
         private string codigo;
+
         public frmBuscarCategoriaCabys()
         {
             InitializeComponent();
-
         }
-
-      
 
         private void frmBuscarCategoriaCabys_Load(object sender, EventArgs e)
         {
             try
             {
+                // Se obtiene la lista completa desde la BD
                 lista = CatProductIns.getCat9Cabys();
-                cargarlistaCabysDB(lista);
-                cargarCombo();
+
+                if (lista == null)
+                    lista = new List<tbCategoria9Cabys>();
+
+                listaFiltrada = lista;
+
+                paginaActual = 1;
+
+                MostrarPagina();
+
+                txtbusqueda.Focus();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                MessageBox.Show("Error al buscar el Bien/Servicio", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-        }
-
-        private void cargarCombo()
-        {
-            //comboBox1.DataSource = Enum.GetValues(typeof(Enums.TiposCabys));
-        }
-
-        private void cargarlistaCabysDB(List<tbCategoria9Cabys> lists)
-        {
-            try
-            {
-                lstvBienServicios.Items.Clear();
-
-                if (lists != null)
-                {
-                    foreach (tbCategoria9Cabys p in lists)
-                    {
-                        ListViewItem item = new ListViewItem();
-                        item.Text = p.idCategoria9.Trim();
-                        item.SubItems.Add(p.nombre.Trim());
-                        item.SubItems.Add(p.impuesto.ToString().Trim());
-                      //  string resultado = p.nombre.ToUpper().IndexOf("SERVICIO", StringComparison.OrdinalIgnoreCase) >= 0
-                      //? "Servicios"
-                      //: "Mercancía";
-
-                        item.SubItems.Add(Utility.ObtenerTipoCabys(p.idCategoria9));
-
-                        lstvBienServicios.Items.Add(item);
-
-                    }
-
-                }
-
-            }
-            catch (ListEntityException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(
+                    "Error al cargar los Bienes/Servicios CABYS.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
-        private void cargarlista(List<CabysDTO> lists)
+        /// <summary>
+        /// Muestra únicamente los registros correspondientes
+        /// a la página actual.
+        /// </summary>
+        private void MostrarPagina()
         {
             try
             {
+                lstvBienServicios.BeginUpdate();
                 lstvBienServicios.Items.Clear();
 
-                if(lists != null)
+                if (listaFiltrada == null || listaFiltrada.Count == 0)
                 {
-                    foreach (CabysDTO p in lists)
-                    {
-                        ListViewItem item = new ListViewItem();
-                        item.Text = p.Codigo.Trim();
-                        item.SubItems.Add(p.Descripcion.Trim());
-                        item.SubItems.Add(p.Impuesto.ToString().Trim());
-                        // Reemplaza la línea problemática en el método cargarlista:
-                        string resultado = p.Descripcion.ToUpper().IndexOf("SERVICIO", StringComparison.OrdinalIgnoreCase) >= 0
-                            ? "Servicios"
-                            : "Producto";
+                    paginaActual = 1;
+                    totalPaginas = 1;
 
-               
+                    lblPagina.Text = "Página 1 de 1 - 0 registros";
 
+                    btnAnterior.Enabled = false;
+                    btnSiguiente.Enabled = false;
 
-                        item.SubItems.Add(resultado);
-                        lstvBienServicios.Items.Add(item);
-
-                    }
-
+                    return;
                 }
-               
+
+                // Calcular total de páginas
+                totalPaginas = (int)Math.Ceiling(
+                    (double)listaFiltrada.Count / registrosPorPagina);
+
+                if (paginaActual < 1)
+                    paginaActual = 1;
+
+                if (paginaActual > totalPaginas)
+                    paginaActual = totalPaginas;
+
+                // Obtener solamente los elementos de la página
+                List<tbCategoria9Cabys> pagina = listaFiltrada
+                    .Skip((paginaActual - 1) * registrosPorPagina)
+                    .Take(registrosPorPagina)
+                    .ToList();
+
+                foreach (tbCategoria9Cabys p in pagina)
+                {
+                    ListViewItem item = new ListViewItem();
+
+                    item.Text = !string.IsNullOrEmpty(p.idCategoria9)
+                        ? p.idCategoria9.Trim()
+                        : "";
+
+                    item.SubItems.Add(
+                        !string.IsNullOrEmpty(p.nombre)
+                            ? p.nombre.Trim()
+                            : "");
+
+                    item.SubItems.Add(
+                        p.impuesto.ToString());
+
+                    item.SubItems.Add(
+                        Utility.ObtenerTipoCabys(p.idCategoria9));
+
+                    lstvBienServicios.Items.Add(item);
+                }
+
+                // Información de página
+                lblPagina.Text =
+                    "Página " + paginaActual +
+                    " de " + totalPaginas +
+                    "  |  " +
+                    listaFiltrada.Count.ToString("N0") +
+                    " registros";
+
+                // Habilitar/deshabilitar navegación
+                btnAnterior.Enabled = paginaActual > 1;
+                btnSiguiente.Enabled = paginaActual < totalPaginas;
             }
-            catch (ListEntityException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(
+                    "Error al mostrar los registros CABYS.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                lstvBienServicios.EndUpdate();
             }
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            Buscar();
+        }
 
+        private void Buscar()
+        {
+            try
+            {
+                string texto = txtbusqueda.Text.Trim();
 
-     
+                if (string.IsNullOrWhiteSpace(texto))
+                {
+                    listaFiltrada = lista;
+                }
+                else
+                {
+                    listaFiltrada = lista
+                        .Where(c =>
+                            (
+                                !string.IsNullOrEmpty(c.idCategoria9) &&
+                                c.idCategoria9.IndexOf(
+                                    texto,
+                                    StringComparison.OrdinalIgnoreCase) >= 0
+                            )
+                            ||
+                            (
+                                !string.IsNullOrEmpty(c.nombre) &&
+                                c.nombre.IndexOf(
+                                    texto,
+                                    StringComparison.OrdinalIgnoreCase) >= 0
+                            )
+                        )
+                        .ToList();
+                }
+
+                paginaActual = 1;
+
+                MostrarPagina();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al buscar el Bien/Servicio.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual > 1)
+            {
+                paginaActual--;
+                MostrarPagina();
+            }
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (paginaActual < totalPaginas)
+            {
+                paginaActual++;
+                MostrarPagina();
+            }
+        }
+
+        private void txtbusqueda_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Buscar();
+
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
 
         private void lstvBienServicios_DoubleClick(object sender, EventArgs e)
         {
@@ -132,103 +236,38 @@ namespace PresentationLayer
                 if (lstvBienServicios.SelectedItems.Count > 0)
                 {
                     codigo = lstvBienServicios.SelectedItems[0].Text;
-                    int tipo = lstvBienServicios.SelectedItems[0].SubItems[3].Text.Trim().ToUpper() == "SERVICIOS" ? 1 : 2;
 
+                    string tipoTexto =
+                        lstvBienServicios.SelectedItems[0]
+                            .SubItems[3]
+                            .Text
+                            .Trim()
+                            .ToUpper();
 
+                    int tipo = tipoTexto == "SERVICIOS" ? 1 : 2;
 
-                    pasarDatosEvent(codigo, tipo);
-                    this.Dispose();
+                    if (pasarDatosEvent != null)
+                    {
+                        pasarDatosEvent(codigo, tipo);
+                    }
 
+                    this.Close();
                 }
             }
-            catch (LicenseException ex)
+            catch (Exception ex)
             {
-
-                MessageBox.Show(ex.Message);
-            }
-
-
-        }
-
-        private void lstvBienServicios_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void btnsalir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private async void btnBuscar_Click(object sender, EventArgs e)
-        {
-            //await BuscarAsync();
-            var listaFiltrada = lista.FindAll(c => c.idCategoria9.ToUpper().Contains(txtbusqueda.Text.ToUpper()) || c.nombre.ToUpper().Contains(txtbusqueda.Text.ToUpper()));
-            cargarlistaCabysDB(listaFiltrada);
-
-        }
-
-        //private async void txtbusqueda_MouseEnter(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (txtbusqueda.Text != string.Empty)
-        //        {
-
-        //            int enumValor = (int)comboBox1.SelectedValue; // código numérico del enum
-        //            string textoBusqueda = txtbusqueda.Text.Trim();
-           
-
-        //            var listaFiltrada = lista.FindAll(c =>
-        //                   c.idCategoria9.Contains(textoBusqueda)              // búsqueda general por texto
-        //                || c.nombre.Contains(textoBusqueda)                    // búsqueda en nombre
-        //                || c.idCategoria9.StartsWith(enumValor.ToString(), StringComparison.OrdinalIgnoreCase) // empieza con código+letra
-        //            ); cargarlistaCabysDB(listaFiltrada);
-
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        MessageBox.Show("Error al buscar el Bien/Servicio", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
-
-       
-
-        private async Task BuscarAsync()
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(txtbusqueda.Text))
-                {
-                    btnBuscar.Enabled = false; // 🔒 Deshabilita el botón
-
-                    // Llamada asíncrona al API
-                    var cabys = await Task.Run(() => ConsultasAPI.obtenerCABYS(txtbusqueda.Text.Trim()));
-
-                    // Aquí podrías llenar tu lista
-                     //cargarlista(CatProductIns.getCat9CabysByText(txtbusqueda.Text.Trim().ToUpper()));
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error al buscar el Bien/Servicio", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                btnBuscar.Enabled = true; // 🔓 Rehabilita el botón siempre (haya éxito o error)
+                MessageBox.Show(
+                    "Error al seleccionar el CABYS.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
-        private async void txtbusqueda_KeyDown(object sender, KeyEventArgs e)
+        private void lstvBienServicios_SelectedIndexChanged(
+            object sender,
+            EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                await BuscarAsync();
-                e.Handled = true;
-                e.SuppressKeyPress = true; // Evita el beep del Enter
-            }
         }
     }
 }

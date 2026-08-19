@@ -1,5 +1,6 @@
 ﻿using AutoUpdaterDotNET;
 using BusinessLayer;
+using BusinessLayer.Respaldos;
 using CommonLayer;
 using EntityLayer;
 using Microsoft.WindowsAPICodePack.Shell;
@@ -40,6 +41,9 @@ namespace PresentationLayer
         BActualizaciones actualiIns = new BActualizaciones();
 
         BEmpresa empresaIns = new BEmpresa();
+
+        private volatile bool respaldoEnProgreso = false;
+
 
 
         bool cerrando = false;
@@ -297,8 +301,8 @@ namespace PresentationLayer
             try
             {
                 // Se inicia de forma asíncrona y el formulario continúa cargando.
-                
 
+                this.FormClosing += FormPrincipal_FormClosing; // <-- AGREGAR ESTA LÍNEA
 
                 timer1.Start();
                 this.WindowState = FormWindowState.Maximized;
@@ -322,7 +326,34 @@ namespace PresentationLayer
                 this.Close();
             }
         }
+        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (respaldoEnProgreso)
+            {
+                e.Cancel = true;
+                MessageBox.Show(
+                    "Se está realizando un respaldo de la base de datos en segundo plano. " +
+                    "Espere a que finalice antes de cerrar la aplicación.",
+                    "Respaldo en progreso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
+        private void NotificarResultadoRespaldo(CommonLayer.DTO.ResultadoRespaldo resultado)
+        {
+            if (!resultado.Exitoso)
+            {
+                MessageBox.Show(
+                    "No se pudo completar el respaldo automático de la base de datos." +
+                    Environment.NewLine + Environment.NewLine +
+                    "Detalle: " + resultado.DetalleError,
+                    "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            //else
+            //{
+            //    MessageBox.Show("Respaldo de la base de datos completado correctamente.",
+            //        "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+        }
         private void inicio()
         {
             panelformularios.Controls.Clear();
@@ -339,15 +370,7 @@ namespace PresentationLayer
 
                 if (Global.Configuracion.respaldo == (int)Enums.EstadoConfig.Si)
                 {
-                    //DialogResult resp = MessageBox.Show("Desea realizar el respaldo de la base de datos.", "Seguridad", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    //if (resp == DialogResult.Yes)
-                    //{
-                        // MessageBox.Show("El respaldo se generará en segundo plano.","Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        //Backup respaldo = new Backup();
-
-                    //}
+                    RealizarRespaldoAutomatico();
                 }
 
                // validarMensajeViciminetoLicencia();
@@ -375,7 +398,39 @@ namespace PresentationLayer
             }
         }
 
+        private void RealizarRespaldoAutomatico()
+        {
+            try
+            {
+                respaldoEnProgreso = true;
 
+                var servicio = ServicioRespaldoBaseDatos.CrearDesdeConfiguracionActual();
+
+                servicio.RespaldoCompletado += (s, resultado) =>
+                {
+                    respaldoEnProgreso = false;
+
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new Action(() => NotificarResultadoRespaldo(resultado)));
+                    }
+                    else
+                    {
+                        NotificarResultadoRespaldo(resultado);
+                    }
+                };
+
+                servicio.IniciarRespaldo();
+            }
+            catch (Exception ex)
+            {
+                // Si ni siquiera pudo arrancar (ej. carpeta inválida antes de
+                // llegar al hilo en background), liberamos el bloqueo de cierre.
+                respaldoEnProgreso = false;
+                MessageBox.Show("Error al iniciar el respaldo automático: " + ex.Message,
+                    "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         public void registrarIngreso()
         {
             //registra el acceso en segundo plano
@@ -633,7 +688,7 @@ namespace PresentationLayer
                 btnClientes.Enabled = true;
                 btnCompras.Enabled = false;
                 btnAbonos.Enabled = true;
-                btnCajas.Enabled = true;
+                //btnCajas.Enabled = true;
                 btnDocumentos.Enabled = true;
                 btnEmpresa.Enabled = false;
                 mnuUsuarios.Enabled = false;
@@ -654,7 +709,7 @@ namespace PresentationLayer
                 btnClientes.Enabled = true;
                 btnCompras.Enabled = false;
                 btnAbonos.Enabled = true;
-                btnCajas.Enabled = true;
+                //btnCajas.Enabled = true;
                 btnDocumentos.Enabled = true;
                 btnEmpresa.Enabled = false;           
                 btnMantenimiento.Enabled = false;
@@ -672,7 +727,7 @@ namespace PresentationLayer
                 btnClientes.Enabled = true;
                 btnCompras.Enabled = true;
                 btnAbonos.Enabled = true;
-                btnCajas.Enabled = true;
+                //btnCajas.Enabled = true;
                 btnDocumentos.Enabled = true;
                 btnEmpresa.Enabled = true;             
                 btnMantenimiento.Enabled = true;
@@ -1291,35 +1346,72 @@ namespace PresentationLayer
                         
         }
 
-     
+
 
 
         #region APERTURA DE FORMULARIOS
+
+        // ============================================================
+        // Reemplaza tu método AbrirFormulario<MiForm>(int tipoForm) existente.
+        //
+        // Qué NO resuelve esto (para que quede claro el alcance): los controles
+        // DENTRO de cada formulario (frmClientes, frmFacturacion1, etc.) siguen
+        // con Anchor = Top,Left fijo, así que no se reposicionan ni se agrandan
+        // cuando el contenedor cambia de tamaño. Eso requiere tocar el Designer
+        // de cada formulario (agregar Anchor/Dock o migrar a TableLayoutPanel),
+        // que quedó pendiente para más adelante.
+        //
+        // Qué SÍ resuelve: si panelformularios queda más chico que el tamaño de
+        // diseño original del formulario embebido (por ejemplo al achicar la
+        // ventana, o al abrir el menú lateral que le resta ancho), antes los
+        // controles quedaban recortados o tapados sin forma de verlos. Ahora
+        // aparecen scrollbars en vez de perder acceso a los controles.
+        // ============================================================
 
         private void AbrirFormulario<MiForm>(int tipoForm) where MiForm : Form, new()
         {
             try
             {
                 Form formulario;
-                formulario = panelformularios.Controls.OfType<MiForm>().FirstOrDefault();//Busca en la colecion el formulario
+                formulario = panelformularios.Controls.OfType<MiForm>().FirstOrDefault(); //Busca en la coleccion el formulario
 
-                if (formulario != null &&  (tipoForm == (int)Enums.formularios.dashboard || tipoForm == (int)Enums.formularios.EntradaDinero || tipoForm == (int)Enums.formularios.SalidaDinero 
+                if (formulario != null && (tipoForm == (int)Enums.formularios.dashboard || tipoForm == (int)Enums.formularios.EntradaDinero || tipoForm == (int)Enums.formularios.SalidaDinero
                     || tipoForm == (int)Enums.formularios.reporte || tipoForm == (int)Enums.formularios.facturacion || tipoForm == (int)Enums.formularios.facturacionReducida
-                    ||  tipoForm == (int)Enums.formularios.facturacionSuper  || tipoForm == (int)Enums.formularios.estadoCaja))
+                    || tipoForm == (int)Enums.formularios.facturacionSuper || tipoForm == (int)Enums.formularios.estadoCaja))
                 {
                     panelformularios.Controls.Remove(formulario);
                     formulario = null;
                 }
 
-
-
                 if (formulario == null)
                 {
                     formulario = new MiForm();
                     verificarParametros(ref formulario, tipoForm);
+
                     formulario.TopLevel = false;
                     formulario.FormBorderStyle = FormBorderStyle.None;
                     formulario.Dock = DockStyle.Fill;
+
+                    // Escalado consistente con FormPrincipal (evita que un
+                    // formulario hijo con AutoScaleMode distinto se vea con
+                    // proporciones distintas al resto de la app).
+                    formulario.AutoScaleMode = AutoScaleMode.Font;
+
+                    // Sin esto, si panelformularios queda MÁS CHICO que el tamaño
+                    // de diseño original del formulario (ventana angosta, sidebar
+                    // abierto, etc.), los controles del borde derecho/inferior
+                    // quedaban tapados o inaccesibles. Con AutoScroll = true,
+                    // WinForms agrega scrollbars automáticamente en ese caso —
+                    // no es "responsive" real, pero garantiza que nada quede
+                    // inalcanzable.
+                    formulario.AutoScroll = true;
+
+                    // Evita que el formulario imponga un tamaño mínimo mayor al
+                    // del panel contenedor (puede pasar si el Designer del hijo
+                    // dejó un MinimumSize grande) — sin esto, Dock=Fill puede
+                    // pelearse con el MinimumSize del formulario embebido.
+                    formulario.MinimumSize = new Size(0, 0);
+
                     panelformularios.Controls.Add(formulario);
                     panelformularios.Tag = formulario;
                     formulario.Show();
@@ -1329,18 +1421,14 @@ namespace PresentationLayer
                 ////si el formulario/instancia existe
                 else
                 {
-
                     formulario.BringToFront();
-
                 }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show("Error el abrir el formulario", "Abrir Formulario", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void button9_Click(object sender, EventArgs e)
         {
             if (Global.Configuracion.pantallaFacturacion == (int)Enums.pantallaFacturacion.amplia)
@@ -1472,7 +1560,7 @@ namespace PresentationLayer
 
         private void mnuGastos_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<frmGastos>();
+            AbrirFormulario<frmAceptacionDocumentos>();
             mnuGastos.BackColor = Color.FromArgb(12, 61, 92);
         }
 
@@ -2031,6 +2119,14 @@ namespace PresentationLayer
         private void lblHora_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+
+            AbrirFormulario<frmAceptacionDocumentos>();
+            btnValidacionHAC.BackColor = Color.FromArgb(12, 61, 92);
         }
 
         private void btnConsultas_Click(object sender, EventArgs e)

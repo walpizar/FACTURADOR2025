@@ -29,6 +29,89 @@ namespace BusinessLayer
 
         List<tbReporteHacienda> listaGuardados = null;
 
+        // ============================================================
+        // Agregar a BFacturacion (junto a reportarMensajesHacienda).
+        // Usa el mismo patrón de getToken() que ya usa enviarMensajeHacienda.
+        //
+        // Requiere en tbCompras un campo para guardar el estado real que
+        // devuelve Hacienda (distinto de reporteAceptaHacienda, que solo indica
+        // "ya se lo mandamos", no "Hacienda ya lo validó"). Si no lo tenés,
+        // podés reusar el campo mensajeReporteHacienda que ya existe.
+        // ============================================================
+
+        /// <summary>
+        /// Consulta en Hacienda el estado real (Aceptado/Rechazado/Procesando) de
+        /// las compras que YA se les envió la confirmación (reporteAceptaHacienda = true)
+        /// pero de las que todavía no se conoce el resultado final.
+        /// </summary>
+        // ============================================================
+        // Agregar a BFacturacion (junto a reportarMensajesHacienda).
+        // Usa el mismo patrón de getToken() que ya usa enviarMensajeHacienda.
+        //
+        // Requiere en tbCompras un campo para guardar el estado real que
+        // devuelve Hacienda (distinto de reporteAceptaHacienda, que solo indica
+        // "ya se lo mandamos", no "Hacienda ya lo validó"). Si no lo tenés,
+        // podés reusar el campo mensajeReporteHacienda que ya existe.
+        // ============================================================
+
+        /// <summary>
+        /// Consulta en Hacienda el estado real (Aceptado/Rechazado/Procesando) de
+        /// las compras que YA se les envió la confirmación (reporteAceptaHacienda = true)
+        /// pero de las que todavía no se conoce el resultado final
+        /// (mensajeRespHacienda = false).
+        /// </summary>
+        public void consultarEstadoConfirmaciones(List<tbCompras> lista)
+        {
+            try
+            {
+                if (!Utility.AccesoInternet()) return;
+
+                string token = getToken();
+                var comunicacion = new FacturacionElectronicaLayer.Clases.Comunicacion();
+
+                foreach (var compra in lista)
+                {
+                    if (!compra.reporteAceptaHacienda) continue; // todavía no se envió
+                    if (compra.mensajeRespHacienda) continue;    // ya se tiene el resultado definitivo
+
+                    try
+                    {
+                        // IMPORTANTE: usar el MISMO campo que se usó al enviar
+                        // (enviarMensajeHacienda arma consecutivoReceptor con
+                        // compra.consecutivoEmisor, no con compra.consecutivo).
+                        // Si acá se consulta con un valor distinto al que
+                        // realmente se mandó, Hacienda responde "no existe"
+                        // aunque el envío sí haya llegado.
+                        var respuesta = comunicacion.ConsultarMensaje(token, compra.claveEmisor, compra.consecutivoEmisor).Result;
+
+                        if (respuesta == null)
+                        {
+                            // Sin respuesta todavía (404 = Hacienda sigue procesando).
+                            // No se toca mensajeRespHacienda: se sigue consultando
+                            // en la próxima corrida hasta que haya resultado.
+                            continue;
+                        }
+
+                        compra.EstadoFacturaHacienda = respuesta.ind_estado;
+                        compra.mensajeRespHacienda = true; // ya llegó el resultado definitivo
+
+                        DFacturaIns.ActualizarCompraSimplificada(compra);
+                    }
+                    catch (Exception ex)
+                    {
+                        clsEvento evento = new clsEvento(
+                            $"Error consultando estado del documento {compra.numFactura}: {ex.Message}", "1");
+                    }
+
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                clsEvento evento = new clsEvento(ex.Message, "1");
+                throw ex;
+            }
+        }
 
         public tbDocumento guadar(tbDocumento facturaGlobal)
         {
@@ -617,6 +700,41 @@ namespace BusinessLayer
 
         }
 
+        // ============================================================
+        // Reemplaza tu método enviarMensajeHacienda existente.
+        // Mismo patrón que FacturarElectronicamente: al momento del envío
+        // solo se conoce si Hacienda RECIBIÓ el mensaje (Accepted/no), no si
+        // lo aceptó o rechazó de forma definitiva — eso se sabe después,
+        // consultando (ver BFacturacion.consultarEstadoConfirmaciones más abajo).
+        // ============================================================
+
+        // ============================================================
+        // Reemplaza tu método enviarMensajeHacienda existente.
+        // Mismo patrón que FacturarElectronicamente: al momento del envío
+        // solo se conoce si Hacienda RECIBIÓ el mensaje (Accepted/no), no si
+        // lo aceptó o rechazó de forma definitiva — eso se sabe después,
+        // consultando (ver BFacturacion.consultarEstadoConfirmaciones más abajo).
+        // ============================================================
+
+        // ============================================================
+        // Reemplaza tu método enviarMensajeHacienda existente.
+        // Mismo patrón que FacturarElectronicamente: al momento del envío
+        // solo se conoce si Hacienda RECIBIÓ el mensaje (Accepted/no), no si
+        // lo aceptó o rechazó de forma definitiva — eso se sabe después,
+        // consultando (ver BFacturacion.consultarEstadoConfirmaciones más abajo).
+        // ============================================================
+
+        // ============================================================
+        // Reemplaza tu método enviarMensajeHacienda existente.
+        // Mismo patrón que FacturarElectronicamente: al momento del envío
+        // solo se conoce si Hacienda RECIBIÓ el mensaje (Accepted/no), no si
+        // lo aceptó o rechazó de forma definitiva — eso se sabe después,
+        // consultando (ver BFacturacion.consultarEstadoConfirmaciones más abajo).
+        //
+        // Requiere: using CommonLayer.DTO; (para ResultadoEnvioHacienda, el nuevo
+        // tipo que devuelve EnvioMensaje en vez de un string suelto)
+        // ============================================================
+
         private tbCompras enviarMensajeHacienda(tbCompras compra)
         {
             Emisor _emisor;
@@ -624,15 +742,13 @@ namespace BusinessLayer
             try
             {
                 FacturaElectronicaCR factura = new FacturaElectronicaCR(compra);
-
-
                 XmlDocument xml = factura.CreaXMLMensajeReceptor();
                 compra.xmlSinFirma = Utility.EncodeStrToBase64(xml.OuterXml);
-
                 string directorio = Global.Usuario.tbEmpresa.rutaXMLCompras.Trim();
                 string nombreArchivo = compra.consecutivoEmisor;
                 string tipoDoc = "_MS";
-                //sino existe el directorio lo crea
+
+                // sino existe el directorio lo crea
                 if (!Directory.Exists(directorio))
                 {
                     Directory.CreateDirectory(directorio);
@@ -650,15 +766,12 @@ namespace BusinessLayer
                 xmlElectronica = _firma.FirmaXML_Xades((directorio + nombreArchivo + tipoDoc), Global.Usuario.tbEmpresa.certificadoInstalado.Trim());
                 compra.xmlFirmado = Utility.EncodeStrToBase64(xmlElectronica.OuterXml);
 
-                //json
-
-
+                // json
                 FacturacionElectronicaLayer.Clases.Emisor myEmisor = new FacturacionElectronicaLayer.Clases.Emisor();
                 myEmisor.numeroIdentificacion = compra.idProveedor.ToString().Trim();
                 myEmisor.TipoIdentificacion = compra.tipoIdProveedor.ToString().Trim().PadLeft(2, '0');
 
                 FacturacionElectronicaLayer.Clases.Receptor myReceptor = new FacturacionElectronicaLayer.Clases.Receptor();
-
                 myReceptor.sinReceptor = false;
                 myReceptor.numeroIdentificacion = compra.idEmpresa.Trim();
                 myReceptor.TipoIdentificacion = compra.tipoIdEmpresa.ToString().Trim();
@@ -666,39 +779,47 @@ namespace BusinessLayer
                 FacturacionElectronicaLayer.Clases.RecepcionMensaje myRecepcion = new FacturacionElectronicaLayer.Clases.RecepcionMensaje();
                 myRecepcion.emisor = myEmisor;
                 myRecepcion.receptor = myReceptor;
-
                 myRecepcion.clave = compra.claveEmisor;
                 myRecepcion.fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:sszzz");
                 myRecepcion.comprobanteXml = compra.xmlFirmado;
                 myRecepcion.consecutivoReceptor = compra.consecutivoEmisor;
+
                 xmlElectronica = null;
 
                 string Token = "";
                 Token = getToken();
-                //  this.txtTokenHacienda.Text = Token;
 
                 FacturacionElectronicaLayer.Clases.Comunicacion enviaFactura = new FacturacionElectronicaLayer.Clases.Comunicacion();
-                enviaFactura.EnvioMensaje(Token, myRecepcion);
-
-         
-
-                string jsonEnvio = "";
-                jsonEnvio = enviaFactura.jsonEnvio;
-                //string jsonRespuesta = "";
-                //jsonRespuesta = enviaFactura.jsonRespuesta;
+                ResultadoEnvioHacienda resultadoEnvio = enviaFactura.EnvioMensaje(Token, myRecepcion).Result;
 
                 System.IO.StreamWriter outputFile = new System.IO.StreamWriter((directorio
                                 + (nombreArchivo + tipoDoc + "_03_jsonEnvio.txt")));
-                outputFile.Write(jsonEnvio);
+                outputFile.Write(resultadoEnvio.JsonEnvio);
                 outputFile.Close();
 
-                if (enviaFactura.statusCode == "Accepted")
+                // ---------- Guardar estado del envío (igual que FacturarElectronicamente) ----------
+                // Exitoso ya contempla tanto "Accepted" (recibido ahora) como
+                // "YaRecibidoPreviamente" (Hacienda ya lo tenía de un envío
+                // anterior) — en ambos casos el documento YA ESTÁ en Hacienda,
+                // así que se guardan los MISMOS valores que un envío exitoso
+                // normal, para que quede indistinguible de cualquier otro ya
+                // procesado.
+                if (resultadoEnvio.Exitoso)
                 {
                     compra.reporteAceptaHacienda = true;
-                    compra.mensajeReporteHacienda = enviaFactura.estadoEnvio;
-                    //compra. = enviaFactura.mensajeRespuesta;
+                    compra.mensajeReporteHacienda = "Accepted";
+                }
+                else
+                {
+                    compra.reporteAceptaHacienda = false;
+                    compra.mensajeReporteHacienda = resultadoEnvio.Mensaje;
                 }
 
+                // Todavía no se consultó el resultado definitivo (aceptado/rechazado
+                // real por Hacienda) — eso llega después, vía consulta. Por eso
+                // EstadoFacturaHacienda queda sin tocar acá (o en null si es la
+                // primera vez) y mensajeRespHacienda en false.
+                compra.mensajeRespHacienda = false;
 
                 DFacturaIns.ActualizarCompraSimplificada(compra);
                 return compra;
@@ -707,13 +828,26 @@ namespace BusinessLayer
             {
                 clsEvento evento = new clsEvento(ex.Message, "1");
                 throw ex;
-
             }
-
-
-            return null;
-
         }
+
+        // ============================================================
+        // Agregar a BFacturacion (junto a reportarMensajesHacienda).
+        // Usa el mismo patrón de getToken() que ya usa enviarMensajeHacienda.
+        //
+        // Requiere en tbCompras un campo para guardar el estado real que
+        // devuelve Hacienda (distinto de reporteAceptaHacienda, que solo indica
+        // "ya se lo mandamos", no "Hacienda ya lo validó"). Si no lo tenés,
+        // podés reusar el campo mensajeReporteHacienda que ya existe.
+        // ============================================================
+
+        /// <summary>
+        /// Consulta en Hacienda el estado real (Aceptado/Rechazado/Procesando) de
+        /// las compras que YA se les envió la confirmación (reporteAceptaHacienda = true)
+        /// pero de las que todavía no se conoce el resultado final
+        /// (mensajeRespHacienda = false).
+        /// </summary>
+
         //public tbCompras CompraSimplificadaElectronica(tbCompras facturaGlobal)
         //{
 

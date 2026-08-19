@@ -271,6 +271,8 @@
     <Compile Include="DTO\CabysDTO.cs" />
     <Compile Include="DTO\ClienteDTO.cs" />
     <Compile Include="DTO\DocumentoHaciendaDTO.cs" />
+    <Compile Include="DTO\ResultadoEnvioHacienda.cs" />
+    <Compile Include="DTO\ResultadoRespaldo.cs" />
     <Compile Include="EnumMenu.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="EtiquetaDto.cs" />
@@ -311,6 +313,7 @@
     <Compile Include="SqlHelper.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="ValidadorXmlComprobante.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

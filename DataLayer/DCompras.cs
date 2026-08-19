@@ -6,6 +6,7 @@ using EntityLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace DataLayer
 {
@@ -152,7 +153,28 @@ namespace DataLayer
             }
             return null;
         }
-
+  
+        /// <summary>
+        /// Obtiene las compras (facturas recibidas) que todavía requieren
+        /// atención: las que no se han confirmado ante Hacienda
+        /// (reporteAceptaHacienda = false/null), Y también las que ya se
+        /// enviaron pero todavía no tienen respuesta final de Hacienda
+        /// (EstadoFacturaHacienda = null) — esas siguen "pendientes" hasta
+        /// que se conozca si Hacienda las aceptó o rechazó.
+        /// </summary>
+        public List<tbCompras> GetPendientesConfirmar()
+        {
+            using (var db = new Entities())
+            {
+                return db.tbCompras
+                    .Include(c => c.tbDetalleCompras)
+                    .Where(c => c.reporteAceptaHacienda == false
+                             || c.reporteAceptaHacienda == null
+                             || c.EstadoFacturaHacienda == null)
+                    .OrderBy(c => c.fechaCompra)
+                    .ToList();
+            }
+        }
         public tbCompras Guardar(tbCompras entity)
         {
             try

@@ -464,6 +464,12 @@
     <Compile Include="FormPrincipal.Designer.cs">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAceptacionDocumentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAceptacionDocumentos.Designer.cs">
+      <DependentUpon>frmAceptacionDocumentos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAcompanamiento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -535,12 +541,6 @@
     </Compile>
     <Compile Include="frmComentariosComandas.Designer.cs">
       <DependentUpon>frmComentariosComandas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmCorreosFacturas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmCorreosFacturas.Designer.cs">
-      <DependentUpon>frmCorreosFacturas.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDashboard.cs">
       <SubType>Form</SubType>
@@ -1283,6 +1283,9 @@
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAceptacionDocumentos.resx">
+      <DependentUpon>frmAceptacionDocumentos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAcompanamiento.resx">
       <DependentUpon>frmAcompanamiento.cs</DependentUpon>
     </EmbeddedResource>
@@ -1321,9 +1324,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmComentariosComandas.resx">
       <DependentUpon>frmComentariosComandas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmCorreosFacturas.resx">
-      <DependentUpon>frmCorreosFacturas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
