@@ -11,8 +11,6 @@ namespace PresentationLayer
     {
 
 
-
-
         BFacturacion facturacion = new BFacturacion();
         public frmConsultasMensajesHacienda()
         {

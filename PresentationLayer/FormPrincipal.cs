@@ -378,7 +378,7 @@ namespace PresentationLayer
                 //abirr el dashboard
                 if (Global.Usuario.idRol == (int)Enums.roles.Administracion)
                 {
-                    AbrirFormulario<frmDashboard>((int)Enums.formularios.dashboard);
+                    AbrirFormulario<frmDashboardVentas>((int)Enums.formularios.dashboard);
                     btnDashboard.BackColor = Color.FromArgb(12, 61, 92);
 
                 }
@@ -2048,7 +2048,7 @@ namespace PresentationLayer
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            AbrirFormulario<frmDashboard>((int)Enums.formularios.dashboard);
+            AbrirFormulario<frmDashboardVentas>((int)Enums.formularios.dashboard);
             btnDashboard.BackColor = Color.FromArgb(12, 61, 92);
         }
 

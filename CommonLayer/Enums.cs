@@ -3,6 +3,13 @@
     public static class Enums
 
     {
+
+        public enum TipoCodigoRomana
+        {
+            Peso = 1,   // El código de barras embebe el PESO en gramos
+            Precio = 2  // El código de barras embebe el PRECIO ya calculado
+        }
+
         public enum tipoAdjunto
         {
             factura = 1,

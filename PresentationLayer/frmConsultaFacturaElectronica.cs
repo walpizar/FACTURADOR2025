@@ -1,7 +1,9 @@
 ﻿using BusinessLayer;
 using CommonLayer;
 using CommonLayer.Exceptions.BussinessExceptions;
+using EntityLayer;
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +14,7 @@ namespace PresentationLayer
     {
         BFacturacion facturacion = new BFacturacion();
         public string clave { get; set; }
-
+        public int tipoDoc { get; set; } = 1;
 
         public frmConsultaFacturaElectronica()
         {
@@ -46,7 +48,7 @@ namespace PresentationLayer
 
         private async 
         Task
-Consultar()
+                Consultar()
         {
             if (!Utility.AccesoInternet())
             {
@@ -61,38 +63,69 @@ Consultar()
                 return;
             }
 
+           
             try
             {
                 string resultadoXml = null;
-
-                switch ((Enums.ConsultarHacienda)cboTipoBusqueda.SelectedValue)
+                if (tipoDoc != (int)Enums.TipoDocumento.Compras)
                 {
-                    case Enums.ConsultarHacienda.Clave:
-                        resultadoXml = facturacion
-                            .consultarFacturaElectronicaPorClave(txtClave.Text.Trim()).Result;
-                        break;
+                    switch ((Enums.ConsultarHacienda)cboTipoBusqueda.SelectedValue)
+                    {
+                        case Enums.ConsultarHacienda.Clave:
+                            resultadoXml = facturacion
+                                .consultarFacturaElectronicaPorClave(txtClave.Text.Trim()).Result;
+                            break;
 
-                    case Enums.ConsultarHacienda.Consecutivo:
-                        // Ahora sí se espera el Task<string>
-                        resultadoXml = facturacion
-                            .consultarFacturaElectronicaPorConsecutivoAsync(txtClave.Text.Trim()).Result;
-                        break;
+                        case Enums.ConsultarHacienda.Consecutivo:
+                            // Ahora sí se espera el Task<string>
+                            resultadoXml = facturacion
+                                .consultarFacturaElectronicaPorConsecutivoAsync(txtClave.Text.Trim()).Result;
+                            break;
 
-                    default:
-                        if (cboTipoDoc.SelectedValue == null ||
-                            (int)cboTipoDoc.SelectedValue == 0)
-                        {
-                            MessageBox.Show("Debe indicar un tipo de documento para poder consultar por ID de Documento");
-                            return;
-                        }
-                        // Si este método es síncrono y devuelve string, no necesita await
-                        resultadoXml = facturacion
-                            .consultarFacturaElectronicaPorIdFact(
-                                int.Parse(txtClave.Text.Trim()),
-                                (int)cboTipoDoc.SelectedValue).Result;
-                        break;
+                        default:
+                            if (cboTipoDoc.SelectedValue == null ||
+                                (int)cboTipoDoc.SelectedValue == 0)
+                            {
+                                MessageBox.Show("Debe indicar un tipo de documento para poder consultar por ID de Documento");
+                                return;
+                            }
+                            // Si este método es síncrono y devuelve string, no necesita await
+                            resultadoXml = facturacion
+                                .consultarFacturaElectronicaPorIdFact(
+                                    int.Parse(txtClave.Text.Trim()),
+                                    (int)cboTipoDoc.SelectedValue).Result;
+                            break;
+                    }
                 }
-                    string mensajeLimpio = Regex.Replace( resultadoXml, @":Signature.*$","",RegexOptions.Multiline);
+                else
+                {
+                    tbCompras compra = facturacion.GetEntityCompraByClave(clave);
+
+                    var respuesta = facturacion.consultarEstadoConfirmaciones(compra);
+
+                    if (respuesta != null &&
+                        !string.IsNullOrWhiteSpace(respuesta.respuesta_xml))
+                    {
+                        try
+                        {
+                            byte[] bytes = Convert.FromBase64String(respuesta.respuesta_xml);
+
+                            resultadoXml = Encoding.UTF8.GetString(bytes);
+                        }
+                        catch
+                        {
+                            // Por si la respuesta ya viniera como XML sin Base64
+                            resultadoXml = respuesta.respuesta_xml;
+                        }
+                    }
+                    else
+                    {
+                        resultadoXml = null;
+                    }
+
+                }
+
+                string mensajeLimpio = Regex.Replace(resultadoXml, @":Signature.*$", "", RegexOptions.Multiline);
 
                 // Si además quieres recortar espacios sobrantes
                 mensajeLimpio = mensajeLimpio.Trim();

@@ -142,10 +142,10 @@
           <Property Name="contacto" Type="nchar" MaxLength="50" />
           <Property Name="contribuyente" Type="bit" Nullable="false" />
           <Property Name="aplicaDescAuto" Type="bit" />
-          <Property Name="codigoActDefault" Type="char" MaxLength="10" />
           <Property Name="fechaVencExo" Type="date" />
           <Property Name="incisoExo" Type="nvarchar" MaxLength="50" />
           <Property Name="articuloExo" Type="nvarchar" MaxLength="50" />
+          <Property Name="codigoActDefault" Type="char" MaxLength="10" />
         </EntityType>
         <EntityType Name="tbClientesActividadesEconomicas">
           <Key>
@@ -204,19 +204,22 @@
           <Property Name="correo1" Type="nchar" MaxLength="50" />
           <Property Name="tipoMoneda" Type="int" />
           <Property Name="tipoCambio" Type="decimal" Precision="18" Scale="5" />
-          <Property Name="sucursal" Type="int" />
-          <Property Name="caja" Type="int" />
-          <Property Name="cambiarColon" Type="bit" />
           <Property Name="codigoActividadEmpresa" Type="nchar" MaxLength="10" />
           <Property Name="tipoDocRef" Type="int" />
           <Property Name="claveRef" Type="nchar" MaxLength="50" />
           <Property Name="fechaRef" Type="datetime" />
           <Property Name="codigoRef" Type="int" />
           <Property Name="razon" Type="nchar" MaxLength="180" />
+          <Property Name="sucursal" Type="int" />
+          <Property Name="caja" Type="int" />
+          <Property Name="cambiarColon" Type="bit" />
           <Property Name="nombreProveedor" Type="varchar" MaxLength="100" />
           <Property Name="codigoMensaje" Type="int" />
           <Property Name="EstadoMensaje" Type="varchar" MaxLength="9" />
           <Property Name="DetalleMensaje" Type="varchar" MaxLength="1000" />
+          <Property Name="condicionImpuesto" Type="varchar" MaxLength="2" />
+          <Property Name="montoImpuestoAcreditar" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="montoGastoAplicable" Type="decimal" Precision="18" Scale="5" />
         </EntityType>
         <EntityType Name="tbDetalleCompras">
           <Key>
@@ -291,8 +294,8 @@
           <Property Name="porcExo" Type="int" />
           <Property Name="montoTotalExo" Type="decimal" Precision="18" Scale="5" Nullable="false" />
           <Property Name="totalLinea" Type="decimal" Precision="18" Scale="5" Nullable="false" />
-          <Property Name="precioCosto" Type="decimal" Precision="18" Scale="5" />
           <Property Name="comentario" Type="nchar" MaxLength="500" />
+          <Property Name="precioCosto" Type="decimal" Precision="18" Scale="5" />
         </EntityType>
         <EntityType Name="tbDetalleOrdenCompra">
           <Key>
@@ -351,7 +354,7 @@
           <Property Name="notificarCorreo" Type="bit" Nullable="false" />
           <Property Name="correo1" Type="nchar" MaxLength="50" />
           <Property Name="correo2" Type="nchar" MaxLength="50" />
-          <Property Name="observaciones" Type="nchar" MaxLength="1000" />
+          <Property Name="observaciones" Type="nchar" MaxLength="270" />
           <Property Name="idEmpresa" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="tipoIdEmpresa" Type="int" Nullable="false" />
           <Property Name="tipoDocRef" Type="int" />
@@ -362,9 +365,9 @@
           <Property Name="xmlSinFirma" Type="nvarchar(max)" />
           <Property Name="xmlFirmado" Type="nvarchar(max)" />
           <Property Name="xmlRespuesta" Type="nvarchar(max)" />
+          <Property Name="codigoActividad" Type="nchar" MaxLength="10" />
           <Property Name="sucursal" Type="int" />
           <Property Name="caja" Type="int" />
-          <Property Name="codigoActividad" Type="nchar" MaxLength="10" />
           <Property Name="estadoCorreo" Type="int" />
           <Property Name="codigoActividadReceptor" Type="varchar" MaxLength="10" />
         </EntityType>
@@ -559,15 +562,17 @@
           <Property Name="comandasTipo" Type="int" />
           <Property Name="cantComandas" Type="int" />
           <Property Name="correoCierre" Type="bit" />
-          <Property Name="promociones" Type="bit" />
-          <Property Name="etiquetas" Type="bit" />
           <Property Name="aprobarEliminar" Type="bit" />
           <Property Name="cierreCajaAdmin" Type="bit" />
           <Property Name="precioVariable" Type="bit" />
+          <Property Name="promociones" Type="bit" />
+          <Property Name="etiquetas" Type="bit" />
           <Property Name="validaCabys" Type="bit" />
           <Property Name="inventarioNegativo" Type="bit" />
           <Property Name="margenGananciaDolar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="actualizarTipoCambioAutomatico" Type="bit" Nullable="false" />
+          <Property Name="usaRomana" Type="bit" Nullable="false" />
+          <Property Name="tipoCodigoRomana" Type="int" />
         </EntityType>
         <EntityType Name="tbPermisos">
           <Key>
@@ -1452,24 +1457,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbPersona_tbBarrios">
-          <End Role="tbBarrios" Type="Self.tbBarrios" Multiplicity="0..1" />
-          <End Role="tbPersona" Type="Self.tbPersona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbBarrios">
-              <PropertyRef Name="Provincia" />
-              <PropertyRef Name="canton" />
-              <PropertyRef Name="distrito" />
-              <PropertyRef Name="barrio" />
-            </Principal>
-            <Dependent Role="tbPersona">
-              <PropertyRef Name="provincia" />
-              <PropertyRef Name="canton" />
-              <PropertyRef Name="distrito" />
-              <PropertyRef Name="barrio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbPersona_tbTipoId">
           <End Role="tbTipoId" Type="Self.tbTipoId" Multiplicity="1" />
           <End Role="tbPersona" Type="Self.tbPersona" Multiplicity="*" />
@@ -1879,10 +1866,6 @@
           <AssociationSet Name="FK_tbPermisos_tbRoles" Association="Self.FK_tbPermisos_tbRoles">
             <End Role="tbRoles" EntitySet="tbRoles" />
             <End Role="tbPermisos" EntitySet="tbPermisos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPersona_tbBarrios" Association="Self.FK_tbPersona_tbBarrios">
-            <End Role="tbBarrios" EntitySet="tbBarrios" />
-            <End Role="tbPersona" EntitySet="tbPersona" />
           </AssociationSet>
           <AssociationSet Name="FK_tbPersona_tbTipoId" Association="Self.FK_tbPersona_tbTipoId">
             <End Role="tbTipoId" EntitySet="tbTipoId" />
@@ -2440,6 +2423,9 @@
           <NavigationProperty Name="tbTipoPago" Relationship="dbSISSODINAModel.FK_tbCompras_tbTipoPago" FromRole="tbCompras" ToRole="tbTipoPago" />
           <NavigationProperty Name="tbTipoVenta" Relationship="dbSISSODINAModel.FK_tbCompras_tbTipoVenta" FromRole="tbCompras" ToRole="tbTipoVenta" />
           <NavigationProperty Name="tbDetalleCompras" Relationship="dbSISSODINAModel.FK_tbDetalleCompras_tbCompras" FromRole="tbCompras" ToRole="tbDetalleCompras" />
+          <Property Name="condicionImpuesto" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="montoImpuestoAcreditar" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="montoGastoAplicable" Type="Decimal" Precision="18" Scale="5" />
         </EntityType>
         <EntityType Name="tbDetalleCompras">
           <Key>
@@ -2572,7 +2558,7 @@
           <Property Name="notificarCorreo" Type="Boolean" Nullable="false" />
           <Property Name="correo1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="correo2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="observaciones" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="observaciones" Type="String" MaxLength="270" FixedLength="true" Unicode="true" />
           <Property Name="idEmpresa" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="tipoIdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="tipoDocRef" Type="Int32" />
@@ -2821,6 +2807,8 @@
           <Property Name="margenGananciaDolar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="actualizarTipoCambioAutomatico" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbEmpresa" Relationship="dbSISSODINAModel.FK_tbParametrosEmpresa_tbEmpresa" FromRole="tbParametrosEmpresa" ToRole="tbEmpresa" />
+          <Property Name="usaRomana" Type="Boolean" Nullable="false" />
+          <Property Name="tipoCodigoRomana" Type="Int32" />
         </EntityType>
         <EntityType Name="tbPersonasTribunalS">
           <Key>
@@ -4082,6 +4070,9 @@
           <EntitySetMapping Name="tbCompras">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbCompras">
               <MappingFragment StoreEntitySet="tbCompras">
+                <ScalarProperty Name="montoGastoAplicable" ColumnName="montoGastoAplicable" />
+                <ScalarProperty Name="montoImpuestoAcreditar" ColumnName="montoImpuestoAcreditar" />
+                <ScalarProperty Name="condicionImpuesto" ColumnName="condicionImpuesto" />
                 <ScalarProperty Name="DetalleMensaje" ColumnName="DetalleMensaje" />
                 <ScalarProperty Name="EstadoMensaje" ColumnName="EstadoMensaje" />
                 <ScalarProperty Name="codigoMensaje" ColumnName="codigoMensaje" />
@@ -4444,6 +4435,8 @@
           <EntitySetMapping Name="tbParametrosEmpresa">
             <EntityTypeMapping TypeName="dbSISSODINAModel.tbParametrosEmpresa">
               <MappingFragment StoreEntitySet="tbParametrosEmpresa">
+                <ScalarProperty Name="tipoCodigoRomana" ColumnName="tipoCodigoRomana" />
+                <ScalarProperty Name="usaRomana" ColumnName="usaRomana" />
                 <ScalarProperty Name="actualizarTipoCambioAutomatico" ColumnName="actualizarTipoCambioAutomatico" />
                 <ScalarProperty Name="margenGananciaDolar" ColumnName="margenGananciaDolar" />
                 <ScalarProperty Name="inventarioNegativo" ColumnName="inventarioNegativo" />

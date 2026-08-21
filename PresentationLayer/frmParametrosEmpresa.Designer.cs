@@ -44,6 +44,9 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tlsBtnSalir = new System.Windows.Forms.ToolStripButton();
             this.gbxDatos = new System.Windows.Forms.GroupBox();
+            this.chkUsaRomana = new System.Windows.Forms.CheckBox();
+            this.lblTipoCodigoRomana = new System.Windows.Forms.Label();
+            this.cboTipoCodigoRomana = new System.Windows.Forms.ComboBox();
             this.chkInvNegativo = new System.Windows.Forms.CheckBox();
             this.chkValidaCabys = new System.Windows.Forms.CheckBox();
             this.chkEtiquetas = new System.Windows.Forms.CheckBox();
@@ -224,6 +227,9 @@
             // 
             // gbxDatos
             // 
+            this.gbxDatos.Controls.Add(this.chkUsaRomana);
+            this.gbxDatos.Controls.Add(this.lblTipoCodigoRomana);
+            this.gbxDatos.Controls.Add(this.cboTipoCodigoRomana);
             this.gbxDatos.Controls.Add(this.chkActualizaTipoCambio);
             this.gbxDatos.Controls.Add(this.txtMargenDolar);
             this.gbxDatos.Controls.Add(this.chkInvNegativo);
@@ -277,10 +283,42 @@
             this.gbxDatos.Margin = new System.Windows.Forms.Padding(2);
             this.gbxDatos.Name = "gbxDatos";
             this.gbxDatos.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxDatos.Size = new System.Drawing.Size(425, 517);
+            this.gbxDatos.Size = new System.Drawing.Size(425, 560);
             this.gbxDatos.TabIndex = 14;
             this.gbxDatos.TabStop = false;
             this.gbxDatos.Text = "Parámetros Empresa";
+            // 
+            // chkUsaRomana
+            // 
+            this.chkUsaRomana.AutoSize = true;
+            this.chkUsaRomana.Location = new System.Drawing.Point(4, 518);
+            this.chkUsaRomana.Margin = new System.Windows.Forms.Padding(2);
+            this.chkUsaRomana.Name = "chkUsaRomana";
+            this.chkUsaRomana.Size = new System.Drawing.Size(150, 17);
+            this.chkUsaRomana.TabIndex = 93;
+            this.chkUsaRomana.Text = "Usa Romana (Báscula)";
+            this.chkUsaRomana.UseVisualStyleBackColor = true;
+            this.chkUsaRomana.CheckedChanged += new System.EventHandler(this.chkUsaRomana_CheckedChanged);
+            // 
+            // lblTipoCodigoRomana
+            // 
+            this.lblTipoCodigoRomana.AutoSize = true;
+            this.lblTipoCodigoRomana.Location = new System.Drawing.Point(160, 519);
+            this.lblTipoCodigoRomana.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTipoCodigoRomana.Name = "lblTipoCodigoRomana";
+            this.lblTipoCodigoRomana.Size = new System.Drawing.Size(66, 13);
+            this.lblTipoCodigoRomana.TabIndex = 94;
+            this.lblTipoCodigoRomana.Text = "Tipo código:";
+            // 
+            // cboTipoCodigoRomana
+            // 
+            this.cboTipoCodigoRomana.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTipoCodigoRomana.Enabled = false;
+            this.cboTipoCodigoRomana.FormattingEnabled = true;
+            this.cboTipoCodigoRomana.Location = new System.Drawing.Point(232, 516);
+            this.cboTipoCodigoRomana.Name = "cboTipoCodigoRomana";
+            this.cboTipoCodigoRomana.Size = new System.Drawing.Size(120, 21);
+            this.cboTipoCodigoRomana.TabIndex = 95;
             // 
             // chkInvNegativo
             // 
@@ -770,7 +808,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(447, 562);
+            this.ClientSize = new System.Drawing.Size(447, 605);
             this.Controls.Add(this.gbxDatos);
             this.Controls.Add(this.tlsMenu);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -853,5 +891,8 @@
         private System.Windows.Forms.CheckBox chkInvNegativo;
         private System.Windows.Forms.TextBox txtMargenDolar;
         private System.Windows.Forms.CheckBox chkActualizaTipoCambio;
+        private System.Windows.Forms.CheckBox chkUsaRomana;
+        private System.Windows.Forms.Label lblTipoCodigoRomana;
+        private System.Windows.Forms.ComboBox cboTipoCodigoRomana;
     }
 }

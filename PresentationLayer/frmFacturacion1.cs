@@ -1164,11 +1164,16 @@ namespace PresentationLayer
                 }
 
                 // 2. Si no existe el código completo, intentar interpretarlo
-                // como un EAN-13 generado por la romana.
-                if (TryInterpretarCodigoRomana(
+                // como un EAN-13 generado por la romana — SOLO si la empresa
+                // realmente usa báscula/romana (evita falsos positivos con
+                // códigos EAN-13 normales que empiecen en "2").
+                var parametrosEmpresa = Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault();
+                bool usaRomana = parametrosEmpresa != null && parametrosEmpresa.usaRomana;
+
+                if (usaRomana && TryInterpretarCodigoRomana(
                     codigo,
                     out string plu,
-                    out decimal precioProducto))
+                    out decimal valorCodigo))
                 {
                     // 3. Buscar el producto mediante el PLU.
                     producto = buscarProducto(plu);
@@ -1186,12 +1191,26 @@ namespace PresentationLayer
 
                     if (producto != null)
                     {
-                        // 4. Agregar el producto utilizando el peso como cantidad.
+                        // 4. Interpretar el valor embebido según cómo esté
+                        // configurada la báscula: algunas codifican el PESO
+                        // directo (gramos), otras el PRECIO ya calculado.
+                        decimal cantidad;
 
+                        if (parametrosEmpresa.tipoCodigoRomana == (int)Enums.TipoCodigoRomana.Peso)
+                        {
+                            // El número embebido es el peso en GRAMOS: se convierte a kg.
+                            cantidad = valorCodigo / 1000m;
+                        }
+                        else
+                        {
+                            // El número embebido es el PRECIO ya calculado: se
+                            // infiere el peso dividiendo entre el precio por kg.
+                            cantidad = producto.precioVenta1 == 0
+                                ? 0
+                                : valorCodigo / producto.precioVenta1;
+                        }
 
-                        var pesoKilogramos = precioProducto / producto.precioVenta1;
-                        agregarProductoDetalleFactura(producto, 1, pesoKilogramos, 0, true, true);
-                        
+                        agregarProductoDetalleFactura(producto, 1, cantidad, 0, true, true);
 
                         return;
                     }

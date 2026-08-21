@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace PresentationLayer
@@ -43,7 +44,7 @@ namespace PresentationLayer
                // facturasLista = (IEnumerable<tbDocumento>)facturaIns.listaFacturasFechas(dtpFechaInicio.Value.Date, dtpFechaFin.Value.Date);
      
                 ////carga mensajes de compras enviados
-                //mensajesLista = facturaIns.listaMensajesCompras();
+               // mensajesLista = facturaIns.listaMensajesCompras();
 
                 ////carga compras simplificadas
                 //comprasLista = facturaIns.listaComprasSimplificada();
@@ -336,6 +337,20 @@ namespace PresentationLayer
                             }
                             msj.ShowDialog();
 
+                        }
+                        else if (tipoDoc == Enum.GetName(typeof(Enums.TipoDocumento), Enums.TipoDocumento.Gastos).ToUpper())
+                        {
+                          
+                            var doc = facturasLista.Where(x => x.id == id && x.tipoDocumento == tipoDocumento).SingleOrDefault();
+                            if (doc != null)
+                            {
+                               
+                                frmConsultaFacturaElectronica consulta = new frmConsultaFacturaElectronica();
+                                consulta.clave = doc.clave;
+                                consulta.tipoDoc= (int)Enums.TipoDocumento.Compras;
+                                consulta.ShowDialog();
+                            }
+                            
                         }
                         else if (tipoDoc == Enum.GetName(typeof(Enums.TipoDocumento), Enums.TipoDocumento.FacturaElectronica).ToUpper() ||
                             tipoDoc == Enum.GetName(typeof(Enums.TipoDocumento), Enums.TipoDocumento.NotaCreditoElectronica).ToUpper() ||

@@ -70,6 +70,9 @@ namespace EntityLayer
         public Nullable<int> codigoMensaje { get; set; }
         public string EstadoMensaje { get; set; }
         public string DetalleMensaje { get; set; }
+        public string condicionImpuesto { get; set; }
+        public Nullable<decimal> montoImpuestoAcreditar { get; set; }
+        public Nullable<decimal> montoGastoAplicable { get; set; }
     
         public virtual tbActividades tbActividades { get; set; }
         public virtual tbReporteHacienda tbReporteHacienda { get; set; }

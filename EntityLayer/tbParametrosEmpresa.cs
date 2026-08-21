@@ -47,6 +47,8 @@ namespace EntityLayer
         public Nullable<bool> inventarioNegativo { get; set; }
         public decimal margenGananciaDolar { get; set; }
         public bool actualizarTipoCambioAutomatico { get; set; }
+        public bool usaRomana { get; set; }
+        public Nullable<int> tipoCodigoRomana { get; set; }
     
         public virtual tbEmpresa tbEmpresa { get; set; }
     }

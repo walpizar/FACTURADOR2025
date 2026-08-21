@@ -28,11 +28,12 @@ namespace PresentationLayer
             tlsBtnSalir.Enabled = true;
             chkServicioMesa.Checked = false;
             cboTipoComanda.DataSource = Enum.GetValues(typeof(Enums.TipoComanda));
-            chkCierreCorreo.Visible = Global.Configuracion.aperturaCierre == 1 ? true : false ;
+            chkCierreCorreo.Visible = Global.Configuracion.aperturaCierre == 1 ? true : false;
             lblCantComandas.Visible = chkComanda.Checked;
             mskCantComandas.Visible = chkComanda.Checked;
             chkInvNegativo.Visible = chkManejaInventario.Checked;
 
+            CargarComboTipoCodigoRomana();
 
             cargarDatos();
             //listainve = inveIns.GetListEntities(3);
@@ -98,8 +99,8 @@ namespace PresentationLayer
                 chkValidaCabys.Checked = (bool)parametros.validaCabys;
 
                 mskCantComandas.Text = parametros.cantComandas.ToString();
-                
-                
+
+
                 chkAprobacionEliminar.Checked = (bool)parametros.aprobarEliminar;
                 chkCierreCajaAdmin.Checked = (bool)parametros.cierreCajaAdmin;
                 chkPrecioVariable.Checked = (bool)parametros.precioVariable;
@@ -118,6 +119,8 @@ namespace PresentationLayer
                     txtPorcServicioMesa.ResetText();
 
                 }
+
+                CargarParametrosRomana(parametros);
 
             }
             catch (Exception)
@@ -160,6 +163,7 @@ namespace PresentationLayer
                     //tlsBtnCancelar.Enabled = false;
 
                     cboTipoComanda.Enabled = chkComanda.Checked;
+                    cboTipoCodigoRomana.Enabled = chkUsaRomana.Checked;
 
 
                     break;
@@ -228,7 +232,7 @@ namespace PresentationLayer
                         parametros.plazoMaximoProforma = int.Parse(txtPlazoMaxProf.Text.Trim());
                         parametros.precioBase = int.Parse(txtPrecioBase.Text.Trim());
 
-                       // parametros.inicioCierreCaja = chkInicioCierreCaja.Checked;
+                        // parametros.inicioCierreCaja = chkInicioCierreCaja.Checked;
                         parametros.aprobacionDescuento = chkAprobDes.Checked;
                         parametros.manejaInventario = chkManejaInventario.Checked;
                         parametros.inventarioNegativo = chkInvNegativo.Checked;
@@ -249,7 +253,7 @@ namespace PresentationLayer
                         parametros.rutaBackUp = txtRutaBackup.Text;
                         parametros.servicioMesa = chkServicioMesa.Checked;
                         parametros.comandas = chkComanda.Checked;
-                        parametros.cantComandas = int.Parse( mskCantComandas.Text);
+                        parametros.cantComandas = int.Parse(mskCantComandas.Text);
                         parametros.validaCabys = chkValidaCabys.Checked;
 
                         if (!chkComanda.Checked)
@@ -259,10 +263,10 @@ namespace PresentationLayer
                         }
                         else
                         {
-                            parametros.comandasTipo =(int)cboTipoComanda.SelectedValue;
+                            parametros.comandasTipo = (int)cboTipoComanda.SelectedValue;
 
                         }
-                        
+
 
                         if (chkServicioMesa.Checked)
                         {
@@ -272,6 +276,8 @@ namespace PresentationLayer
                         {
                             parametros.porcServicioMesa = null;
                         }
+
+                        GuardarParametrosRomana(parametros);
 
                         try
                         {
@@ -409,9 +415,15 @@ namespace PresentationLayer
                 return false;
 
             }
+            else if (chkUsaRomana.Checked && cboTipoCodigoRomana.SelectedValue == null)
+            {
+                MessageBox.Show("Debe indicar el tipo de código de la romana (Peso o Precio)", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cboTipoCodigoRomana.Focus();
+                return false;
+            }
 
 
-                return true;
+            return true;
 
 
         }
@@ -472,12 +484,65 @@ namespace PresentationLayer
             {
                 mskCantComandas.Text = parametrosGlobal.cantComandas.ToString();
             }
-          
+
         }
 
         private void chkManejaInventario_CheckedChanged(object sender, EventArgs e)
         {
-           chkInvNegativo.Visible= chkManejaInventario.Checked;
+            chkInvNegativo.Visible = chkManejaInventario.Checked;
+        }
+
+        // ---------- Romana (báscula) ----------
+
+        /// <summary>
+        /// Carga el combo de tipo de código directo desde el enum
+        /// Enums.TipoCodigoRomana (Peso/Precio) — si se agrega un tipo
+        /// nuevo al enum, aparece acá sin tocar este método.
+        /// </summary>
+        private void CargarComboTipoCodigoRomana()
+        {
+            var opciones = Enum.GetValues(typeof(Enums.TipoCodigoRomana))
+                .Cast<Enums.TipoCodigoRomana>()
+                .Select(v => new { Texto = v.ToString(), Valor = (int)v })
+                .ToList();
+
+            cboTipoCodigoRomana.DataSource = opciones;
+            cboTipoCodigoRomana.DisplayMember = "Texto";
+            cboTipoCodigoRomana.ValueMember = "Valor";
+        }
+
+        private void chkUsaRomana_CheckedChanged(object sender, EventArgs e)
+        {
+            cboTipoCodigoRomana.Enabled = chkUsaRomana.Checked;
+
+            if (!chkUsaRomana.Checked)
+            {
+                cboTipoCodigoRomana.SelectedIndex = -1;
+            }
+        }
+
+        private void CargarParametrosRomana(tbParametrosEmpresa parametros)
+        {
+            chkUsaRomana.Checked = parametros.usaRomana;
+            cboTipoCodigoRomana.Enabled = parametros.usaRomana;
+
+            if (parametros.tipoCodigoRomana.HasValue)
+            {
+                cboTipoCodigoRomana.SelectedValue = parametros.tipoCodigoRomana.Value;
+            }
+            else
+            {
+                cboTipoCodigoRomana.SelectedIndex = -1;
+            }
+        }
+
+        private void GuardarParametrosRomana(tbParametrosEmpresa parametros)
+        {
+            parametros.usaRomana = chkUsaRomana.Checked;
+
+            parametros.tipoCodigoRomana = chkUsaRomana.Checked && cboTipoCodigoRomana.SelectedValue != null
+                ? (int?)cboTipoCodigoRomana.SelectedValue
+                : null;
         }
     }
 }

@@ -610,6 +610,64 @@ namespace DataLayer
                 throw ex;
             }
         }
+        public tbCompras GetEntityCompraByClave(string clave)
+        {
+            try
+            {
+                using (Entities context = new Entities())
+                {
+
+
+                    var doc = (from p in context.tbCompras.Include("tbDetalleCompras").Include("tbTipoPago").Include("tbTipoVenta")
+                               where p.clave== clave
+                               select p).FirstOrDefault();
+
+                    //if (doc.idProveedor != null)
+                    //{
+                    //    doc.tbProveedores = proveedorIns.GetProveedorById((int)doc.tipoIdProveedor, doc.idProveedor);
+
+                    //}
+                    return doc;
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public tbCompras GetEntityCompraByConsecutivo(string consecutivo)
+        {
+            try
+            {
+                using (Entities context = new Entities())
+                {
+
+
+                    var doc = (from p in context.tbCompras.Include("tbDetalleCompras").Include("tbTipoPago").Include("tbTipoVenta")
+                               where p.consecutivo == consecutivo
+                               select p).FirstOrDefault();
+
+                    //if (doc.idProveedor != null)
+                    //{
+                    //    doc.tbProveedores = proveedorIns.GetProveedorById((int)doc.tipoIdProveedor, doc.idProveedor);
+
+                    //}
+                    return doc;
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public tbDocumento GetEntityByClave(tbDocumento entity)
         {
             try

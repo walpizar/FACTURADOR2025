@@ -113,6 +113,73 @@ namespace BusinessLayer
             }
         }
 
+        public FacturacionElectronicaLayer.Clases.RespuestaHacienda consultarEstadoConfirmaciones(tbCompras compra)
+        {
+            try
+            {
+                if (!Utility.AccesoInternet())
+                    return null;
+
+                if (compra == null)
+                    return null;
+
+                // Todavía no se ha enviado a Hacienda
+                if (!compra.reporteAceptaHacienda)
+                    return null;
+
+                // Ya se obtuvo anteriormente una respuesta definitiva
+                if (compra.mensajeRespHacienda)
+                    return null;
+
+                string token = getToken();
+
+                var comunicacion =
+                    new FacturacionElectronicaLayer.Clases.Comunicacion();
+
+                try
+                {
+                    var respuesta = comunicacion
+                        .ConsultarMensaje(
+                            token,
+                            compra.claveEmisor,
+                            compra.consecutivoEmisor)
+                        .Result;
+
+                    // Hacienda todavía no tiene respuesta
+                    if (respuesta == null)
+                    {
+                        return null;
+                    }
+
+                    // Guardar estado devuelto por Hacienda
+                    compra.EstadoFacturaHacienda = respuesta.ind_estado;
+                    compra.mensajeRespHacienda = true;
+
+                    DFacturaIns.ActualizarCompraSimplificada(compra);
+
+                    // Devuelve la respuesta completa de Hacienda
+                    return respuesta;
+                }
+                catch (Exception ex)
+                {
+                    clsEvento evento = new clsEvento(
+                        $"Error consultando estado del documento " +
+                        $"{compra.numFactura}: {ex.Message}",
+                        "1");
+
+                    return null;
+                }
+                finally
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                clsEvento evento = new clsEvento(ex.Message, "1");
+                throw;
+            }
+        }
         public tbDocumento guadar(tbDocumento facturaGlobal)
         {
 
@@ -431,6 +498,14 @@ namespace BusinessLayer
         public tbCompras GetEntityCompra(tbCompras compra)
         {
             return DFacturaIns.GetEntityCompra(compra);
+        }
+        public tbCompras GetEntityCompraByClave(string clave)
+        {
+            return DFacturaIns.GetEntityCompraByClave(clave);
+        }
+        public tbCompras GetEntityCompraByConsecutivo(string  consecutivo)
+        {
+            return DFacturaIns.GetEntityCompraByConsecutivo(consecutivo);
         }
         public List<tbDetalleDocumento> getEntityDetails(tbDocumento facturaGlobal)
         {
