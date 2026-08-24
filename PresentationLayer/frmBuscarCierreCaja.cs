@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarCierreCaja : Form
+    public partial class frmBuscarCierreCaja : FormBase
     {
         BCajas cajaIns = new BCajas();
         private tbCajasMovimientos cierreSelect { get; set; }

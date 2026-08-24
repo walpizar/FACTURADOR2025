@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace PresentationLayer
 {
 
-    public partial class frmUsuario : Form
+    public partial class frmUsuario : FormBase
     {
         BRoles rolesIns = new BRoles();
         BUsuario usuarioIns = new BUsuario();

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmReportes : Form
+    public partial class frmReportes : FormBase
     {
       
         public DateTime fechaInicio { get; set; }

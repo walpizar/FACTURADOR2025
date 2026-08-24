@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmRespaldoRestaurar : Form
+    public partial class frmRespaldoRestaurar : FormBase
     {
         private ServicioRespaldoBaseDatos servicioRespaldo;
 

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmCambiarContrasena : Form
+    public partial class frmCambiarContrasena : FormBase
     {
         BUsuario usuarioIns = new BUsuario();
         public frmCambiarContrasena()

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarDocumentos : Form
+    public partial class frmBuscarDocumentos : FormBase
     {
 
         private IEnumerable<tbDocumento> lista { get; set; }

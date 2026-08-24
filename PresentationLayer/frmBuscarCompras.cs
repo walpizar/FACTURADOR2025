@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarCompras : Form
+    public partial class frmBuscarCompras : FormBase
     {
         BCompras comprasIns = new BCompras();
         public static List<tbCompras> listaCompras = new List<tbCompras>();

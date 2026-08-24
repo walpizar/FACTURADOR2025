@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmOrdenesCompra : Form
+    public partial class frmOrdenesCompra : FormBase
     {
         BOrdenCompra ordenIns = new BOrdenCompra();
 

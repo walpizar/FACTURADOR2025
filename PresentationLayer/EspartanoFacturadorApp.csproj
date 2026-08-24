@@ -704,12 +704,6 @@
     <Compile Include="frmFacturacionContingencia.Designer.cs">
       <DependentUpon>frmFacturacionContingencia.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFacturacionFotos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFacturacionFotos.Designer.cs">
-      <DependentUpon>frmFacturacionFotos.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmFacturacionReducida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1280,6 +1274,7 @@
       <DependentUpon>rptVentasUsuarios.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\TemaOscuro.cs" />
     <EmbeddedResource Include="Acerca.resx">
       <DependentUpon>Acerca.cs</DependentUpon>
     </EmbeddedResource>
@@ -1448,9 +1443,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmFacturacionContingencia.resx">
       <DependentUpon>frmFacturacionContingencia.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmFacturacionFotos.resx">
-      <DependentUpon>frmFacturacionFotos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFacturacionReducida.resx">
       <DependentUpon>frmFacturacionReducida.cs</DependentUpon>

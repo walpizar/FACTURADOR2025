@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace PresentationLayer
 {
 
-    public partial class frmCertificado : Form
+    public partial class frmCertificado : FormBase
     {
         private DataSet dsCertificados = new DataSet();
 

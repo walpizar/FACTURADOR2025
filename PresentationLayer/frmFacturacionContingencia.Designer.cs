@@ -778,7 +778,7 @@ namespace PresentationLayer
             // 
             this.txtObservaciones.Location = new System.Drawing.Point(4, 470);
             this.txtObservaciones.Margin = new System.Windows.Forms.Padding(2);
-            this.txtObservaciones.MaxLength = 270;
+            this.txtObservaciones.MaxLength = 1000;
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(1001, 48);

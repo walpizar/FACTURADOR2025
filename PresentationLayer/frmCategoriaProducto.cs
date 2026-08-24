@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmCategoriaProducto : Form
+    public partial class frmCategoriaProducto : FormBase
     {
 
         //Creamos las Variables globles de nuestro formulario.

@@ -16,7 +16,7 @@ using System.Windows.Forms;
 namespace PresentationLayer
 {
 
-    public partial class frmFacturacionContingencia : Form
+    public partial class frmFacturacionContingencia : FormBase
     {
         BProducto BProducto = new BProducto();
         Bcliente BCliente = new Bcliente();

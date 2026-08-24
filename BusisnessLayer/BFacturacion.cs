@@ -386,7 +386,7 @@ namespace BusinessLayer
                 medida.nomenclatura = detalle.nomenclatura;
                 detalle.idMedida = medidaIns.GetEnityByNomenclatura(medida).idTipoMedida;
 
-   
+
 
             }
             // cambio la moneda cuando es dolar y el usuario realizo el cambio a colon
@@ -420,8 +420,8 @@ namespace BusinessLayer
 
             if (facturaGlobal.tipoDoc != (int)Enums.TipoDocumento.Proforma)
             {
-                var consecutivo= facturaGlobal.tipoDoc;
-                if(facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Gastos || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Compras || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.ComprasSimplificada)
+                var consecutivo = facturaGlobal.tipoDoc;
+                if (facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Gastos || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.Compras || facturaGlobal.tipoDoc == (int)Enums.TipoDocumento.ComprasSimplificada)
                 {
                     consecutivo = facturaGlobal.codigoMensaje == 1 ? 05 : facturaGlobal.codigoMensaje == 2 ? 06 : 07;
                 }
@@ -503,7 +503,7 @@ namespace BusinessLayer
         {
             return DFacturaIns.GetEntityCompraByClave(clave);
         }
-        public tbCompras GetEntityCompraByConsecutivo(string  consecutivo)
+        public tbCompras GetEntityCompraByConsecutivo(string consecutivo)
         {
             return DFacturaIns.GetEntityCompraByConsecutivo(consecutivo);
         }
@@ -692,7 +692,7 @@ namespace BusinessLayer
 
         public decimal validarCredito(string idCliente, int? tipoIdCliente)
         {
-            return  DFacturaIns.validarCredito(idCliente, tipoIdCliente);
+            return DFacturaIns.validarCredito(idCliente, tipoIdCliente);
         }
 
         public void reportarMensajesHacienda(object o, DoWorkEventArgs e)
@@ -703,10 +703,10 @@ namespace BusinessLayer
                 {
                     foreach (var msj in listaGuardados)
                     {
-                      //  enviarMensajeHacienda(msj);
+                        //  enviarMensajeHacienda(msj);
 
 
-                       // consultarMensaje(msj);
+                        // consultarMensaje(msj);
 
 
 
@@ -739,7 +739,7 @@ namespace BusinessLayer
                         }
 
 
-                       // consultarMensaje(compra);
+                        // consultarMensaje(compra);
 
                     }
                 }
@@ -840,6 +840,15 @@ namespace BusinessLayer
                 FacturacionElectronicaLayer.Clases.Firma _firma = new FacturacionElectronicaLayer.Clases.Firma();
                 xmlElectronica = _firma.FirmaXML_Xades((directorio + nombreArchivo + tipoDoc), Global.Usuario.tbEmpresa.certificadoInstalado.Trim());
                 compra.xmlFirmado = Utility.EncodeStrToBase64(xmlElectronica.OuterXml);
+
+                if (string.IsNullOrWhiteSpace(compra.xmlFirmado))
+                {
+                    throw new Exception("No fue posible almacenar el XML firmado del mensaje receptor.");
+                }
+
+                // IMPORTANTE: persistir el XML firmado inmediatamente, antes de token/envío.
+                // Si falla Internet, autenticación o Hacienda, el XML firmado ya queda resguardado.
+                DFacturaIns.ActualizarCompraSimplificada(compra);
 
                 // json
                 FacturacionElectronicaLayer.Clases.Emisor myEmisor = new FacturacionElectronicaLayer.Clases.Emisor();
@@ -1223,6 +1232,14 @@ namespace BusinessLayer
                 XmlDocument xmlElectronica = _firma.FirmaXML_Xades((directorio + nombreArchivo + tipoDoc), Global.Usuario.tbEmpresa.certificadoInstalado.Trim());
                 facturaGlobal.xmlFirmado = Utility.EncodeStrToBase64(xmlElectronica.OuterXml);
 
+                if (string.IsNullOrWhiteSpace(facturaGlobal.xmlFirmado))
+                {
+                    throw new Exception("No fue posible almacenar el XML firmado del documento electrónico.");
+                }
+
+                // IMPORTANTE: persistir el XML firmado inmediatamente, antes de token/envío.
+                // Si falla Internet, autenticación o Hacienda, el XML firmado ya queda resguardado.
+                facturaGlobal = modificar(facturaGlobal);
 
                 FacturacionElectronicaLayer.Clases.Emisor myEmisor = new FacturacionElectronicaLayer.Clases.Emisor();
                 myEmisor.numeroIdentificacion = _empresa.id.ToString().Trim();
@@ -1297,13 +1314,13 @@ namespace BusinessLayer
             }
             catch (generarXMLException ex)
             {
-               
+
                 clsEvento evento = new clsEvento(ex.Message, "1");
                 throw ex;
             }
             catch (Exception ex)
             {
-                
+
                 clsEvento evento = new clsEvento(ex.Message, "1");
                 throw new FacturacionElectronicaException(ex);
             }
@@ -1400,9 +1417,9 @@ namespace BusinessLayer
             return DFacturaIns.getListProformas();
         }
 
-        public IEnumerable<tbDocumento> getDocsByNoTrack( int sucursal, int caja, DateTime fechaApertura, DateTime fechaCierre)
+        public IEnumerable<tbDocumento> getDocsByNoTrack(int sucursal, int caja, DateTime fechaApertura, DateTime fechaCierre)
         {
-            return DFacturaIns.getDocsByNoTrack( sucursal, caja, fechaApertura, fechaCierre);
+            return DFacturaIns.getDocsByNoTrack(sucursal, caja, fechaApertura, fechaCierre);
         }
 
         public IEnumerable<tbDocumento> getVentasByFechaNoTrack(DateTime fecha, int sucursal, int caja)
@@ -1435,11 +1452,11 @@ namespace BusinessLayer
             return DFacturaIns.getAbonosByFecha(fecha, tipoPago, sucursal, caja);
         }
 
-        public IEnumerable<tbPagos> getAbonosByFechaAsNotTracking(DateTime fechaInicio,DateTime fechaFin, int sucursal, int caja)
+        public IEnumerable<tbPagos> getAbonosByFechaAsNotTracking(DateTime fechaInicio, DateTime fechaFin, int sucursal, int caja)
         {
             return DFacturaIns.getAbonosByFechaAsNotTracking(fechaInicio, fechaFin, sucursal, caja);
         }
-        public IEnumerable<tbPagos> getAbonosByFecha(DateTime fecha,  int sucursal, int caja)
+        public IEnumerable<tbPagos> getAbonosByFecha(DateTime fecha, int sucursal, int caja)
         {
             return DFacturaIns.getAbonosByFecha(fecha, sucursal, caja);
         }
@@ -1785,13 +1802,13 @@ namespace BusinessLayer
             {
                 if (!msj.reporteAceptaHacienda)
                 {
-                   // enviarMensajeHacienda(msj);
+                    // enviarMensajeHacienda(msj);
                 }
 
 
                 if (msj.rutaRespuestaHacienda != null)
                 {
-                   // return consultarMensaje(msj);
+                    // return consultarMensaje(msj);
                 }
 
 
@@ -1802,12 +1819,12 @@ namespace BusinessLayer
 
         public string consultarFacturaElectronicaPorIdFact(tbDocumento entity)
         {
-            return  consultarFacturaElectronicaPorClave(string.Empty, entity).Result;
+            return consultarFacturaElectronicaPorClave(string.Empty, entity).Result;
         }
         public async Task<String> consultarFacturaElectronicaPorClave(string clave)
         {
 
-            return  consultarFacturaElectronicaPorClave(clave, null).Result;
+            return consultarFacturaElectronicaPorClave(clave, null).Result;
         }
 
         public async Task<String> consultarFacturaElectronicaPorConsecutivoAsync(string consec)
@@ -1815,7 +1832,7 @@ namespace BusinessLayer
             var doc = DFacturaIns.getByConsecutivo(consec);
             if (doc != null)
             {
-                return  await consultarFacturaElectronicaPorClave(doc.clave);
+                return await consultarFacturaElectronicaPorClave(doc.clave);
 
             }
             return "Sin respuesta, puede que la ID del documento no sea válida.";
@@ -1824,14 +1841,14 @@ namespace BusinessLayer
         }
         private async Task<String> consultarFacturaElectronicaPorClave(string clave, tbDocumento doc)
         {
-   
+
             string mensaje = "";
 
             try
             {
-                if(doc!=null && clave == string.Empty)
+                if (doc != null && clave == string.Empty)
                 {
-                   
+
                     if (clave == string.Empty)
                     {
 
@@ -1860,7 +1877,7 @@ namespace BusinessLayer
 
                 string directorio = Global.Usuario.tbEmpresa.rutaCertificado.Trim();
 
-               
+
 
                 if (clave != string.Empty)
                 {
@@ -1872,8 +1889,8 @@ namespace BusinessLayer
 
                     try
                     {
-                        mensaje= await factura.ConsultaEstatusComprobante(Token, clave);
-                       
+                        mensaje = await factura.ConsultaEstatusComprobante(Token, clave);
+
                     }
                     catch (Exception)
                     {
@@ -1883,7 +1900,7 @@ namespace BusinessLayer
                     //cierro sesion hacienda
                     //factura.CerrarSesion(Token);
 
-                    if (factura.statusCode == null ||factura.statusCode == "BadRequest" || factura.mensajeRespuesta=="error")
+                    if (factura.statusCode == null || factura.statusCode == "BadRequest" || factura.mensajeRespuesta == "error")
                     {
                         mensaje = "Sin respuesta, puede que la ID del documento no sea válida.";
                     }
@@ -2149,7 +2166,7 @@ namespace BusinessLayer
                 jsonRespuesta = factura.jsonRespuesta;
 
 
-              //  System.IO.StreamWriter outputFile = new System.IO.StreamWriter((directorio
+                //  System.IO.StreamWriter outputFile = new System.IO.StreamWriter((directorio
                 //                + (consecutivo + tipoDod + "_04_jsonRespuesta.txt")));
                 //outputFile.Write(jsonRespuesta);
                 //outputFile.Close();
@@ -2180,7 +2197,7 @@ namespace BusinessLayer
                 mensaje = string.Format("Estado Mensaje: {1}{0}Mensaje Hacienda:{0}{2}", Environment.NewLine, factura.mensajeRespuesta, factura.xmlRespuesta == null ? "Sin respuesta" : factura.xmlRespuesta.InnerText);
 
 
-               // DFacturaIns.ActualizarMensaje(msj);
+                // DFacturaIns.ActualizarMensaje(msj);
 
 
 
@@ -2314,20 +2331,20 @@ namespace BusinessLayer
 
 
         public List<tbDocumento> validarDocumentosDiarias()
-        { 
+        {
             List<tbDocumento> listProcesadas = new List<tbDocumento>();
-           
+
             try
             {
-         
 
-                IEnumerable<DocumentoHaciendaDTO> facturasLista = listaFacturasInconsistentes();           
+
+                IEnumerable<DocumentoHaciendaDTO> facturasLista = listaFacturasInconsistentes();
 
                 foreach (var doc in facturasLista)
                 {
                     try
                     {
-                        if(!doc.reporteAceptaHacienda)
+                        if (!doc.reporteAceptaHacienda)
                         {
                             tbDocumento documento = (tbDocumento)getEntityByKey(doc.id, doc.tipoDocumento);
                             FacturarElectronicamente(documento);
@@ -2337,7 +2354,7 @@ namespace BusinessLayer
                         {
                             consultarFacturaElectronicaPorClave(doc.clave);
                         }
-                  
+
 
                         //var document = getEntity(doc);
 
@@ -2350,7 +2367,7 @@ namespace BusinessLayer
                     }
                     catch (Exception ex)
                     {
-                    
+
 
                     }
 
@@ -2360,16 +2377,16 @@ namespace BusinessLayer
             catch (Exception ex)
             {
                 throw ex;
-                
+
             }
             return listProcesadas;
         }
 
-      
+
 
         public List<tbDocumento> docsCorreoPendietes()
         {
-            
+
 
             try
             {
@@ -2384,7 +2401,7 @@ namespace BusinessLayer
                 throw ex;
 
             }
-          
+
         }
 
     }

@@ -268,7 +268,8 @@
             // 
             // btnBuscarProducto
             // 
-            this.btnBuscarProducto.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarProducto.Image")));
+            this.btnBuscarProducto.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarProducto.BackgroundImage")));
+            this.btnBuscarProducto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarProducto.Location = new System.Drawing.Point(326, 24);
             this.btnBuscarProducto.Name = "btnBuscarProducto";
             this.btnBuscarProducto.Size = new System.Drawing.Size(40, 40);
@@ -302,6 +303,7 @@
             this.ClientSize = new System.Drawing.Size(763, 493);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tlsMenu);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmProductoAcompanam";
             this.Text = "Mantenimento: Asignar Acompañamientos Producto";
             this.Load += new System.EventHandler(this.frmProductoAcompanam_Load);

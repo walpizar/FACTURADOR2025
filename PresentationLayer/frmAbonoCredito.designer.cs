@@ -305,7 +305,8 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Image = ((System.Drawing.Image)(resources.GetObject("btnLimpiar.Image")));
+            this.btnLimpiar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLimpiar.BackgroundImage")));
+            this.btnLimpiar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnLimpiar.Location = new System.Drawing.Point(671, 17);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(56, 56);
@@ -326,7 +327,8 @@
             // 
             // btnBuscarCliente
             // 
-            this.btnBuscarCliente.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.Image")));
+            this.btnBuscarCliente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.BackgroundImage")));
+            this.btnBuscarCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarCliente.Location = new System.Drawing.Point(608, 17);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
             this.btnBuscarCliente.Size = new System.Drawing.Size(56, 56);
@@ -428,6 +430,7 @@
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbxCredito);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmAbonoCredito";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Proceso: Cuentas por Cobras(Abonos)";

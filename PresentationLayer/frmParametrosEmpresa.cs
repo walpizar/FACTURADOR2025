@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmParametrosEmpresa : Form
+    public partial class frmParametrosEmpresa : FormBase
     {
 
         BEmpresa empresaIns = new BEmpresa();

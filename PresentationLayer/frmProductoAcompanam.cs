@@ -16,7 +16,7 @@ namespace PresentationLayer
 
   
 
-    public partial class frmProductoAcompanam : Form
+    public partial class frmProductoAcompanam : FormBase
     {
         tbProducto productoGlobal;
 

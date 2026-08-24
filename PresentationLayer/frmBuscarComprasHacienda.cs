@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarComprasHacienda : Form
+    public partial class frmBuscarComprasHacienda : FormBase
     {
         public delegate void pasarDatos(tbReporteHacienda entity);
         public event pasarDatos pasarDatosEvent;

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmEstadoPromocion : Form
+    public partial class frmEstadoPromocion : FormBase
     {
         public delegate void pasaDatos(int estado);
         public event pasaDatos pasarDatosEvent;

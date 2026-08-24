@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarRoles : Form
+    public partial class frmBuscarRoles : FormBase
     {
         private List<tbRoles> listaROLES = new List<tbRoles>();//LISTA PARA CARGAR LOS ROLES
 

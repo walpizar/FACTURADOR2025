@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmEstadoCaja : Form
+    public partial class frmEstadoCaja : FormBase
     {
         bool aprobacionAdmin = false;
         private DateTime fechaIncio { get; set; }

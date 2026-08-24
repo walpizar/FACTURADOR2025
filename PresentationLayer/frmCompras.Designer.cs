@@ -382,7 +382,8 @@
             // 
             // btnBuscarProveedor
             // 
-            this.btnBuscarProveedor.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarProveedor.Image")));
+            this.btnBuscarProveedor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarProveedor.BackgroundImage")));
+            this.btnBuscarProveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarProveedor.Location = new System.Drawing.Point(374, 77);
             this.btnBuscarProveedor.Name = "btnBuscarProveedor";
             this.btnBuscarProveedor.Size = new System.Drawing.Size(29, 29);
@@ -812,7 +813,8 @@
             // 
             // btnBuscarProducto
             // 
-            this.btnBuscarProducto.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarProducto.Image")));
+            this.btnBuscarProducto.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarProducto.BackgroundImage")));
+            this.btnBuscarProducto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarProducto.Location = new System.Drawing.Point(362, 12);
             this.btnBuscarProducto.Name = "btnBuscarProducto";
             this.btnBuscarProducto.Size = new System.Drawing.Size(40, 40);
@@ -862,7 +864,7 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -1397,6 +1399,7 @@
             this.Controls.Add(this.gbxCompras);
             this.Controls.Add(this.tlsMenu);
             this.Controls.Add(this.chkActualiza);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmCompras";
             this.Text = "Compras";
             this.Load += new System.EventHandler(this.frmCompras_Load);

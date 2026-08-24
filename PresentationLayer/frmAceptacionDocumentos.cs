@@ -18,7 +18,7 @@ using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
-    public partial class frmAceptacionDocumentos : Form
+    public partial class frmAceptacionDocumentos : FormBase
     {
         // Origen de cada fila: distingue lo que ya existe en BD de lo recién
         // cargado desde XML (todavía no persistido).

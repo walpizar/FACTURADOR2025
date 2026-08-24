@@ -15,7 +15,7 @@ using static PresentationLayer.Reportes.dsEtiquetas;
 
 namespace PresentationLayer
 {
-    public partial class frmProductos2 : Form
+    public partial class frmProductos2 : FormBase
     {
         bool isBotonCalcular = false;
 

@@ -2558,7 +2558,7 @@
           <Property Name="notificarCorreo" Type="Boolean" Nullable="false" />
           <Property Name="correo1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="correo2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="observaciones" Type="String" MaxLength="270" FixedLength="true" Unicode="true" />
+          <Property Name="observaciones" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
           <Property Name="idEmpresa" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="tipoIdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="tipoDocRef" Type="Int32" />

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBackUp : Form
+    public partial class frmBackUp : FormBase
     {
         //Configura la carpeta donde se guardarán los backups y el prefijo de nombre.
         private readonly string backupFolder = CommonLayer.Global.Usuario.tbEmpresa.tbParametrosEmpresa.FirstOrDefault().rutaBackUp.Trim();

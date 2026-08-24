@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarTipoCliente : Form
+    public partial class frmBuscarTipoCliente : FormBase
     {
 
         List<tbTipoClientes> listaTipoCliente = new List<tbTipoClientes>();

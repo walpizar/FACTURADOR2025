@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarPromociones : Form
+    public partial class frmBuscarPromociones : FormBase
     {
         int bandera = 1;
         tbProducto productoGlo = new tbProducto();

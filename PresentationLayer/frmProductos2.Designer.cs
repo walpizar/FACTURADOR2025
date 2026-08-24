@@ -139,7 +139,7 @@
             this.gboDatosProducto.Margin = new System.Windows.Forms.Padding(2);
             this.gboDatosProducto.Name = "gboDatosProducto";
             this.gboDatosProducto.Padding = new System.Windows.Forms.Padding(2);
-            this.gboDatosProducto.Size = new System.Drawing.Size(508, 584);
+            this.gboDatosProducto.Size = new System.Drawing.Size(525, 584);
             this.gboDatosProducto.TabIndex = 15;
             this.gboDatosProducto.TabStop = false;
             this.gboDatosProducto.Text = "Datos de Productos";
@@ -157,11 +157,12 @@
             // 
             // btnCategoriasCabys
             // 
-            this.btnCategoriasCabys.Image = ((System.Drawing.Image)(resources.GetObject("btnCategoriasCabys.Image")));
+            this.btnCategoriasCabys.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCategoriasCabys.BackgroundImage")));
+            this.btnCategoriasCabys.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnCategoriasCabys.Location = new System.Drawing.Point(469, 196);
             this.btnCategoriasCabys.Margin = new System.Windows.Forms.Padding(2);
             this.btnCategoriasCabys.Name = "btnCategoriasCabys";
-            this.btnCategoriasCabys.Size = new System.Drawing.Size(26, 28);
+            this.btnCategoriasCabys.Size = new System.Drawing.Size(34, 28);
             this.btnCategoriasCabys.TabIndex = 54;
             this.btnCategoriasCabys.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.btnCategoriasCabys.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -211,7 +212,7 @@
             this.gbxInv.Margin = new System.Windows.Forms.Padding(2);
             this.gbxInv.Name = "gbxInv";
             this.gbxInv.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxInv.Size = new System.Drawing.Size(491, 63);
+            this.gbxInv.Size = new System.Drawing.Size(499, 63);
             this.gbxInv.TabIndex = 51;
             this.gbxInv.TabStop = false;
             this.gbxInv.Text = "Inventario";
@@ -283,7 +284,7 @@
             this.gbxDesc.Margin = new System.Windows.Forms.Padding(2);
             this.gbxDesc.Name = "gbxDesc";
             this.gbxDesc.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxDesc.Size = new System.Drawing.Size(491, 53);
+            this.gbxDesc.Size = new System.Drawing.Size(499, 53);
             this.gbxDesc.TabIndex = 50;
             this.gbxDesc.TabStop = false;
             this.gbxDesc.Text = "Descuento";
@@ -347,7 +348,7 @@
             this.gbxImpuestos.Margin = new System.Windows.Forms.Padding(2);
             this.gbxImpuestos.Name = "gbxImpuestos";
             this.gbxImpuestos.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxImpuestos.Size = new System.Drawing.Size(491, 109);
+            this.gbxImpuestos.Size = new System.Drawing.Size(499, 109);
             this.gbxImpuestos.TabIndex = 49;
             this.gbxImpuestos.TabStop = false;
             this.gbxImpuestos.Text = "Impuestos";
@@ -370,7 +371,7 @@
             this.btnCalcular.Location = new System.Drawing.Point(236, 15);
             this.btnCalcular.Margin = new System.Windows.Forms.Padding(2);
             this.btnCalcular.Name = "btnCalcular";
-            this.btnCalcular.Size = new System.Drawing.Size(56, 19);
+            this.btnCalcular.Size = new System.Drawing.Size(86, 21);
             this.btnCalcular.TabIndex = 46;
             this.btnCalcular.Text = "Calcular";
             this.btnCalcular.UseVisualStyleBackColor = true;
@@ -480,7 +481,7 @@
             this.gbxUtilidades.Margin = new System.Windows.Forms.Padding(2);
             this.gbxUtilidades.Name = "gbxUtilidades";
             this.gbxUtilidades.Padding = new System.Windows.Forms.Padding(2);
-            this.gbxUtilidades.Size = new System.Drawing.Size(491, 104);
+            this.gbxUtilidades.Size = new System.Drawing.Size(499, 104);
             this.gbxUtilidades.TabIndex = 48;
             this.gbxUtilidades.TabStop = false;
             this.gbxUtilidades.Text = "Utilidades";
@@ -672,11 +673,12 @@
             // 
             // button1
             // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button1.Location = new System.Drawing.Point(469, 141);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 28);
+            this.button1.Size = new System.Drawing.Size(34, 28);
             this.button1.TabIndex = 5;
             this.button1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
@@ -749,7 +751,7 @@
             this.txtNombreProducto.MaxLength = 160;
             this.txtNombreProducto.Multiline = true;
             this.txtNombreProducto.Name = "txtNombreProducto";
-            this.txtNombreProducto.Size = new System.Drawing.Size(438, 78);
+            this.txtNombreProducto.Size = new System.Drawing.Size(446, 78);
             this.txtNombreProducto.TabIndex = 2;
             // 
             // lblNombreProducto
@@ -800,7 +802,7 @@
             this.tlsBtnSalir});
             this.tlsMenu.Location = new System.Drawing.Point(0, 0);
             this.tlsMenu.Name = "tlsMenu";
-            this.tlsMenu.Size = new System.Drawing.Size(530, 39);
+            this.tlsMenu.Size = new System.Drawing.Size(544, 39);
             this.tlsMenu.TabIndex = 16;
             this.tlsMenu.Text = "toolStrip1";
             this.tlsMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.tlsMenu_ItemClicked);
@@ -911,9 +913,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(530, 632);
+            this.ClientSize = new System.Drawing.Size(544, 632);
             this.Controls.Add(this.tlsMenu);
             this.Controls.Add(this.gboDatosProducto);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmProductos2";
             this.Text = "Mantenimiento: Productos";

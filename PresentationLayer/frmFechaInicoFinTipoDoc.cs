@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFechaInicoFinTipoDoc : Form
+    public partial class frmFechaInicoFinTipoDoc : FormBase
     {
         public delegate void pasaDatos(DateTime fechaInicio, DateTime fechaFin, int tipo);
         public event pasaDatos pasarDatosEvent;

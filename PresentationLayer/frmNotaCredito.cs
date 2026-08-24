@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmNotaCredito : Form
+    public partial class frmNotaCredito : FormBase
     {
         BusinessLayer.BFacturacion factIns = new BusinessLayer.BFacturacion();
         public List<tbDetalleDocumento> _docDetalleCopia { get; set; }

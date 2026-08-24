@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarMovimiento : Form
+    public partial class frmBuscarMovimiento : FormBase
     {
         BMovimiento BMovimientosIns = new BMovimiento();//Instancia para consultar y acceder a los movimientos almacenados
 

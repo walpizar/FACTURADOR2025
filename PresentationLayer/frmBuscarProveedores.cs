@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 namespace PresentationLayer
 {
-    public partial class frmBuscarProveedores : Form
+    public partial class frmBuscarProveedores : FormBase
     {
         tbProveedores proveedorGlo = new tbProveedores();
         public static tbPersona personaGlo = new tbPersona();

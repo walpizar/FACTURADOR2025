@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmImportaListaPreciosJSON : Form
+    public partial class frmImportaListaPreciosJSON : FormBase
     {
         BProducto proIns = new BProducto();
         public frmImportaListaPreciosJSON()

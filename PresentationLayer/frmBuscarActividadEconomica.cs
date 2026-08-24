@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class buscarAct : Form
+    public partial class buscarAct : FormBase
     {
 
         BActividadesEconomicas ActIns = new BActividadesEconomicas();

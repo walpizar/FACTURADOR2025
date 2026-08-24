@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class Acerca : Form
+    public partial class Acerca : FormBase
     {
         public Acerca()
         {
@@ -11,6 +11,11 @@ namespace PresentationLayer
         }
 
         private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Acerca_Load(object sender, EventArgs e)
         {
 
         }

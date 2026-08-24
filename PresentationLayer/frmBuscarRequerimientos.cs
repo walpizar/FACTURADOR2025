@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 namespace PresentationLayer
 {
-    public partial class frmBuscarRequerimientos : Form
+    public partial class frmBuscarRequerimientos : FormBase
     {
 
         tbRequerimientos RequeriGlo = new tbRequerimientos();

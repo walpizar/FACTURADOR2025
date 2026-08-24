@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmEmpresaCombo : Form
+    public partial class frmEmpresaCombo : FormBase
     {
         public delegate void pasaDatos(string path);
         public event pasaDatos pasarDatosEvent;

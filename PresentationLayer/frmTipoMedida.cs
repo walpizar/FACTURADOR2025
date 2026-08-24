@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmTipoMedida : Form
+    public partial class frmTipoMedida : FormBase
     {
         bTipoMedidas TipoMedidaIns = new bTipoMedidas();
 

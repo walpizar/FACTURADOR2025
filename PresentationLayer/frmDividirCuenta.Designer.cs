@@ -554,10 +554,11 @@
             // 
             // btnBuscarCliente
             // 
-            this.btnBuscarCliente.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.Image")));
-            this.btnBuscarCliente.Location = new System.Drawing.Point(557, 4);
+            this.btnBuscarCliente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.BackgroundImage")));
+            this.btnBuscarCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnBuscarCliente.Location = new System.Drawing.Point(557, 1);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(37, 42);
+            this.btnBuscarCliente.Size = new System.Drawing.Size(37, 34);
             this.btnBuscarCliente.TabIndex = 73;
             this.btnBuscarCliente.UseVisualStyleBackColor = true;
             this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
@@ -597,6 +598,7 @@
             this.Controls.Add(this.gbxMontos);
             this.Controls.Add(this.lstvTotal);
             this.Controls.Add(this.lstvListaParcial);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmDividirCuenta";

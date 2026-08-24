@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmCobrar : Form
+    public partial class frmCobrar : FormBase
     {
         private decimal tipoCambio = 0m;
         private decimal saldoPendienteColones = 0m;

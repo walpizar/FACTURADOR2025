@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmLogin : Form
+    public partial class frmLogin : FormBase
     {
         //nombramos las variables e instancias necesarias para acceder a los objetos necesarios
         tbUsuarios usuarioB = new tbUsuarios();

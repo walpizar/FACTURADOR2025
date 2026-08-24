@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmClienteReporte : Form
+    public partial class frmClienteReporte : FormBase
     {
         tbClientes clienteGlo;
         Bcliente BCliente = new Bcliente();

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmAliasMesa : Form
+    public partial class frmAliasMesa : FormBase
     {
         public delegate void pasaDatos(string alias);
         public event pasaDatos pasarDatosEvent;

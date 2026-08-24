@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFechasUsuarioPorc : Form
+    public partial class frmFechasUsuarioPorc : FormBase
     {
         public tbUsuarios usuario { get; set; }
 

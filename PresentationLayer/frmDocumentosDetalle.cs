@@ -20,7 +20,7 @@ using System.IO;
 
 namespace PresentationLayer
 {
-    public partial class frmDocumentosDetalle : Form
+    public partial class frmDocumentosDetalle : FormBase
     {
         private tbDocumento _doc;
         BFacturacion facturaIns = new BFacturacion();

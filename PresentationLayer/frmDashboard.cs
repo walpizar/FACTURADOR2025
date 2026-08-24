@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmDashboard : Form
+    public partial class frmDashboard : FormBase
     {
         SqlConnection _SqlConnection = new SqlConnection(Utility.stringConexionReportes());
         SqlCommand cmd;
@@ -22,10 +22,12 @@ namespace PresentationLayer
         public frmDashboard()
         {
             InitializeComponent();
+           
         }
 
         private void frmDashboard_Load(object sender, EventArgs e)
         {
+            this.BackColor = Color.FromArgb(26, 32, 40);
             Grafico_top10MenosProductosVentas();
             Grafico_top10ProductosVentas();
             datos();

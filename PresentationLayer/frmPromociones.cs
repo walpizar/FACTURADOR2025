@@ -16,7 +16,7 @@ using static PresentationLayer.Reportes.dsEtiquetas;
 
 namespace PresentationLayer
 {
-    public partial class frmPromociones : Form
+    public partial class frmPromociones : FormBase
     {
         bTipoMedidas medidaIns = new bTipoMedidas();
         public tbPromociones promocion { get; set; }

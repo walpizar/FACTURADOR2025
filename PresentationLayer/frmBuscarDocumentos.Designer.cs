@@ -234,7 +234,8 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
+            this.btnBuscar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscar.BackgroundImage")));
+            this.btnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscar.Location = new System.Drawing.Point(830, 84);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(58, 51);
@@ -344,7 +345,8 @@
             // 
             // btnRefrescar
             // 
-            this.btnRefrescar.Image = ((System.Drawing.Image)(resources.GetObject("btnRefrescar.Image")));
+            this.btnRefrescar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRefrescar.BackgroundImage")));
+            this.btnRefrescar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnRefrescar.Location = new System.Drawing.Point(894, 85);
             this.btnRefrescar.Name = "btnRefrescar";
             this.btnRefrescar.Size = new System.Drawing.Size(57, 50);
@@ -394,6 +396,7 @@
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.txtCedula);
             this.Controls.Add(this.lsvFacturas);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmBuscarDocumentos";
             this.Text = "Búsqueda: Documentos Emitidos";
             this.Load += new System.EventHandler(this.frmBuscarFactura_Load);

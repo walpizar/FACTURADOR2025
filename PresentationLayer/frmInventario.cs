@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmInventario : Form
+    public partial class frmInventario : FormBase
     {
         //
         //ESTE ES

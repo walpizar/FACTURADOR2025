@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmValidacionDocsHacienda : Form
+    public partial class frmValidacionDocsHacienda : FormBase
     {
         BFacturacion facturaIns = new BFacturacion();
         Bcliente clienteIns = new Bcliente();

@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFacturacion1 : Form
+    public partial class frmFacturacion1 : FormBase
     {  
         BProducto BProducto = new BProducto();
         Bcliente BCliente = new Bcliente();
@@ -1455,7 +1455,7 @@ namespace PresentationLayer
                 {
                     cargarActividades(cliente);
                     cboActividadEconomica.Enabled = true;
-                    btnActividadesCarga.Enabled = true;
+                    //btnActividadesCarga.Enabled = true;
                 }
                 else
                 {
@@ -1463,7 +1463,7 @@ namespace PresentationLayer
                     cboActividadEconomica.Items.Clear();
 
                     cboActividadEconomica.Enabled = false;
-                    btnActividadesCarga.Enabled = false;
+                    //btnActividadesCarga.Enabled = false;
 
                 }
 

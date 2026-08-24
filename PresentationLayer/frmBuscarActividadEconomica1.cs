@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarActividadEconomica1 : Form
+    public partial class frmBuscarActividadEconomica1 : FormBase
     {
         private readonly BActividades actividadesInst = new BActividades();
         private List<tbActividades> resultadoCatalogo = new List<tbActividades>();

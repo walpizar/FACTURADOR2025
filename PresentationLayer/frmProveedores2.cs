@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmProveedores2 : Form
+    public partial class frmProveedores2 : FormBase
     {
         Bcliente clienteInst = new Bcliente();
         int bandera = 1;

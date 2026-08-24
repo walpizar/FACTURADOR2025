@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SisSodINA
 {
-    public partial class frmBuscarTipoMedida : Form
+    public partial class frmBuscarTipoMedida : FormBase
 
     {
         bTipoMedidas tipoMedidaIns = new bTipoMedidas();

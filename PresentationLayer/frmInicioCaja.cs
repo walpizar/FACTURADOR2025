@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmInicioCaja : Form
+    public partial class frmInicioCaja : FormBase
     {
         BMovimiento movIns = new BMovimiento();
         public frmInicioCaja()

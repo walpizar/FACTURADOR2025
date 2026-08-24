@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmAprobacion : Form
+    public partial class frmAprobacion : FormBase
     {
 
         tbUsuarios usuarioB = new tbUsuarios();

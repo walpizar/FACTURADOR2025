@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmAcompanamiento : Form
+    public partial class frmAcompanamiento : FormBase
     {
         int bandera = 1;
         tbAcompanamiento acompanamientoGlo = new tbAcompanamiento();

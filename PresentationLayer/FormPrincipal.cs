@@ -770,13 +770,13 @@ namespace PresentationLayer
             if (Global.Usuario.idRol == (int)Enums.roles.facturadorSuperMas)
             {
                 btnCierreCaja.Visible = false;
-                lblCierreCaja.Visible = false;
+                //lblCierreCaja.Visible = false;
 
             }
             else
             {
                 btnCierreCaja.Visible = true;
-                lblCierreCaja.Visible = true;
+               // lblCierreCaja.Visible = true;
             }
 
             if (!factElect)
@@ -1368,7 +1368,7 @@ namespace PresentationLayer
         // aparecen scrollbars en vez de perder acceso a los controles.
         // ============================================================
 
-        private void AbrirFormulario<MiForm>(int tipoForm) where MiForm : Form, new()
+        private void AbrirFormulario<MiForm>(int tipoForm) where MiForm : FormBase, new()
         {
             try
             {
@@ -1442,9 +1442,6 @@ namespace PresentationLayer
             else if (Global.Configuracion.pantallaFacturacion == (int)Enums.pantallaFacturacion.SuperReducida)
             {
                 AbrirFormulario<frmFacturacionReducida>((int)Enums.formularios.facturacionReducida);
-            }else if (Global.Configuracion.pantallaFacturacion == (int)Enums.pantallaFacturacion.fotos)
-            {
-                AbrirFormulario<frmFacturacionFotos>((int)Enums.formularios.facturacionFotos);
             }
 
             btnFacturacion.BackColor = Color.FromArgb(12, 61, 92);
@@ -1473,7 +1470,7 @@ namespace PresentationLayer
             AbrirFormulario<frmAbonoCredito>();
             btnAbonos.BackColor = Color.FromArgb(12, 61, 92);
         }
-        private void AbrirFormulario<MiForm>() where MiForm : Form, new()
+        private void AbrirFormulario<MiForm>() where MiForm : FormBase, new()
         {
             AbrirFormulario<MiForm>(0);
             btnProductos.BackColor = Color.FromArgb(12, 61, 92);
@@ -2129,6 +2126,11 @@ namespace PresentationLayer
             btnValidacionHAC.BackColor = Color.FromArgb(12, 61, 92);
         }
 
+        private void FormPrincipal_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnConsultas_Click(object sender, EventArgs e)
         {
             Open_DropDownMenu(mnuConsultas, sender);
@@ -2139,11 +2141,88 @@ namespace PresentationLayer
             Open_DropDownMenu(mnuProcesos, sender);
         }
 
+        // ============================================================
+        // PARCHE — Agregar estos 3 métodos a FormPrincipal.cs (por ejemplo,
+        // junto a btnMenu_Click, que ya maneja el toggle del sidebar).
+        //
+        // Comportamiento: acordeón real — al expandir una categoría, las otras
+        // 2 se colapsan automáticamente. El header muestra ▾ cuando está
+        // expandida y ▸ cuando está colapsada.
+        // ============================================================
+
+        private void btnCatVentas_Click(object sender, EventArgs e)
+        {
+            ToggleCategoriaMenu(flpCatVentasBody, btnCatVentas, "VENTAS Y CLIENTES");
+        }
+
+        private void btnCatDocumentos_Click(object sender, EventArgs e)
+        {
+            ToggleCategoriaMenu(flpCatDocumentosBody, btnCatDocumentos, "DOCUMENTOS");
+        }
+
+        private void lblSucursal_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblCaja_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCatAdmin_Click(object sender, EventArgs e)
+        {
+            ToggleCategoriaMenu(flpCatAdminBody, btnCatAdmin, "ADMINISTRACIÓN");
+        }
+
+        /// <summary>
+        /// Expande la categoría clickeada (si estaba colapsada) y colapsa
+        /// automáticamente las otras 2 — comportamiento de acordeón real, no
+        /// permite tener varias categorías abiertas a la vez (así el sidebar
+        /// nunca vuelve a saturarse verticalmente).
+        /// </summary>
+        private void ToggleCategoriaMenu(FlowLayoutPanel bodyClickeado, Button headerClickeado, string tituloClickeado)
+        {
+            bool vaAExpandirse = !bodyClickeado.Visible;
+
+            // Colapsa las 3 categorías primero...
+            flpCatVentasBody.Visible = false;
+            flpCatDocumentosBody.Visible = false;
+            flpCatAdminBody.Visible = false;
+            btnCatVentas.Text = "▸  VENTAS Y CLIENTES";
+            btnCatDocumentos.Text = "▸  DOCUMENTOS";
+            btnCatAdmin.Text = "▸  ADMINISTRACIÓN";
+
+            // ...y solo vuelve a abrir la clickeada si el clic fue para EXPANDIR
+            // (si el usuario clickeó una que ya estaba abierta, queda todo
+            // colapsado — permite cerrar todas si se quiere ver el menú compacto).
+            if (vaAExpandirse)
+            {
+                bodyClickeado.Visible = true;
+                headerClickeado.Text = "▾  " + tituloClickeado;
+            }
+        }
+
 
 
         #endregion
 
-      
+
 
 
     }

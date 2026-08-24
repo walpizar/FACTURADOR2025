@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmCantidad : Form
+    public partial class frmCantidad : FormBase
     {
 
         public delegate void pasaDatos(decimal peso);

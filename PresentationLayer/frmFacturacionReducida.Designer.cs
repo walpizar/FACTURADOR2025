@@ -38,6 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbxAcciones = new System.Windows.Forms.GroupBox();
             this.lblProgress = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnEnvioCorreos = new System.Windows.Forms.Button();
@@ -83,8 +84,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnActividadesCarga = new System.Windows.Forms.Button();
+            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
             this.lblCliente = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.chkFacturaElectronica = new System.Windows.Forms.CheckBox();
@@ -129,9 +132,6 @@
             this.precio1 = new System.Windows.Forms.ToolStripMenuItem();
             this.precio2 = new System.Windows.Forms.ToolStripMenuItem();
             this.precio3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnActividadesCarga = new System.Windows.Forms.Button();
-            this.cboActividadEconomica = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.tabFacturacion.SuspendLayout();
             this.tabFact.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -234,6 +234,18 @@
             this.lblProgress.TabIndex = 105;
             this.lblProgress.Text = "Progreso : 0 de 0";
             this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Maroon;
+            this.label20.Location = new System.Drawing.Point(6, 78);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(372, 12);
+            this.label20.TabIndex = 83;
+            this.label20.Text = "F2:Cobrar  F4:Producto  F5:Cliente  F9:Imprimir Cuenta  F10:Pendientes";
+            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // label23
             // 
@@ -763,7 +775,7 @@
             // txtObservaciones
             // 
             this.txtObservaciones.Location = new System.Drawing.Point(6, 15);
-            this.txtObservaciones.MaxLength = 270;
+            this.txtObservaciones.MaxLength = 1000;
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(1131, 129);
@@ -791,6 +803,39 @@
             this.panel2.Size = new System.Drawing.Size(1013, 101);
             this.panel2.TabIndex = 82;
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label24.Location = new System.Drawing.Point(8, 77);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(54, 13);
+            this.label24.TabIndex = 101;
+            this.label24.Text = "Actividad:";
+            // 
+            // btnActividadesCarga
+            // 
+            this.btnActividadesCarga.Image = ((System.Drawing.Image)(resources.GetObject("btnActividadesCarga.Image")));
+            this.btnActividadesCarga.Location = new System.Drawing.Point(488, 69);
+            this.btnActividadesCarga.Margin = new System.Windows.Forms.Padding(2);
+            this.btnActividadesCarga.Name = "btnActividadesCarga";
+            this.btnActividadesCarga.Size = new System.Drawing.Size(29, 27);
+            this.btnActividadesCarga.TabIndex = 99;
+            this.btnActividadesCarga.UseVisualStyleBackColor = true;
+            this.btnActividadesCarga.Click += new System.EventHandler(this.btnActividadesCarga_Click);
+            // 
+            // cboActividadEconomica
+            // 
+            this.cboActividadEconomica.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboActividadEconomica.FormattingEnabled = true;
+            this.cboActividadEconomica.Location = new System.Drawing.Point(70, 71);
+            this.cboActividadEconomica.Name = "cboActividadEconomica";
+            this.cboActividadEconomica.Size = new System.Drawing.Size(414, 21);
+            this.cboActividadEconomica.TabIndex = 100;
+            // 
             // lblCliente
             // 
             this.lblCliente.AutoSize = true;
@@ -803,18 +848,6 @@
             this.lblCliente.Size = new System.Drawing.Size(42, 13);
             this.lblCliente.TabIndex = 56;
             this.lblCliente.Text = "Cliente:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Maroon;
-            this.label20.Location = new System.Drawing.Point(6, 78);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(372, 12);
-            this.label20.TabIndex = 83;
-            this.label20.Text = "F2:Cobrar  F4:Producto  F5:Cliente  F9:Imprimir Cuenta  F10:Pendientes";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // txtCliente
             // 
@@ -1353,39 +1386,6 @@
             this.precio3.Name = "precio3";
             this.precio3.Size = new System.Drawing.Size(116, 22);
             this.precio3.Text = "Precio 3";
-            // 
-            // btnActividadesCarga
-            // 
-            this.btnActividadesCarga.Image = ((System.Drawing.Image)(resources.GetObject("btnActividadesCarga.Image")));
-            this.btnActividadesCarga.Location = new System.Drawing.Point(488, 69);
-            this.btnActividadesCarga.Margin = new System.Windows.Forms.Padding(2);
-            this.btnActividadesCarga.Name = "btnActividadesCarga";
-            this.btnActividadesCarga.Size = new System.Drawing.Size(29, 27);
-            this.btnActividadesCarga.TabIndex = 99;
-            this.btnActividadesCarga.UseVisualStyleBackColor = true;
-            this.btnActividadesCarga.Click += new System.EventHandler(this.btnActividadesCarga_Click);
-            // 
-            // cboActividadEconomica
-            // 
-            this.cboActividadEconomica.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboActividadEconomica.FormattingEnabled = true;
-            this.cboActividadEconomica.Location = new System.Drawing.Point(70, 71);
-            this.cboActividadEconomica.Name = "cboActividadEconomica";
-            this.cboActividadEconomica.Size = new System.Drawing.Size(414, 21);
-            this.cboActividadEconomica.TabIndex = 100;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label24.Location = new System.Drawing.Point(8, 77);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(54, 13);
-            this.label24.TabIndex = 101;
-            this.label24.Text = "Actividad:";
             // 
             // frmFacturacionReducida
             // 

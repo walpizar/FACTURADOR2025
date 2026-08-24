@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmComentariosComandas : Form
+    public partial class frmComentariosComandas : FormBase
     {
         private List<clsComanda> _listaComandas { get; set; }
         public delegate void pasaDatos(List<clsComanda> lista);

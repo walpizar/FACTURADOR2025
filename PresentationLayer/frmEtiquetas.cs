@@ -20,7 +20,7 @@ namespace PresentationLayer
 
  
 
-    public partial class frmEtiquetas : Form
+    public partial class frmEtiquetas : FormBase
     {
         BPromociones promoIns = new BPromociones();
         BProducto bPro = new BProducto();

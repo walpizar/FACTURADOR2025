@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmDetalleLineaCompra : Form
+    public partial class frmDetalleLineaCompra : FormBase
     {
         bTipoMedidas medidaIns = new bTipoMedidas();
         public tbDetalleCompras detalle { get; set; }

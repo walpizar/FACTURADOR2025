@@ -19,44 +19,42 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
+            this.toolTipMenu = new System.Windows.Forms.ToolTip(this.components);
+            this.btnCierreCaja = new System.Windows.Forms.PictureBox();
+            this.btnRespaldo = new System.Windows.Forms.PictureBox();
+            this.btnsalir = new System.Windows.Forms.PictureBox();
+            this.btnCambiarUser = new System.Windows.Forms.PictureBox();
             this.panelformularios = new System.Windows.Forms.Panel();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.pnlMenuHeader = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.flpMenuButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.pictImage = new System.Windows.Forms.PictureBox();
             this.cboActividades = new System.Windows.Forms.ComboBox();
-            this.flpMenuButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnCatVentas = new System.Windows.Forms.Button();
+            this.flpCatVentasBody = new System.Windows.Forms.FlowLayoutPanel();
             this.btnFacturacion = new System.Windows.Forms.Button();
             this.btnProductos = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
             this.btnCompras = new System.Windows.Forms.Button();
             this.btnAbonos = new System.Windows.Forms.Button();
+            this.btnCatDocumentos = new System.Windows.Forms.Button();
+            this.flpCatDocumentosBody = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDocumentos = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnValidacionHAC = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnCatAdmin = new System.Windows.Forms.Button();
+            this.flpCatAdminBody = new System.Windows.Forms.FlowLayoutPanel();
             this.btnEmpresa = new System.Windows.Forms.Button();
             this.btnSeguridad = new System.Windows.Forms.Button();
             this.btnMantenimiento = new System.Windows.Forms.Button();
             this.btnProcesos = new System.Windows.Forms.Button();
             this.btnConsultas = new System.Windows.Forms.Button();
             this.btnReportes = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblCierreCaja = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnCierreCaja = new System.Windows.Forms.PictureBox();
-            this.lblCaja = new System.Windows.Forms.Label();
-            this.btnRespaldo = new System.Windows.Forms.PictureBox();
-            this.lblSucursal = new System.Windows.Forms.Label();
-            this.btnsalir = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.lblNombre = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnCambiarUser = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -164,20 +162,38 @@
             this.mnuEmpresas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuParametros = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.panelMenu.SuspendLayout();
-            this.pnlMenuHeader.SuspendLayout();
-            this.flpMenuButtons.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel5.SuspendLayout();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.lblSucursal = new System.Windows.Forms.Label();
+            this.lblCaja = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblNombre = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.btnCierreCaja)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRespaldo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnsalir)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCambiarUser)).BeginInit();
+            this.panelMenu.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.flpMenuButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictImage)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.flpCatVentasBody.SuspendLayout();
+            this.flpCatDocumentosBody.SuspendLayout();
+            this.flpCatAdminBody.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panelBarraTitulo.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -195,10 +211,78 @@
             this.mnuConsultas.SuspendLayout();
             this.mnuProcesos.SuspendLayout();
             this.mnuEmpresa.SuspendLayout();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
+            // btnCierreCaja
+            // 
+            this.btnCierreCaja.BackColor = System.Drawing.Color.Transparent;
+            this.btnCierreCaja.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCierreCaja.BackgroundImage")));
+            this.btnCierreCaja.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCierreCaja.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCierreCaja.Location = new System.Drawing.Point(108, 5);
+            this.btnCierreCaja.Name = "btnCierreCaja";
+            this.btnCierreCaja.Size = new System.Drawing.Size(32, 32);
+            this.btnCierreCaja.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCierreCaja.TabIndex = 33;
+            this.btnCierreCaja.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.btnCierreCaja, "Caja");
+            this.btnCierreCaja.Click += new System.EventHandler(this.btnCierreCaja_Click);
+            // 
+            // btnRespaldo
+            // 
+            this.btnRespaldo.AccessibleName = "Respaldo";
+            this.btnRespaldo.BackColor = System.Drawing.Color.Transparent;
+            this.btnRespaldo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRespaldo.BackgroundImage")));
+            this.btnRespaldo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnRespaldo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRespaldo.Location = new System.Drawing.Point(156, 5);
+            this.btnRespaldo.Name = "btnRespaldo";
+            this.btnRespaldo.Size = new System.Drawing.Size(32, 32);
+            this.btnRespaldo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnRespaldo.TabIndex = 26;
+            this.btnRespaldo.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.btnRespaldo, "Realizar respaldo");
+            this.btnRespaldo.Click += new System.EventHandler(this.btnRespaldo_Click);
+            // 
+            // btnsalir
+            // 
+            this.btnsalir.BackColor = System.Drawing.Color.Transparent;
+            this.btnsalir.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnsalir.BackgroundImage")));
+            this.btnsalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnsalir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnsalir.Location = new System.Drawing.Point(12, 5);
+            this.btnsalir.Name = "btnsalir";
+            this.btnsalir.Size = new System.Drawing.Size(32, 32);
+            this.btnsalir.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnsalir.TabIndex = 17;
+            this.btnsalir.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.btnsalir, "Salir del sistema");
+            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
+            // 
+            // btnCambiarUser
+            // 
+            this.btnCambiarUser.BackColor = System.Drawing.Color.Transparent;
+            this.btnCambiarUser.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCambiarUser.BackgroundImage")));
+            this.btnCambiarUser.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCambiarUser.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCambiarUser.Location = new System.Drawing.Point(60, 5);
+            this.btnCambiarUser.Name = "btnCambiarUser";
+            this.btnCambiarUser.Size = new System.Drawing.Size(32, 32);
+            this.btnCambiarUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCambiarUser.TabIndex = 25;
+            this.btnCambiarUser.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.btnCambiarUser, "Cambiar usuario / sucursal");
+            this.btnCambiarUser.Click += new System.EventHandler(this.btnCambiarUser_Click);
+            // 
             // panelformularios
-            //
+            // 
             this.panelformularios.BackColor = System.Drawing.SystemColors.Control;
             this.panelformularios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelformularios.Location = new System.Drawing.Point(200, 51);
@@ -207,12 +291,11 @@
             this.panelformularios.Size = new System.Drawing.Size(822, 729);
             this.panelformularios.TabIndex = 2;
             this.panelformularios.Paint += new System.Windows.Forms.PaintEventHandler(this.panelformularios_Paint);
-            //
+            // 
             // panelMenu
-            //
+            // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(41)))), ((int)(((byte)(68)))));
             this.panelMenu.Controls.Add(this.panel2);
-            this.panelMenu.Controls.Add(this.pnlMenuHeader);
             this.panelMenu.Controls.Add(this.flpMenuButtons);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -221,576 +304,523 @@
             this.panelMenu.Size = new System.Drawing.Size(200, 780);
             this.panelMenu.TabIndex = 1;
             this.panelMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMenu_Paint);
-            //
-            // pnlMenuHeader (logo + combo actividades — SIEMPRE visible, arriba)
-            //
-            this.pnlMenuHeader.Controls.Add(this.pictImage);
-            this.pnlMenuHeader.Controls.Add(this.cboActividades);
-            this.pnlMenuHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlMenuHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlMenuHeader.Name = "pnlMenuHeader";
-            this.pnlMenuHeader.Size = new System.Drawing.Size(200, 130);
-            this.pnlMenuHeader.TabIndex = 40;
-            //
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel5);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 722);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 58);
+            this.panel2.TabIndex = 27;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.label8);
+            this.panel5.Controls.Add(this.label6);
+            this.panel5.Controls.Add(this.label5);
+            this.panel5.Controls.Add(this.label9);
+            this.panel5.Controls.Add(this.btnsalir);
+            this.panel5.Controls.Add(this.btnCambiarUser);
+            this.panel5.Controls.Add(this.btnCierreCaja);
+            this.panel5.Controls.Add(this.btnRespaldo);
+            this.panel5.Controls.Add(this.pictureBox1);
+            this.panel5.Controls.Add(this.pictureBox2);
+            this.panel5.Controls.Add(this.pictureBox3);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(200, 58);
+            this.panel5.TabIndex = 34;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1, 1);
+            this.pictureBox1.TabIndex = 27;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(1, 1);
+            this.pictureBox2.TabIndex = 28;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(1, 1);
+            this.pictureBox3.TabIndex = 29;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Visible = false;
+            // 
+            // flpMenuButtons
+            // 
+            this.flpMenuButtons.AutoScroll = true;
+            this.flpMenuButtons.Controls.Add(this.pictImage);
+            this.flpMenuButtons.Controls.Add(this.cboActividades);
+            this.flpMenuButtons.Controls.Add(this.btnDashboard);
+            this.flpMenuButtons.Controls.Add(this.btnCatVentas);
+            this.flpMenuButtons.Controls.Add(this.flpCatVentasBody);
+            this.flpMenuButtons.Controls.Add(this.btnCatDocumentos);
+            this.flpMenuButtons.Controls.Add(this.flpCatDocumentosBody);
+            this.flpMenuButtons.Controls.Add(this.btnCatAdmin);
+            this.flpMenuButtons.Controls.Add(this.flpCatAdminBody);
+            this.flpMenuButtons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpMenuButtons.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpMenuButtons.Location = new System.Drawing.Point(0, 0);
+            this.flpMenuButtons.Name = "flpMenuButtons";
+            this.flpMenuButtons.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.flpMenuButtons.Size = new System.Drawing.Size(200, 780);
+            this.flpMenuButtons.TabIndex = 41;
+            this.flpMenuButtons.WrapContents = false;
+            // 
             // pictImage
-            //
-            this.pictImage.Image = ((System.Drawing.Image)(resources.GetObject("pictImage.Image")));
-            this.pictImage.Location = new System.Drawing.Point(12, 5);
+            // 
+            this.pictImage.Location = new System.Drawing.Point(3, 7);
             this.pictImage.Name = "pictImage";
             this.pictImage.Size = new System.Drawing.Size(180, 96);
             this.pictImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictImage.TabIndex = 5;
             this.pictImage.TabStop = false;
-            //
+            // 
             // cboActividades
-            //
+            // 
             this.cboActividades.FormattingEnabled = true;
-            this.cboActividades.Location = new System.Drawing.Point(12, 104);
+            this.cboActividades.Location = new System.Drawing.Point(3, 109);
             this.cboActividades.Name = "cboActividades";
             this.cboActividades.Size = new System.Drawing.Size(181, 21);
             this.cboActividades.TabIndex = 4;
             this.cboActividades.SelectedIndexChanged += new System.EventHandler(this.cboActividades_SelectedIndexChanged);
-            //
-            // flpMenuButtons (lista de botones del menu — CON SCROLL si no entran)
-            //
-            // Antes, todos estos botones vivían directo en panelMenu con
-            // posición absoluta (Location). En pantallas más bajas que el
-            // diseño original, los de más abajo quedaban tapados por
-            // panel2 (la barra de usuario/salir) o directamente fuera del
-            // área visible, sin forma de alcanzarlos. Ahora viven en un
-            // FlowLayoutPanel con AutoScroll = true: si no entran todos,
-            // aparece una scrollbar en vez de esconderse.
-            //
-            this.flpMenuButtons.AutoScroll = true;
-            this.flpMenuButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpMenuButtons.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpMenuButtons.WrapContents = false;
-            this.flpMenuButtons.Location = new System.Drawing.Point(0, 130);
-            this.flpMenuButtons.Name = "flpMenuButtons";
-            this.flpMenuButtons.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.flpMenuButtons.Size = new System.Drawing.Size(200, 541);
-            this.flpMenuButtons.TabIndex = 41;
-            this.flpMenuButtons.Controls.Add(this.btnDashboard);
-            this.flpMenuButtons.Controls.Add(this.btnFacturacion);
-            this.flpMenuButtons.Controls.Add(this.btnProductos);
-            this.flpMenuButtons.Controls.Add(this.btnClientes);
-            this.flpMenuButtons.Controls.Add(this.btnCompras);
-            this.flpMenuButtons.Controls.Add(this.btnAbonos);
-            this.flpMenuButtons.Controls.Add(this.btnDocumentos);
-            this.flpMenuButtons.Controls.Add(this.button1);
-            this.flpMenuButtons.Controls.Add(this.btnValidacionHAC);
-            this.flpMenuButtons.Controls.Add(this.btnEmpresa);
-            this.flpMenuButtons.Controls.Add(this.btnSeguridad);
-            this.flpMenuButtons.Controls.Add(this.btnMantenimiento);
-            this.flpMenuButtons.Controls.Add(this.btnProcesos);
-            this.flpMenuButtons.Controls.Add(this.btnConsultas);
-            this.flpMenuButtons.Controls.Add(this.btnReportes);
-            //
+            // 
             // btnDashboard
-            //
+            // 
             this.btnDashboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnDashboard.FlatAppearance.BorderSize = 0;
             this.btnDashboard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDashboard.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDashboard.ForeColor = System.Drawing.Color.White;
-            this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
             this.btnDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDashboard.Location = new System.Drawing.Point(3, 136);
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(179, 32);
             this.btnDashboard.TabIndex = 23;
             this.btnDashboard.Text = "Inicio";
             this.btnDashboard.UseVisualStyleBackColor = true;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            //
+            // 
+            // btnCatVentas
+            // 
+            this.btnCatVentas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(22)))), ((int)(((byte)(28)))));
+            this.btnCatVentas.FlatAppearance.BorderSize = 0;
+            this.btnCatVentas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(150)))));
+            this.btnCatVentas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCatVentas.Font = new System.Drawing.Font("Century Gothic", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCatVentas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(210)))), ((int)(((byte)(225)))));
+            this.btnCatVentas.Location = new System.Drawing.Point(3, 174);
+            this.btnCatVentas.Name = "btnCatVentas";
+            this.btnCatVentas.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.btnCatVentas.Size = new System.Drawing.Size(179, 30);
+            this.btnCatVentas.TabIndex = 42;
+            this.btnCatVentas.Text = "▾  VENTAS Y CLIENTES";
+            this.btnCatVentas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCatVentas.UseVisualStyleBackColor = false;
+            this.btnCatVentas.Click += new System.EventHandler(this.btnCatVentas_Click);
+            // 
+            // flpCatVentasBody
+            // 
+            this.flpCatVentasBody.AutoSize = true;
+            this.flpCatVentasBody.Controls.Add(this.btnFacturacion);
+            this.flpCatVentasBody.Controls.Add(this.btnProductos);
+            this.flpCatVentasBody.Controls.Add(this.btnClientes);
+            this.flpCatVentasBody.Controls.Add(this.btnCompras);
+            this.flpCatVentasBody.Controls.Add(this.btnAbonos);
+            this.flpCatVentasBody.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpCatVentasBody.Location = new System.Drawing.Point(3, 210);
+            this.flpCatVentasBody.Name = "flpCatVentasBody";
+            this.flpCatVentasBody.Size = new System.Drawing.Size(185, 190);
+            this.flpCatVentasBody.TabIndex = 43;
+            this.flpCatVentasBody.WrapContents = false;
+            // 
             // btnFacturacion
-            //
+            // 
             this.btnFacturacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnFacturacion.FlatAppearance.BorderSize = 0;
             this.btnFacturacion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnFacturacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFacturacion.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFacturacion.ForeColor = System.Drawing.Color.White;
-            this.btnFacturacion.Image = ((System.Drawing.Image)(resources.GetObject("btnFacturacion.Image")));
             this.btnFacturacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFacturacion.Location = new System.Drawing.Point(3, 3);
             this.btnFacturacion.Name = "btnFacturacion";
             this.btnFacturacion.Size = new System.Drawing.Size(179, 32);
             this.btnFacturacion.TabIndex = 17;
             this.btnFacturacion.Text = "Ventas";
             this.btnFacturacion.UseVisualStyleBackColor = false;
             this.btnFacturacion.Click += new System.EventHandler(this.button9_Click);
-            //
+            // 
             // btnProductos
-            //
+            // 
             this.btnProductos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnProductos.FlatAppearance.BorderSize = 0;
             this.btnProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProductos.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProductos.ForeColor = System.Drawing.Color.White;
-            this.btnProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnProductos.Image")));
             this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProductos.Location = new System.Drawing.Point(3, 41);
             this.btnProductos.Name = "btnProductos";
             this.btnProductos.Size = new System.Drawing.Size(179, 32);
             this.btnProductos.TabIndex = 16;
             this.btnProductos.Text = "Productos";
             this.btnProductos.UseVisualStyleBackColor = false;
             this.btnProductos.Click += new System.EventHandler(this.button10_Click);
-            //
+            // 
             // btnClientes
-            //
+            // 
             this.btnClientes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnClientes.FlatAppearance.BorderSize = 0;
             this.btnClientes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClientes.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClientes.ForeColor = System.Drawing.Color.White;
-            this.btnClientes.Image = ((System.Drawing.Image)(resources.GetObject("btnClientes.Image")));
             this.btnClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClientes.Location = new System.Drawing.Point(3, 79);
             this.btnClientes.Name = "btnClientes";
             this.btnClientes.Size = new System.Drawing.Size(179, 32);
             this.btnClientes.TabIndex = 18;
             this.btnClientes.Text = "Clientes";
             this.btnClientes.UseVisualStyleBackColor = false;
             this.btnClientes.Click += new System.EventHandler(this.button8_Click);
-            //
+            // 
             // btnCompras
-            //
+            // 
             this.btnCompras.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnCompras.FlatAppearance.BorderSize = 0;
             this.btnCompras.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCompras.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCompras.ForeColor = System.Drawing.Color.White;
-            this.btnCompras.Image = ((System.Drawing.Image)(resources.GetObject("btnCompras.Image")));
             this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCompras.Location = new System.Drawing.Point(3, 117);
             this.btnCompras.Name = "btnCompras";
             this.btnCompras.Size = new System.Drawing.Size(179, 32);
             this.btnCompras.TabIndex = 19;
             this.btnCompras.Text = "Compras";
             this.btnCompras.UseVisualStyleBackColor = false;
             this.btnCompras.Click += new System.EventHandler(this.button7_Click);
-            //
+            // 
             // btnAbonos
-            //
+            // 
             this.btnAbonos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnAbonos.FlatAppearance.BorderSize = 0;
             this.btnAbonos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnAbonos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAbonos.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAbonos.ForeColor = System.Drawing.Color.White;
-            this.btnAbonos.Image = ((System.Drawing.Image)(resources.GetObject("btnAbonos.Image")));
             this.btnAbonos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAbonos.Location = new System.Drawing.Point(3, 155);
             this.btnAbonos.Name = "btnAbonos";
             this.btnAbonos.Size = new System.Drawing.Size(179, 32);
             this.btnAbonos.TabIndex = 21;
             this.btnAbonos.Text = "Abonos";
             this.btnAbonos.UseVisualStyleBackColor = false;
             this.btnAbonos.Click += new System.EventHandler(this.button6_Click);
-            //
+            // 
+            // btnCatDocumentos
+            // 
+            this.btnCatDocumentos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(22)))), ((int)(((byte)(28)))));
+            this.btnCatDocumentos.FlatAppearance.BorderSize = 0;
+            this.btnCatDocumentos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(150)))));
+            this.btnCatDocumentos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCatDocumentos.Font = new System.Drawing.Font("Century Gothic", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCatDocumentos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(210)))), ((int)(((byte)(225)))));
+            this.btnCatDocumentos.Location = new System.Drawing.Point(3, 406);
+            this.btnCatDocumentos.Name = "btnCatDocumentos";
+            this.btnCatDocumentos.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.btnCatDocumentos.Size = new System.Drawing.Size(179, 30);
+            this.btnCatDocumentos.TabIndex = 44;
+            this.btnCatDocumentos.Text = "▸  DOCUMENTOS";
+            this.btnCatDocumentos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCatDocumentos.UseVisualStyleBackColor = false;
+            this.btnCatDocumentos.Click += new System.EventHandler(this.btnCatDocumentos_Click);
+            // 
+            // flpCatDocumentosBody
+            // 
+            this.flpCatDocumentosBody.AutoSize = true;
+            this.flpCatDocumentosBody.Controls.Add(this.btnDocumentos);
+            this.flpCatDocumentosBody.Controls.Add(this.btnValidacionHAC);
+            this.flpCatDocumentosBody.Controls.Add(this.button1);
+            this.flpCatDocumentosBody.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpCatDocumentosBody.Location = new System.Drawing.Point(3, 442);
+            this.flpCatDocumentosBody.Name = "flpCatDocumentosBody";
+            this.flpCatDocumentosBody.Size = new System.Drawing.Size(185, 114);
+            this.flpCatDocumentosBody.TabIndex = 45;
+            this.flpCatDocumentosBody.Visible = false;
+            this.flpCatDocumentosBody.WrapContents = false;
+            // 
             // btnDocumentos
-            //
+            // 
             this.btnDocumentos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnDocumentos.FlatAppearance.BorderSize = 0;
             this.btnDocumentos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnDocumentos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDocumentos.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDocumentos.ForeColor = System.Drawing.Color.White;
-            this.btnDocumentos.Image = ((System.Drawing.Image)(resources.GetObject("btnDocumentos.Image")));
             this.btnDocumentos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDocumentos.Location = new System.Drawing.Point(3, 3);
             this.btnDocumentos.Name = "btnDocumentos";
             this.btnDocumentos.Size = new System.Drawing.Size(179, 32);
             this.btnDocumentos.TabIndex = 32;
             this.btnDocumentos.Text = "Documentos";
             this.btnDocumentos.UseVisualStyleBackColor = false;
             this.btnDocumentos.Click += new System.EventHandler(this.btnDocumentos_Click);
-            //
-            // button1
-            //
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(179, 32);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "Aceptar Documentos Hacienda";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            //
+            // 
             // btnValidacionHAC
-            //
+            // 
             this.btnValidacionHAC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnValidacionHAC.FlatAppearance.BorderSize = 0;
             this.btnValidacionHAC.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnValidacionHAC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnValidacionHAC.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidacionHAC.ForeColor = System.Drawing.Color.White;
-            this.btnValidacionHAC.Image = ((System.Drawing.Image)(resources.GetObject("btnValidacionHAC.Image")));
             this.btnValidacionHAC.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnValidacionHAC.Location = new System.Drawing.Point(3, 41);
             this.btnValidacionHAC.Name = "btnValidacionHAC";
             this.btnValidacionHAC.Size = new System.Drawing.Size(179, 32);
             this.btnValidacionHAC.TabIndex = 34;
             this.btnValidacionHAC.Text = "Validar Documentos";
             this.btnValidacionHAC.UseVisualStyleBackColor = false;
             this.btnValidacionHAC.Click += new System.EventHandler(this.button1_Click);
-            //
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(3, 79);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(179, 32);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "Aceptar Documentos Hacienda";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // btnCatAdmin
+            // 
+            this.btnCatAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(22)))), ((int)(((byte)(28)))));
+            this.btnCatAdmin.FlatAppearance.BorderSize = 0;
+            this.btnCatAdmin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(60)))), ((int)(((byte)(150)))));
+            this.btnCatAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCatAdmin.Font = new System.Drawing.Font("Century Gothic", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCatAdmin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(210)))), ((int)(((byte)(225)))));
+            this.btnCatAdmin.Location = new System.Drawing.Point(3, 562);
+            this.btnCatAdmin.Name = "btnCatAdmin";
+            this.btnCatAdmin.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.btnCatAdmin.Size = new System.Drawing.Size(179, 30);
+            this.btnCatAdmin.TabIndex = 46;
+            this.btnCatAdmin.Text = "▸  ADMINISTRACIÓN";
+            this.btnCatAdmin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCatAdmin.UseVisualStyleBackColor = false;
+            this.btnCatAdmin.Click += new System.EventHandler(this.btnCatAdmin_Click);
+            // 
+            // flpCatAdminBody
+            // 
+            this.flpCatAdminBody.AutoSize = true;
+            this.flpCatAdminBody.Controls.Add(this.btnEmpresa);
+            this.flpCatAdminBody.Controls.Add(this.btnSeguridad);
+            this.flpCatAdminBody.Controls.Add(this.btnMantenimiento);
+            this.flpCatAdminBody.Controls.Add(this.btnProcesos);
+            this.flpCatAdminBody.Controls.Add(this.btnConsultas);
+            this.flpCatAdminBody.Controls.Add(this.btnReportes);
+            this.flpCatAdminBody.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpCatAdminBody.Location = new System.Drawing.Point(3, 598);
+            this.flpCatAdminBody.Name = "flpCatAdminBody";
+            this.flpCatAdminBody.Size = new System.Drawing.Size(185, 228);
+            this.flpCatAdminBody.TabIndex = 47;
+            this.flpCatAdminBody.Visible = false;
+            this.flpCatAdminBody.WrapContents = false;
+            // 
             // btnEmpresa
-            //
+            // 
             this.btnEmpresa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnEmpresa.FlatAppearance.BorderSize = 0;
             this.btnEmpresa.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnEmpresa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEmpresa.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEmpresa.ForeColor = System.Drawing.Color.White;
-            this.btnEmpresa.Image = ((System.Drawing.Image)(resources.GetObject("btnEmpresa.Image")));
             this.btnEmpresa.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEmpresa.Location = new System.Drawing.Point(3, 3);
             this.btnEmpresa.Name = "btnEmpresa";
             this.btnEmpresa.Size = new System.Drawing.Size(179, 32);
             this.btnEmpresa.TabIndex = 35;
             this.btnEmpresa.Text = "Empresa";
             this.btnEmpresa.UseVisualStyleBackColor = false;
             this.btnEmpresa.Click += new System.EventHandler(this.button2_Click_1);
-            //
+            // 
             // btnSeguridad
-            //
+            // 
             this.btnSeguridad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnSeguridad.FlatAppearance.BorderSize = 0;
             this.btnSeguridad.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnSeguridad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSeguridad.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSeguridad.ForeColor = System.Drawing.Color.White;
-            this.btnSeguridad.Image = ((System.Drawing.Image)(resources.GetObject("btnSeguridad.Image")));
             this.btnSeguridad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSeguridad.Location = new System.Drawing.Point(3, 41);
             this.btnSeguridad.Name = "btnSeguridad";
             this.btnSeguridad.Size = new System.Drawing.Size(179, 32);
             this.btnSeguridad.TabIndex = 30;
             this.btnSeguridad.Text = "Seguridad";
             this.btnSeguridad.UseVisualStyleBackColor = false;
             this.btnSeguridad.Click += new System.EventHandler(this.btnSeguridad_Click);
-            //
+            // 
             // btnMantenimiento
-            //
+            // 
             this.btnMantenimiento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnMantenimiento.FlatAppearance.BorderSize = 0;
             this.btnMantenimiento.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnMantenimiento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMantenimiento.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMantenimiento.ForeColor = System.Drawing.Color.White;
-            this.btnMantenimiento.Image = ((System.Drawing.Image)(resources.GetObject("btnMantenimiento.Image")));
             this.btnMantenimiento.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMantenimiento.Location = new System.Drawing.Point(3, 79);
             this.btnMantenimiento.Name = "btnMantenimiento";
             this.btnMantenimiento.Size = new System.Drawing.Size(179, 32);
             this.btnMantenimiento.TabIndex = 28;
             this.btnMantenimiento.Text = "Mantenimientos";
             this.btnMantenimiento.UseVisualStyleBackColor = false;
             this.btnMantenimiento.Click += new System.EventHandler(this.btnMantenimiento_Click);
-            //
+            // 
             // btnProcesos
-            //
+            // 
             this.btnProcesos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnProcesos.FlatAppearance.BorderSize = 0;
             this.btnProcesos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnProcesos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProcesos.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProcesos.ForeColor = System.Drawing.Color.White;
-            this.btnProcesos.Image = ((System.Drawing.Image)(resources.GetObject("btnProcesos.Image")));
             this.btnProcesos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProcesos.Location = new System.Drawing.Point(3, 117);
             this.btnProcesos.Name = "btnProcesos";
             this.btnProcesos.Size = new System.Drawing.Size(179, 32);
             this.btnProcesos.TabIndex = 31;
             this.btnProcesos.Text = "Procesos";
             this.btnProcesos.UseVisualStyleBackColor = false;
             this.btnProcesos.Click += new System.EventHandler(this.btnProcesos_Click);
-            //
+            // 
             // btnConsultas
-            //
+            // 
             this.btnConsultas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnConsultas.FlatAppearance.BorderSize = 0;
             this.btnConsultas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnConsultas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConsultas.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConsultas.ForeColor = System.Drawing.Color.White;
-            this.btnConsultas.Image = ((System.Drawing.Image)(resources.GetObject("btnConsultas.Image")));
             this.btnConsultas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConsultas.Location = new System.Drawing.Point(3, 155);
             this.btnConsultas.Name = "btnConsultas";
             this.btnConsultas.Size = new System.Drawing.Size(179, 32);
             this.btnConsultas.TabIndex = 29;
             this.btnConsultas.Text = "Consultas";
             this.btnConsultas.UseVisualStyleBackColor = false;
             this.btnConsultas.Click += new System.EventHandler(this.btnConsultas_Click);
-            //
+            // 
             // btnReportes
-            //
+            // 
             this.btnReportes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.btnReportes.FlatAppearance.BorderSize = 0;
             this.btnReportes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnReportes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReportes.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReportes.ForeColor = System.Drawing.Color.White;
-            this.btnReportes.Image = ((System.Drawing.Image)(resources.GetObject("btnReportes.Image")));
             this.btnReportes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReportes.Location = new System.Drawing.Point(3, 193);
             this.btnReportes.Name = "btnReportes";
             this.btnReportes.Size = new System.Drawing.Size(179, 32);
             this.btnReportes.TabIndex = 22;
             this.btnReportes.Text = "Reportes";
             this.btnReportes.UseVisualStyleBackColor = false;
             this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
-            //
-            // panel2 (footer: usuario/salir/caja/respaldo — SIEMPRE visible, abajo)
-            //
-            this.panel2.Controls.Add(this.panel5);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 671);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 109);
-            this.panel2.TabIndex = 27;
-            //
-            // panel5
-            //
-            this.panel5.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.panel5.Controls.Add(this.label6);
-            this.panel5.Controls.Add(this.lblCierreCaja);
-            this.panel5.Controls.Add(this.label4);
-            this.panel5.Controls.Add(this.label3);
-            this.panel5.Controls.Add(this.btnCierreCaja);
-            this.panel5.Controls.Add(this.lblCaja);
-            this.panel5.Controls.Add(this.btnRespaldo);
-            this.panel5.Controls.Add(this.lblSucursal);
-            this.panel5.Controls.Add(this.btnsalir);
-            this.panel5.Controls.Add(this.pictureBox3);
-            this.panel5.Controls.Add(this.lblNombre);
-            this.panel5.Controls.Add(this.pictureBox2);
-            this.panel5.Controls.Add(this.btnCambiarUser);
-            this.panel5.Controls.Add(this.pictureBox1);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 12);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(200, 97);
-            this.panel5.TabIndex = 34;
-            //
-            // label6
-            //
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(145, 74);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 12);
-            this.label6.TabIndex = 37;
-            this.label6.Text = "Respaldo";
-            //
-            // lblCierreCaja
-            //
-            this.lblCierreCaja.AutoSize = true;
-            this.lblCierreCaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCierreCaja.Location = new System.Drawing.Point(108, 75);
-            this.lblCierreCaja.Name = "lblCierreCaja";
-            this.lblCierreCaja.Size = new System.Drawing.Size(28, 12);
-            this.lblCierreCaja.TabIndex = 36;
-            this.lblCierreCaja.Text = "Caja";
-            //
-            // label4
-            //
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(55, 74);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 12);
-            this.label4.TabIndex = 35;
-            this.label4.Text = "Usuario";
-            //
-            // label3
-            //
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(16, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 12);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Salir";
-            //
-            // btnCierreCaja
-            //
-            this.btnCierreCaja.Image = ((System.Drawing.Image)(resources.GetObject("btnCierreCaja.Image")));
-            this.btnCierreCaja.Location = new System.Drawing.Point(102, 35);
-            this.btnCierreCaja.Name = "btnCierreCaja";
-            this.btnCierreCaja.Size = new System.Drawing.Size(44, 38);
-            this.btnCierreCaja.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCierreCaja.TabIndex = 33;
-            this.btnCierreCaja.TabStop = false;
-            this.btnCierreCaja.Click += new System.EventHandler(this.btnCierreCaja_Click);
-            //
-            // lblCaja
-            //
-            this.lblCaja.AutoSize = true;
-            this.lblCaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCaja.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblCaja.Location = new System.Drawing.Point(185, 14);
-            this.lblCaja.Name = "lblCaja";
-            this.lblCaja.Size = new System.Drawing.Size(0, 15);
-            this.lblCaja.TabIndex = 31;
-            //
-            // btnRespaldo
-            //
-            this.btnRespaldo.AccessibleName = "SSSS";
-            this.btnRespaldo.Image = ((System.Drawing.Image)(resources.GetObject("btnRespaldo.Image")));
-            this.btnRespaldo.Location = new System.Drawing.Point(148, 34);
-            this.btnRespaldo.Name = "btnRespaldo";
-            this.btnRespaldo.Size = new System.Drawing.Size(44, 38);
-            this.btnRespaldo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnRespaldo.TabIndex = 26;
-            this.btnRespaldo.TabStop = false;
-            this.btnRespaldo.Click += new System.EventHandler(this.btnRespaldo_Click);
-            //
-            // lblSucursal
-            //
-            this.lblSucursal.AutoSize = true;
-            this.lblSucursal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSucursal.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblSucursal.Location = new System.Drawing.Point(141, 14);
-            this.lblSucursal.Name = "lblSucursal";
-            this.lblSucursal.Size = new System.Drawing.Size(0, 15);
-            this.lblSucursal.TabIndex = 30;
-            //
-            // btnsalir
-            //
-            this.btnsalir.Image = ((System.Drawing.Image)(resources.GetObject("btnsalir.Image")));
-            this.btnsalir.Location = new System.Drawing.Point(10, 35);
-            this.btnsalir.Name = "btnsalir";
-            this.btnsalir.Size = new System.Drawing.Size(44, 38);
-            this.btnsalir.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnsalir.TabIndex = 17;
-            this.btnsalir.TabStop = false;
-            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
-            //
-            // pictureBox3
-            //
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(153, 7);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(29, 22);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 29;
-            this.pictureBox3.TabStop = false;
-            //
-            // lblNombre
-            //
-            this.lblNombre.AutoSize = true;
-            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblNombre.Location = new System.Drawing.Point(38, 14);
-            this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(0, 15);
-            this.lblNombre.TabIndex = 1;
-            //
-            // pictureBox2
-            //
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(112, 7);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(29, 22);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 28;
-            this.pictureBox2.TabStop = false;
-            //
-            // btnCambiarUser
-            //
-            this.btnCambiarUser.Image = ((System.Drawing.Image)(resources.GetObject("btnCambiarUser.Image")));
-            this.btnCambiarUser.Location = new System.Drawing.Point(56, 35);
-            this.btnCambiarUser.Name = "btnCambiarUser";
-            this.btnCambiarUser.Size = new System.Drawing.Size(44, 38);
-            this.btnCambiarUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCambiarUser.TabIndex = 25;
-            this.btnCambiarUser.TabStop = false;
-            this.btnCambiarUser.Click += new System.EventHandler(this.btnCambiarUser_Click);
-            //
-            // pictureBox1
-            //
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(9, 7);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(29, 22);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 27;
-            this.pictureBox1.TabStop = false;
-            //
-            // panel1
-            //
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.panel1.Controls.Add(this.panel4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(511, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 51);
-            this.panel1.TabIndex = 24;
-            //
+            // 
             // panel4
-            //
+            // 
             this.panel4.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panel4.Controls.Add(this.label7);
+            this.panel4.Controls.Add(this.lblNombre);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.label1);
             this.panel4.Controls.Add(this.lblHora);
             this.panel4.Controls.Add(this.lblFecha);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Location = new System.Drawing.Point(477, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 51);
+            this.panel4.Size = new System.Drawing.Size(234, 51);
             this.panel4.TabIndex = 25;
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 26);
+            this.label2.Location = new System.Drawing.Point(113, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 18);
+            this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Hora:";
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 9);
+            this.label1.Location = new System.Drawing.Point(1, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 18);
+            this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Fecha:";
-            //
+            // 
             // lblHora
-            //
+            // 
             this.lblHora.AutoSize = true;
-            this.lblHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHora.ForeColor = System.Drawing.Color.White;
-            this.lblHora.Location = new System.Drawing.Point(60, 26);
+            this.lblHora.Location = new System.Drawing.Point(146, 28);
             this.lblHora.Name = "lblHora";
-            this.lblHora.Size = new System.Drawing.Size(52, 18);
+            this.lblHora.Size = new System.Drawing.Size(39, 13);
             this.lblHora.TabIndex = 1;
-            this.lblHora.Text = "label1";
+            this.lblHora.Text = "01:00";
             this.lblHora.Click += new System.EventHandler(this.lblHora_Click);
-            //
+            // 
             // lblFecha
-            //
+            // 
             this.lblFecha.AutoSize = true;
-            this.lblFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFecha.ForeColor = System.Drawing.Color.White;
-            this.lblFecha.Location = new System.Drawing.Point(60, 9);
+            this.lblFecha.Location = new System.Drawing.Point(42, 28);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(52, 18);
+            this.lblFecha.Size = new System.Drawing.Size(71, 13);
             this.lblFecha.TabIndex = 0;
-            this.lblFecha.Text = "label1";
-            //
+            this.lblFecha.Text = "01/01/2000";
+            // 
             // panelBarraTitulo
-            //
+            // 
             this.panelBarraTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(93)))), ((int)(((byte)(142)))));
             this.panelBarraTitulo.Controls.Add(this.panel6);
-            this.panelBarraTitulo.Controls.Add(this.panel1);
+            this.panelBarraTitulo.Controls.Add(this.panel9);
+            this.panelBarraTitulo.Controls.Add(this.panel4);
             this.panelBarraTitulo.Controls.Add(this.panel3);
             this.panelBarraTitulo.Controls.Add(this.btnMenu);
             this.panelBarraTitulo.Controls.Add(this.lblEmpresa);
@@ -803,19 +833,21 @@
             this.panelBarraTitulo.TabIndex = 0;
             this.panelBarraTitulo.Paint += new System.Windows.Forms.PaintEventHandler(this.panelBarraTitulo_Paint);
             this.panelBarraTitulo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelBarraTitulo_MouseMove);
-            //
+            // 
             // panel6
-            //
+            // 
+            this.panel6.Controls.Add(this.panel7);
             this.panel6.Controls.Add(this.btnCalculadora);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel6.Location = new System.Drawing.Point(449, 0);
+            this.panel6.Location = new System.Drawing.Point(294, 0);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(62, 51);
             this.panel6.TabIndex = 39;
-            //
+            // 
             // btnCalculadora
-            //
-            this.btnCalculadora.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculadora.Image")));
+            // 
+            this.btnCalculadora.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnCalculadora.BackgroundImage")));
+            this.btnCalculadora.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCalculadora.Location = new System.Drawing.Point(13, 7);
             this.btnCalculadora.Name = "btnCalculadora";
             this.btnCalculadora.Size = new System.Drawing.Size(34, 39);
@@ -823,9 +855,9 @@
             this.btnCalculadora.TabIndex = 38;
             this.btnCalculadora.TabStop = false;
             this.btnCalculadora.Click += new System.EventHandler(this.btnCalculadora_Click);
-            //
+            // 
             // panel3
-            //
+            // 
             this.panel3.Controls.Add(this.btnRestaurar);
             this.panel3.Controls.Add(this.btnMaximizar);
             this.panel3.Controls.Add(this.btnSalirEsq);
@@ -835,10 +867,11 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(111, 51);
             this.panel3.TabIndex = 38;
-            //
+            // 
             // btnRestaurar
-            //
-            this.btnRestaurar.Image = ((System.Drawing.Image)(resources.GetObject("btnRestaurar.Image")));
+            // 
+            this.btnRestaurar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRestaurar.BackgroundImage")));
+            this.btnRestaurar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnRestaurar.InitialImage = null;
             this.btnRestaurar.Location = new System.Drawing.Point(5, 9);
             this.btnRestaurar.Name = "btnRestaurar";
@@ -847,10 +880,9 @@
             this.btnRestaurar.TabIndex = 37;
             this.btnRestaurar.TabStop = false;
             this.btnRestaurar.Click += new System.EventHandler(this.pictureBox6_Click);
-            //
+            // 
             // btnMaximizar
-            //
-            this.btnMaximizar.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximizar.Image")));
+            // 
             this.btnMaximizar.InitialImage = null;
             this.btnMaximizar.Location = new System.Drawing.Point(5, 9);
             this.btnMaximizar.Name = "btnMaximizar";
@@ -859,22 +891,24 @@
             this.btnMaximizar.TabIndex = 36;
             this.btnMaximizar.TabStop = false;
             this.btnMaximizar.Click += new System.EventHandler(this.pictureBox5_Click);
-            //
+            // 
             // btnSalirEsq
-            //
-            this.btnSalirEsq.Image = ((System.Drawing.Image)(resources.GetObject("btnSalirEsq.Image")));
-            this.btnSalirEsq.InitialImage = ((System.Drawing.Image)(resources.GetObject("btnSalirEsq.InitialImage")));
+            // 
+            this.btnSalirEsq.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSalirEsq.BackgroundImage")));
+            this.btnSalirEsq.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSalirEsq.InitialImage = null;
             this.btnSalirEsq.Location = new System.Drawing.Point(75, 6);
             this.btnSalirEsq.Name = "btnSalirEsq";
-            this.btnSalirEsq.Size = new System.Drawing.Size(26, 36);
+            this.btnSalirEsq.Size = new System.Drawing.Size(33, 36);
             this.btnSalirEsq.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnSalirEsq.TabIndex = 34;
             this.btnSalirEsq.TabStop = false;
             this.btnSalirEsq.Click += new System.EventHandler(this.pictureBox4_Click);
-            //
+            // 
             // pictureBox4
-            //
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            // 
+            this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
+            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox4.InitialImage = null;
             this.pictureBox4.Location = new System.Drawing.Point(40, 9);
             this.pictureBox4.Name = "pictureBox4";
@@ -883,12 +917,13 @@
             this.pictureBox4.TabIndex = 35;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click_1);
-            //
+            // 
             // btnMenu
-            //
-            this.btnMenu.BackColor = System.Drawing.Color.DeepSkyBlue;
+            // 
+            this.btnMenu.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnMenu.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMenu.BackgroundImage")));
+            this.btnMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnMenu.Image")));
             this.btnMenu.Location = new System.Drawing.Point(0, 0);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(44, 51);
@@ -896,9 +931,9 @@
             this.btnMenu.TabIndex = 27;
             this.btnMenu.TabStop = false;
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
-            //
+            // 
             // lblEmpresa
-            //
+            // 
             this.lblEmpresa.AutoSize = true;
             this.lblEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmpresa.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -906,51 +941,51 @@
             this.lblEmpresa.Name = "lblEmpresa";
             this.lblEmpresa.Size = new System.Drawing.Size(0, 20);
             this.lblEmpresa.TabIndex = 6;
-            //
+            // 
             // lblTitulo
-            //
+            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblTitulo.Location = new System.Drawing.Point(56, 29);
+            this.lblTitulo.Location = new System.Drawing.Point(43, 29);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(287, 15);
             this.lblTitulo.TabIndex = 5;
             this.lblTitulo.Text = "Espartano Software- Facturación Electónica";
             this.lblTitulo.Click += new System.EventHandler(this.lblTitulo_Click);
-            //
+            // 
             // imageryService1
-            //
+            // 
             this.imageryService1.Credentials = null;
             this.imageryService1.Url = "http://dev.virtualearth.net/webservices/v1/imageryservice/imageryservice.svc";
             this.imageryService1.UseDefaultCredentials = false;
-            //
+            // 
             // imageryService2
-            //
+            // 
             this.imageryService2.Credentials = null;
             this.imageryService2.Url = "http://dev.virtualearth.net/webservices/v1/imageryservice/imageryservice.svc";
             this.imageryService2.UseDefaultCredentials = false;
-            //
+            // 
             // imageryService3
-            //
+            // 
             this.imageryService3.Credentials = null;
             this.imageryService3.Url = "http://dev.virtualearth.net/webservices/v1/imageryservice/imageryservice.svc";
             this.imageryService3.UseDefaultCredentials = false;
-            //
+            // 
             // imageryService4
-            //
+            // 
             this.imageryService4.Credentials = null;
             this.imageryService4.Url = "http://dev.virtualearth.net/webservices/v1/imageryservice/imageryservice.svc";
             this.imageryService4.UseDefaultCredentials = false;
-            //
+            // 
             // imageryService5
-            //
+            // 
             this.imageryService5.Credentials = null;
             this.imageryService5.Url = "http://dev.virtualearth.net/webservices/v1/imageryservice/imageryservice.svc";
             this.imageryService5.UseDefaultCredentials = false;
-            //
+            // 
             // mnuReportes
-            //
+            // 
             this.mnuReportes.BackColor = System.Drawing.Color.Blue;
             this.mnuReportes.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuReportes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -966,9 +1001,9 @@
             this.mnuReportes.Name = "mnuReportes";
             this.mnuReportes.ShowImageMargin = false;
             this.mnuReportes.Size = new System.Drawing.Size(245, 220);
-            //
+            // 
             // productoToolStripMenuItem
-            //
+            // 
             this.productoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuReporteCantidadProducto,
             this.mnuReporteVentaEsp});
@@ -976,23 +1011,23 @@
             this.productoToolStripMenuItem.Name = "productoToolStripMenuItem";
             this.productoToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.productoToolStripMenuItem.Text = "Producto";
-            //
+            // 
             // mnuReporteCantidadProducto
-            //
+            // 
             this.mnuReporteCantidadProducto.Name = "mnuReporteCantidadProducto";
             this.mnuReporteCantidadProducto.Size = new System.Drawing.Size(231, 24);
             this.mnuReporteCantidadProducto.Text = "Cantidad Producto";
             this.mnuReporteCantidadProducto.Click += new System.EventHandler(this.mnuReporteCantidadProducto_Click);
-            //
+            // 
             // mnuReporteVentaEsp
-            //
+            // 
             this.mnuReporteVentaEsp.Name = "mnuReporteVentaEsp";
             this.mnuReporteVentaEsp.Size = new System.Drawing.Size(231, 24);
             this.mnuReporteVentaEsp.Text = "Venta fechas Específica";
             this.mnuReporteVentaEsp.Click += new System.EventHandler(this.mnuReporteVentaEsp_Click);
-            //
+            // 
             // inventariosToolStripMenuItem
-            //
+            // 
             this.inventariosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuInvGeneral,
             this.mnuInvBajo,
@@ -1007,72 +1042,72 @@
             this.inventariosToolStripMenuItem.Name = "inventariosToolStripMenuItem";
             this.inventariosToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.inventariosToolStripMenuItem.Text = "Inventarios";
-            //
+            // 
             // mnuInvGeneral
-            //
+            // 
             this.mnuInvGeneral.Name = "mnuInvGeneral";
             this.mnuInvGeneral.Size = new System.Drawing.Size(276, 24);
             this.mnuInvGeneral.Text = "General";
             this.mnuInvGeneral.Click += new System.EventHandler(this.mnuInvGeneral_Click);
-            //
+            // 
             // mnuInvBajo
-            //
+            // 
             this.mnuInvBajo.Name = "mnuInvBajo";
             this.mnuInvBajo.Size = new System.Drawing.Size(276, 24);
             this.mnuInvBajo.Text = "Bajo";
             this.mnuInvBajo.Click += new System.EventHandler(this.mnuInvBajo_Click);
-            //
+            // 
             // mnuInvSobre
-            //
+            // 
             this.mnuInvSobre.Name = "mnuInvSobre";
             this.mnuInvSobre.Size = new System.Drawing.Size(276, 24);
             this.mnuInvSobre.Text = "Sobre";
             this.mnuInvSobre.Click += new System.EventHandler(this.mnuInvSobre_Click);
-            //
+            // 
             // mnuInvCategoria
-            //
+            // 
             this.mnuInvCategoria.Name = "mnuInvCategoria";
             this.mnuInvCategoria.Size = new System.Drawing.Size(276, 24);
             this.mnuInvCategoria.Text = "Categoría";
             this.mnuInvCategoria.Click += new System.EventHandler(this.mnuInvCategoria_Click);
-            //
+            // 
             // mnuProductosFechas
-            //
+            // 
             this.mnuProductosFechas.Name = "mnuProductosFechas";
             this.mnuProductosFechas.Size = new System.Drawing.Size(276, 24);
             this.mnuProductosFechas.Text = "Productos Fechas Específicas";
             this.mnuProductosFechas.Click += new System.EventHandler(this.mnuProductosFechas_Click);
-            //
+            // 
             // mnuInvMenor0
-            //
+            // 
             this.mnuInvMenor0.Name = "mnuInvMenor0";
             this.mnuInvMenor0.Size = new System.Drawing.Size(276, 24);
             this.mnuInvMenor0.Text = "Menor CERO";
             this.mnuInvMenor0.Click += new System.EventHandler(this.mnuInvMenor0_Click);
-            //
+            // 
             // mnuInvCostoProv
-            //
+            // 
             this.mnuInvCostoProv.Name = "mnuInvCostoProv";
             this.mnuInvCostoProv.Size = new System.Drawing.Size(276, 24);
             this.mnuInvCostoProv.Text = "Costo de Invetario Proveedor";
             this.mnuInvCostoProv.Click += new System.EventHandler(this.mnuInvCostoProv_Click);
-            //
+            // 
             // mnuInvCostoCategoria
-            //
+            // 
             this.mnuInvCostoCategoria.Name = "mnuInvCostoCategoria";
             this.mnuInvCostoCategoria.Size = new System.Drawing.Size(276, 24);
             this.mnuInvCostoCategoria.Text = "Costo de Inventario Categoría";
             this.mnuInvCostoCategoria.Click += new System.EventHandler(this.mnuInvCostoCategoria_Click);
-            //
+            // 
             // mnuInvCostoGeneral
-            //
+            // 
             this.mnuInvCostoGeneral.Name = "mnuInvCostoGeneral";
             this.mnuInvCostoGeneral.Size = new System.Drawing.Size(276, 24);
             this.mnuInvCostoGeneral.Text = "Costo de Inventario General";
             this.mnuInvCostoGeneral.Click += new System.EventHandler(this.mnuInvCostoGeneral_Click);
-            //
+            // 
             // ventasToolStripMenuItem
-            //
+            // 
             this.ventasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuVentahoyResum,
             this.mnuVentahoyDetall,
@@ -1088,79 +1123,79 @@
             this.ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
             this.ventasToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.ventasToolStripMenuItem.Text = "Ventas";
-            //
+            // 
             // mnuVentahoyResum
-            //
+            // 
             this.mnuVentahoyResum.Name = "mnuVentahoyResum";
             this.mnuVentahoyResum.Size = new System.Drawing.Size(429, 24);
             this.mnuVentahoyResum.Text = "General hoy Resumida";
             this.mnuVentahoyResum.Click += new System.EventHandler(this.mnuVentahoyResum_Click);
-            //
+            // 
             // mnuVentahoyDetall
-            //
+            // 
             this.mnuVentahoyDetall.Name = "mnuVentahoyDetall";
             this.mnuVentahoyDetall.Size = new System.Drawing.Size(429, 24);
             this.mnuVentahoyDetall.Text = "General hoy Detallada";
             this.mnuVentahoyDetall.Click += new System.EventHandler(this.mnuVentahoyDetall_Click);
-            //
+            // 
             // mnuVentasResumidasFechas
-            //
+            // 
             this.mnuVentasResumidasFechas.Name = "mnuVentasResumidasFechas";
             this.mnuVentasResumidasFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasResumidasFechas.Text = "General Resumida Fechas Específicas";
             this.mnuVentasResumidasFechas.Click += new System.EventHandler(this.mnuVentasResumidasFechas_Click);
-            //
+            // 
             // mnuVentasDetalladaFechas
-            //
+            // 
             this.mnuVentasDetalladaFechas.Name = "mnuVentasDetalladaFechas";
             this.mnuVentasDetalladaFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasDetalladaFechas.Text = "General Detallada Fechas Específicas";
             this.mnuVentasDetalladaFechas.Click += new System.EventHandler(this.mnuVentasDetalladaFechas_Click);
-            //
+            // 
             // mnuVentasProductoFechas
-            //
+            // 
             this.mnuVentasProductoFechas.Name = "mnuVentasProductoFechas";
             this.mnuVentasProductoFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasProductoFechas.Text = "Producto Fechas Específicas";
             this.mnuVentasProductoFechas.Click += new System.EventHandler(this.mnuVentasProductoFechas_Click);
-            //
+            // 
             // mnuVentasMargenFechas
-            //
+            // 
             this.mnuVentasMargenFechas.Name = "mnuVentasMargenFechas";
             this.mnuVentasMargenFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasMargenFechas.Text = "Margen de Ganancias Fechas Específicas";
             this.mnuVentasMargenFechas.Click += new System.EventHandler(this.mnuVentasMargenFechas_Click);
-            //
+            // 
             // mnuVentasMargenVendedorFechas
-            //
+            // 
             this.mnuVentasMargenVendedorFechas.Name = "mnuVentasMargenVendedorFechas";
             this.mnuVentasMargenVendedorFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasMargenVendedorFechas.Text = "Margen de Ganancias X Vendedor Fechas Específicas";
             this.mnuVentasMargenVendedorFechas.Click += new System.EventHandler(this.mnuVentasMargenVendedorFechas_Click);
-            //
+            // 
             // mnuVentasUsuario
-            //
+            // 
             this.mnuVentasUsuario.Name = "mnuVentasUsuario";
             this.mnuVentasUsuario.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasUsuario.Text = "Comisión usuarios por ventas";
             this.mnuVentasUsuario.Click += new System.EventHandler(this.mnuVentasUsuario_Click);
-            //
+            // 
             // mnuVentaAgrupXClienteFechas
-            //
+            // 
             this.mnuVentaAgrupXClienteFechas.Name = "mnuVentaAgrupXClienteFechas";
             this.mnuVentaAgrupXClienteFechas.Size = new System.Drawing.Size(429, 24);
             this.mnuVentaAgrupXClienteFechas.Text = "*General Agrupados X Clientes Fechas Específicas";
             this.mnuVentaAgrupXClienteFechas.Click += new System.EventHandler(this.mnuVentaAgrupXClienteFechas_Click);
-            //
+            // 
             // mnuVentasResumAgrupaXActFecha
-            //
+            // 
             this.mnuVentasResumAgrupaXActFecha.Name = "mnuVentasResumAgrupaXActFecha";
             this.mnuVentasResumAgrupaXActFecha.Size = new System.Drawing.Size(429, 24);
             this.mnuVentasResumAgrupaXActFecha.Text = "*Resumida Agrupadas X Actividad Fechas Específicas";
             this.mnuVentasResumAgrupaXActFecha.Click += new System.EventHandler(this.mnuVentasResumAgrupaXActFecha_Click);
-            //
+            // 
             // comprasToolStripMenuItem
-            //
+            // 
             this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuComprasEnvHacienda,
             this.mnuComprasAgrupXProvFechas,
@@ -1168,68 +1203,68 @@
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.comprasToolStripMenuItem.Text = "Compras";
-            //
+            // 
             // mnuComprasEnvHacienda
-            //
+            // 
             this.mnuComprasEnvHacienda.Name = "mnuComprasEnvHacienda";
             this.mnuComprasEnvHacienda.Size = new System.Drawing.Size(443, 24);
             this.mnuComprasEnvHacienda.Text = "Enviadas Hacienda";
             this.mnuComprasEnvHacienda.Click += new System.EventHandler(this.mnuComprasEnvHacienda_Click);
-            //
+            // 
             // mnuComprasAgrupXProvFechas
-            //
+            // 
             this.mnuComprasAgrupXProvFechas.Name = "mnuComprasAgrupXProvFechas";
             this.mnuComprasAgrupXProvFechas.Size = new System.Drawing.Size(443, 24);
             this.mnuComprasAgrupXProvFechas.Text = "*Agrupadas X Proveedor Fechas Específicas";
             this.mnuComprasAgrupXProvFechas.Click += new System.EventHandler(this.mnuComprasAgrupXProvFechas_Click);
-            //
+            // 
             // mnuComprasResAgruXActFechas
-            //
+            // 
             this.mnuComprasResAgruXActFechas.Name = "mnuComprasResAgruXActFechas";
             this.mnuComprasResAgruXActFechas.Size = new System.Drawing.Size(443, 24);
             this.mnuComprasResAgruXActFechas.Text = "*Resumida Agrupadas X Actividades Fechas Específicas";
             this.mnuComprasResAgruXActFechas.Click += new System.EventHandler(this.mnuComprasResAgruXActFechas_Click);
-            //
+            // 
             // gastosToolStripMenuItem
-            //
+            // 
             this.gastosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuReporteGastosXProveedor,
             this.mnuReporteGastosFechas});
             this.gastosToolStripMenuItem.Name = "gastosToolStripMenuItem";
             this.gastosToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.gastosToolStripMenuItem.Text = "Gastos";
-            //
+            // 
             // mnuReporteGastosXProveedor
-            //
+            // 
             this.mnuReporteGastosXProveedor.Name = "mnuReporteGastosXProveedor";
             this.mnuReporteGastosXProveedor.Size = new System.Drawing.Size(443, 24);
             this.mnuReporteGastosXProveedor.Text = "*Agrupadas X Proveedor Fechas Específicas";
             this.mnuReporteGastosXProveedor.Click += new System.EventHandler(this.agrupadasXProveedorFechasEspecíficasToolStripMenuItem_Click);
-            //
+            // 
             // mnuReporteGastosFechas
-            //
+            // 
             this.mnuReporteGastosFechas.Name = "mnuReporteGastosFechas";
             this.mnuReporteGastosFechas.Size = new System.Drawing.Size(443, 24);
             this.mnuReporteGastosFechas.Text = "*Resumida Agrupadas X Actividades Fechas Especificas";
             this.mnuReporteGastosFechas.Click += new System.EventHandler(this.resumidaAgrupadasToolStripMenuItem_Click);
-            //
+            // 
             // notaDeCréditoToolStripMenuItem
-            //
+            // 
             this.notaDeCréditoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuNCGeneralFechas});
             this.notaDeCréditoToolStripMenuItem.Name = "notaDeCréditoToolStripMenuItem";
             this.notaDeCréditoToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.notaDeCréditoToolStripMenuItem.Text = "Nota de Crédito";
-            //
+            // 
             // mnuNCGeneralFechas
-            //
+            // 
             this.mnuNCGeneralFechas.Name = "mnuNCGeneralFechas";
             this.mnuNCGeneralFechas.Size = new System.Drawing.Size(177, 24);
             this.mnuNCGeneralFechas.Text = "General Fechas";
             this.mnuNCGeneralFechas.Click += new System.EventHandler(this.mnuNCGeneralFechas_Click);
-            //
+            // 
             // toolStripMenuItem1
-            //
+            // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuClienteEstadoCuenta,
             this.mnuClienteAbonos});
@@ -1237,23 +1272,23 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(244, 24);
             this.toolStripMenuItem1.Text = "Clientes";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            //
+            // 
             // mnuClienteEstadoCuenta
-            //
+            // 
             this.mnuClienteEstadoCuenta.Name = "mnuClienteEstadoCuenta";
             this.mnuClienteEstadoCuenta.Size = new System.Drawing.Size(173, 24);
             this.mnuClienteEstadoCuenta.Text = "Estado Cuenta";
             this.mnuClienteEstadoCuenta.Click += new System.EventHandler(this.mnuClienteEstadoCuenta_Click);
-            //
+            // 
             // mnuClienteAbonos
-            //
+            // 
             this.mnuClienteAbonos.Name = "mnuClienteAbonos";
             this.mnuClienteAbonos.Size = new System.Drawing.Size(173, 24);
             this.mnuClienteAbonos.Text = "Abonos";
             this.mnuClienteAbonos.Click += new System.EventHandler(this.mnuClienteAbonos_Click);
-            //
+            // 
             // toolStripMenuItem2
-            //
+            // 
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuCPDocVenc,
             this.mnuNPAbonosHoy,
@@ -1262,52 +1297,52 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(244, 24);
             this.toolStripMenuItem2.Text = "Cuentas por cobrar(Créditos)";
-            //
+            // 
             // mnuCPDocVenc
-            //
+            // 
             this.mnuCPDocVenc.Name = "mnuCPDocVenc";
             this.mnuCPDocVenc.Size = new System.Drawing.Size(349, 24);
             this.mnuCPDocVenc.Text = "Documentos Vencidos";
             this.mnuCPDocVenc.Click += new System.EventHandler(this.mnuCPDocVenc_Click);
-            //
+            // 
             // mnuNPAbonosHoy
-            //
+            // 
             this.mnuNPAbonosHoy.Name = "mnuNPAbonosHoy";
             this.mnuNPAbonosHoy.Size = new System.Drawing.Size(349, 24);
             this.mnuNPAbonosHoy.Text = "Abonos Generales Hoy";
             this.mnuNPAbonosHoy.Click += new System.EventHandler(this.mnuNPAbonosHoy_Click);
-            //
+            // 
             // mnuCPFechas
-            //
+            // 
             this.mnuCPFechas.Name = "mnuCPFechas";
             this.mnuCPFechas.Size = new System.Drawing.Size(349, 24);
             this.mnuCPFechas.Text = "Abonos Generales por Fechas Específicas";
             this.mnuCPFechas.Click += new System.EventHandler(this.mnuCPFechas_Click);
-            //
+            // 
             // mnuEstadoCuentaGeneralFechas
-            //
+            // 
             this.mnuEstadoCuentaGeneralFechas.Name = "mnuEstadoCuentaGeneralFechas";
             this.mnuEstadoCuentaGeneralFechas.Size = new System.Drawing.Size(349, 24);
             this.mnuEstadoCuentaGeneralFechas.Text = "Estado de Cuenta Generales por Fechas";
             this.mnuEstadoCuentaGeneralFechas.Click += new System.EventHandler(this.mnuEstadoCuentaGeneralFechas_Click);
-            //
+            // 
             // promocionesToolStripMenuItem
-            //
+            // 
             this.promocionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuPromocioPorEstado});
             this.promocionesToolStripMenuItem.Name = "promocionesToolStripMenuItem";
             this.promocionesToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.promocionesToolStripMenuItem.Text = "Promociones";
-            //
+            // 
             // mnuPromocioPorEstado
-            //
+            // 
             this.mnuPromocioPorEstado.Name = "mnuPromocioPorEstado";
             this.mnuPromocioPorEstado.Size = new System.Drawing.Size(148, 24);
             this.mnuPromocioPorEstado.Text = "Por Estado";
             this.mnuPromocioPorEstado.Click += new System.EventHandler(this.porEstadoToolStripMenuItem_Click);
-            //
+            // 
             // mnuCaja
-            //
+            // 
             this.mnuCaja.BackColor = System.Drawing.Color.Blue;
             this.mnuCaja.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuCaja.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1316,25 +1351,25 @@
             this.mnuCaja.Name = "mnuReportes";
             this.mnuCaja.ShowImageMargin = false;
             this.mnuCaja.Size = new System.Drawing.Size(173, 52);
-            //
+            // 
             // mnuEntradaDinero
-            //
+            // 
             this.mnuEntradaDinero.ForeColor = System.Drawing.Color.White;
             this.mnuEntradaDinero.Name = "mnuEntradaDinero";
             this.mnuEntradaDinero.Size = new System.Drawing.Size(172, 24);
             this.mnuEntradaDinero.Text = "Entrada de dinero";
             this.mnuEntradaDinero.Click += new System.EventHandler(this.mnuEntradaDinero_Click);
-            //
+            // 
             // menuSalidaDinero
-            //
+            // 
             this.menuSalidaDinero.ForeColor = System.Drawing.Color.White;
             this.menuSalidaDinero.Name = "menuSalidaDinero";
             this.menuSalidaDinero.Size = new System.Drawing.Size(172, 24);
             this.menuSalidaDinero.Text = "Salida de dinero";
             this.menuSalidaDinero.Click += new System.EventHandler(this.menuSalidaDinero_Click);
-            //
+            // 
             // mnuSeguridad
-            //
+            // 
             this.mnuSeguridad.BackColor = System.Drawing.Color.Blue;
             this.mnuSeguridad.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuSeguridad.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1343,24 +1378,24 @@
             this.mnuSeguridad.Name = "mnuReportes";
             this.mnuSeguridad.ShowImageMargin = false;
             this.mnuSeguridad.Size = new System.Drawing.Size(188, 52);
-            //
+            // 
             // mnuUsuarios
-            //
+            // 
             this.mnuUsuarios.ForeColor = System.Drawing.Color.White;
             this.mnuUsuarios.Name = "mnuUsuarios";
             this.mnuUsuarios.Size = new System.Drawing.Size(187, 24);
             this.mnuUsuarios.Text = "Usuarios";
             this.mnuUsuarios.Click += new System.EventHandler(this.mnuUsuarios_Click);
-            //
+            // 
             // mnuCambiarContr
-            //
+            // 
             this.mnuCambiarContr.Name = "mnuCambiarContr";
             this.mnuCambiarContr.Size = new System.Drawing.Size(187, 24);
             this.mnuCambiarContr.Text = "Cambiar Contraseña";
             this.mnuCambiarContr.Click += new System.EventHandler(this.mnuCambiarContr_Click);
-            //
+            // 
             // mnuMantenimiento
-            //
+            // 
             this.mnuMantenimiento.BackColor = System.Drawing.Color.Blue;
             this.mnuMantenimiento.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuMantenimiento.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1372,9 +1407,9 @@
             this.mnuMantenimiento.Name = "mnuReportes";
             this.mnuMantenimiento.ShowImageMargin = false;
             this.mnuMantenimiento.Size = new System.Drawing.Size(140, 124);
-            //
+            // 
             // toolStripMenuItem7
-            //
+            // 
             this.toolStripMenuItem7.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuProducto,
             this.mnuCategorias,
@@ -1384,53 +1419,53 @@
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.Size = new System.Drawing.Size(139, 24);
             this.toolStripMenuItem7.Text = "Producto";
-            //
+            // 
             // mnuProducto
-            //
+            // 
             this.mnuProducto.Name = "mnuProducto";
             this.mnuProducto.Size = new System.Drawing.Size(203, 24);
             this.mnuProducto.Text = "Productos";
             this.mnuProducto.Click += new System.EventHandler(this.mnuProducto_Click);
-            //
+            // 
             // mnuCategorias
-            //
+            // 
             this.mnuCategorias.Name = "mnuCategorias";
             this.mnuCategorias.Size = new System.Drawing.Size(203, 24);
             this.mnuCategorias.Text = "Categorías";
             this.mnuCategorias.Click += new System.EventHandler(this.mnuCategorias_Click);
-            //
+            // 
             // mnuMedidas
-            //
+            // 
             this.mnuMedidas.Name = "mnuMedidas";
             this.mnuMedidas.Size = new System.Drawing.Size(203, 24);
             this.mnuMedidas.Text = "Medidas";
             this.mnuMedidas.Click += new System.EventHandler(this.mnuMedidas_Click);
-            //
+            // 
             // mnuAcompa
-            //
+            // 
             this.mnuAcompa.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuAcompanamiento,
             this.mnuAcompaProducto});
             this.mnuAcompa.Name = "mnuAcompa";
             this.mnuAcompa.Size = new System.Drawing.Size(203, 24);
             this.mnuAcompa.Text = "Acompañamientos";
-            //
+            // 
             // mnuAcompanamiento
-            //
+            // 
             this.mnuAcompanamiento.Name = "mnuAcompanamiento";
             this.mnuAcompanamiento.Size = new System.Drawing.Size(313, 24);
             this.mnuAcompanamiento.Text = "Acompañamiento";
             this.mnuAcompanamiento.Click += new System.EventHandler(this.mnuAcompanamiento_Click);
-            //
+            // 
             // mnuAcompaProducto
-            //
+            // 
             this.mnuAcompaProducto.Name = "mnuAcompaProducto";
             this.mnuAcompaProducto.Size = new System.Drawing.Size(313, 24);
             this.mnuAcompaProducto.Text = "Asignar acompañamiento Producto";
             this.mnuAcompaProducto.Click += new System.EventHandler(this.mnuAcompaProducto_Click);
-            //
+            // 
             // toolStripMenuItem8
-            //
+            // 
             this.toolStripMenuItem8.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuClientes,
             this.mnuTipoClientes});
@@ -1438,47 +1473,47 @@
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
             this.toolStripMenuItem8.Size = new System.Drawing.Size(139, 24);
             this.toolStripMenuItem8.Text = "Clientes";
-            //
+            // 
             // mnuClientes
-            //
+            // 
             this.mnuClientes.Name = "mnuClientes";
             this.mnuClientes.Size = new System.Drawing.Size(189, 24);
             this.mnuClientes.Text = "Clientes";
             this.mnuClientes.Click += new System.EventHandler(this.mnuClientes_Click);
-            //
+            // 
             // mnuTipoClientes
-            //
+            // 
             this.mnuTipoClientes.Name = "mnuTipoClientes";
             this.mnuTipoClientes.Size = new System.Drawing.Size(189, 24);
             this.mnuTipoClientes.Text = "Tipos de clientes";
             this.mnuTipoClientes.Click += new System.EventHandler(this.mnuTipoClientes_Click);
-            //
+            // 
             // mnuProveedores
-            //
+            // 
             this.mnuProveedores.ForeColor = System.Drawing.Color.White;
             this.mnuProveedores.Name = "mnuProveedores";
             this.mnuProveedores.Size = new System.Drawing.Size(139, 24);
             this.mnuProveedores.Text = "Provedores";
             this.mnuProveedores.Click += new System.EventHandler(this.mnuProveedor_Click);
-            //
+            // 
             // mnuEtiquetas
-            //
+            // 
             this.mnuEtiquetas.ForeColor = System.Drawing.Color.White;
             this.mnuEtiquetas.Name = "mnuEtiquetas";
             this.mnuEtiquetas.Size = new System.Drawing.Size(139, 24);
             this.mnuEtiquetas.Text = "Etiquetas";
             this.mnuEtiquetas.Click += new System.EventHandler(this.toolStripMenuItem3_Click_1);
-            //
+            // 
             // mnuPromociones
-            //
+            // 
             this.mnuPromociones.ForeColor = System.Drawing.Color.White;
             this.mnuPromociones.Name = "mnuPromociones";
             this.mnuPromociones.Size = new System.Drawing.Size(139, 24);
             this.mnuPromociones.Text = "Promociones";
             this.mnuPromociones.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            //
+            // 
             // mnuConsultas
-            //
+            // 
             this.mnuConsultas.BackColor = System.Drawing.Color.Blue;
             this.mnuConsultas.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuConsultas.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1488,32 +1523,32 @@
             this.mnuConsultas.Name = "mnuReportes";
             this.mnuConsultas.ShowImageMargin = false;
             this.mnuConsultas.Size = new System.Drawing.Size(250, 76);
-            //
+            // 
             // mnuDocEmitidos
-            //
+            // 
             this.mnuDocEmitidos.ForeColor = System.Drawing.Color.White;
             this.mnuDocEmitidos.Name = "mnuDocEmitidos";
             this.mnuDocEmitidos.Size = new System.Drawing.Size(249, 24);
             this.mnuDocEmitidos.Text = "Documentos Emitidos";
             this.mnuDocEmitidos.Click += new System.EventHandler(this.mnuDocEmitidos_Click);
-            //
+            // 
             // mnuValidarHacienda
-            //
+            // 
             this.mnuValidarHacienda.ForeColor = System.Drawing.Color.White;
             this.mnuValidarHacienda.Name = "mnuValidarHacienda";
             this.mnuValidarHacienda.Size = new System.Drawing.Size(249, 24);
             this.mnuValidarHacienda.Text = "Validar documentos hacienda";
             this.mnuValidarHacienda.Click += new System.EventHandler(this.mnuValidarHacienda_Click);
-            //
+            // 
             // mnuCierreCaja
-            //
+            // 
             this.mnuCierreCaja.Name = "mnuCierreCaja";
             this.mnuCierreCaja.Size = new System.Drawing.Size(249, 24);
             this.mnuCierreCaja.Text = "Estados de Cajas";
             this.mnuCierreCaja.Click += new System.EventHandler(this.mnuCierreCaja_Click);
-            //
+            // 
             // mnuProcesos
-            //
+            // 
             this.mnuProcesos.BackColor = System.Drawing.Color.Blue;
             this.mnuProcesos.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuProcesos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1528,18 +1563,18 @@
             this.mnuEstadoCaja});
             this.mnuProcesos.Name = "mnuReportes";
             this.mnuProcesos.ShowImageMargin = false;
-            this.mnuProcesos.Size = new System.Drawing.Size(245, 242);
-            //
+            this.mnuProcesos.Size = new System.Drawing.Size(245, 220);
+            // 
             // mnuFacturacion
-            //
+            // 
             this.mnuFacturacion.ForeColor = System.Drawing.Color.White;
             this.mnuFacturacion.Name = "mnuFacturacion";
             this.mnuFacturacion.Size = new System.Drawing.Size(244, 24);
             this.mnuFacturacion.Text = "Ventas";
             this.mnuFacturacion.Click += new System.EventHandler(this.mnuFacturacion_Click);
-            //
+            // 
             // toolStripMenuItem14
-            //
+            // 
             this.toolStripMenuItem14.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuEntradasDineroCaja,
             this.mnuSalidaDineroCaja});
@@ -1547,89 +1582,89 @@
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
             this.toolStripMenuItem14.Size = new System.Drawing.Size(244, 24);
             this.toolStripMenuItem14.Text = "Movimiento Caja";
-            //
+            // 
             // mnuEntradasDineroCaja
-            //
+            // 
             this.mnuEntradasDineroCaja.Name = "mnuEntradasDineroCaja";
             this.mnuEntradasDineroCaja.Size = new System.Drawing.Size(176, 24);
             this.mnuEntradasDineroCaja.Text = "Entrada dinero";
             this.mnuEntradasDineroCaja.Click += new System.EventHandler(this.mnuEntradasDineroCaja_Click);
-            //
+            // 
             // mnuSalidaDineroCaja
-            //
+            // 
             this.mnuSalidaDineroCaja.Name = "mnuSalidaDineroCaja";
             this.mnuSalidaDineroCaja.Size = new System.Drawing.Size(176, 24);
             this.mnuSalidaDineroCaja.Text = "Salida dinero";
             this.mnuSalidaDineroCaja.Click += new System.EventHandler(this.mnuSalidaDineroCaja_Click);
-            //
+            // 
             // mnuInventario
-            //
+            // 
             this.mnuInventario.ForeColor = System.Drawing.Color.White;
             this.mnuInventario.Name = "mnuInventario";
             this.mnuInventario.Size = new System.Drawing.Size(244, 24);
             this.mnuInventario.Text = "Inventario";
             this.mnuInventario.Click += new System.EventHandler(this.mnuInventario_Click);
-            //
+            // 
             // mnuAbonos
-            //
+            // 
             this.mnuAbonos.Name = "mnuAbonos";
             this.mnuAbonos.Size = new System.Drawing.Size(244, 24);
             this.mnuAbonos.Text = "Cuentas por cobrar (Abonos)";
             this.mnuAbonos.Click += new System.EventHandler(this.mnuAbonos_Click);
-            //
+            // 
             // mnuCompras
-            //
+            // 
             this.mnuCompras.Name = "mnuCompras";
             this.mnuCompras.Size = new System.Drawing.Size(244, 24);
             this.mnuCompras.Text = "Cuentas por pagar(Compras)";
             this.mnuCompras.Click += new System.EventHandler(this.mnuCompras_Click);
-            //
+            // 
             // mnuOrdenCompra
-            //
+            // 
             this.mnuOrdenCompra.Name = "mnuOrdenCompra";
             this.mnuOrdenCompra.Size = new System.Drawing.Size(244, 24);
             this.mnuOrdenCompra.Text = "Orden de compras";
             this.mnuOrdenCompra.Click += new System.EventHandler(this.mnuOrdenCompra_Click);
-            //
+            // 
             // mnuGastos
-            //
+            // 
             this.mnuGastos.Name = "mnuGastos";
             this.mnuGastos.Size = new System.Drawing.Size(244, 24);
             this.mnuGastos.Text = "Gastos";
             this.mnuGastos.Click += new System.EventHandler(this.mnuGastos_Click);
-            //
+            // 
             // importarExportarToolStripMenuItem
-            //
+            // 
             this.importarExportarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuImportarPreciosProducto,
             this.mnuExportarPreciosProducto});
             this.importarExportarToolStripMenuItem.Name = "importarExportarToolStripMenuItem";
             this.importarExportarToolStripMenuItem.Size = new System.Drawing.Size(244, 24);
             this.importarExportarToolStripMenuItem.Text = "Importar/Exportar";
-            //
+            // 
             // mnuImportarPreciosProducto
-            //
+            // 
             this.mnuImportarPreciosProducto.Name = "mnuImportarPreciosProducto";
             this.mnuImportarPreciosProducto.Size = new System.Drawing.Size(259, 24);
             this.mnuImportarPreciosProducto.Text = "Importar precios productos";
             this.mnuImportarPreciosProducto.Click += new System.EventHandler(this.mnuImportarPreciosProducto_Click);
-            //
+            // 
             // mnuExportarPreciosProducto
-            //
+            // 
             this.mnuExportarPreciosProducto.Name = "mnuExportarPreciosProducto";
             this.mnuExportarPreciosProducto.Size = new System.Drawing.Size(259, 24);
             this.mnuExportarPreciosProducto.Text = "Exportar precios productos";
             this.mnuExportarPreciosProducto.Click += new System.EventHandler(this.mnuExportarPreciosProducto_Click);
-            //
+            // 
             // mnuEstadoCaja
-            //
+            // 
             this.mnuEstadoCaja.Name = "mnuEstadoCaja";
             this.mnuEstadoCaja.Size = new System.Drawing.Size(244, 24);
             this.mnuEstadoCaja.Text = "Estado de Caja";
             this.mnuEstadoCaja.Click += new System.EventHandler(this.mnuEstadoCaja_Click);
-            //
+            // 
             // mnuEmpresa
-            //
+            // 
             this.mnuEmpresa.BackColor = System.Drawing.Color.Blue;
             this.mnuEmpresa.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mnuEmpresa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1638,29 +1673,223 @@
             this.mnuEmpresa.Name = "mnuReportes";
             this.mnuEmpresa.ShowImageMargin = false;
             this.mnuEmpresa.Size = new System.Drawing.Size(128, 52);
-            //
+            // 
             // mnuEmpresas
-            //
+            // 
             this.mnuEmpresas.ForeColor = System.Drawing.Color.White;
             this.mnuEmpresas.Name = "mnuEmpresas";
             this.mnuEmpresas.Size = new System.Drawing.Size(127, 24);
             this.mnuEmpresas.Text = "Empresa";
             this.mnuEmpresas.Click += new System.EventHandler(this.mnuEmpresas_Click);
-            //
+            // 
             // mnuParametros
-            //
+            // 
             this.mnuParametros.ForeColor = System.Drawing.Color.White;
             this.mnuParametros.Name = "mnuParametros";
             this.mnuParametros.Size = new System.Drawing.Size(127, 24);
             this.mnuParametros.Text = "Parámetros";
             this.mnuParametros.Click += new System.EventHandler(this.mnuParametros_Click);
-            //
+            // 
             // timer1
-            //
+            // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            //
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.panel8);
+            this.panel7.Controls.Add(this.pictureBox5);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(62, 51);
+            this.panel7.TabIndex = 40;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
+            this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox5.Location = new System.Drawing.Point(13, 7);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(34, 39);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 38;
+            this.pictureBox5.TabStop = false;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.pictureBox6);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(62, 51);
+            this.panel8.TabIndex = 41;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
+            this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox6.Location = new System.Drawing.Point(13, 7);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(34, 39);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 38;
+            this.pictureBox6.TabStop = false;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.label4);
+            this.panel9.Controls.Add(this.label3);
+            this.panel9.Controls.Add(this.lblCaja);
+            this.panel9.Controls.Add(this.lblSucursal);
+            this.panel9.Controls.Add(this.pictureBox9);
+            this.panel9.Controls.Add(this.pictureBox8);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel9.Location = new System.Drawing.Point(356, 0);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(121, 51);
+            this.panel9.TabIndex = 42;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox8.BackgroundImage")));
+            this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox8.Location = new System.Drawing.Point(66, 5);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(28, 29);
+            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox8.TabIndex = 26;
+            this.pictureBox8.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.pictureBox8, "Cambiar usuario / sucursal");
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox9.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox9.BackgroundImage")));
+            this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox9.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox9.Location = new System.Drawing.Point(11, 3);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(25, 34);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 27;
+            this.pictureBox9.TabStop = false;
+            this.toolTipMenu.SetToolTip(this.pictureBox9, "Cambiar usuario / sucursal");
+            // 
+            // lblSucursal
+            // 
+            this.lblSucursal.AutoSize = true;
+            this.lblSucursal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSucursal.ForeColor = System.Drawing.Color.White;
+            this.lblSucursal.Location = new System.Drawing.Point(34, 11);
+            this.lblSucursal.Name = "lblSucursal";
+            this.lblSucursal.Size = new System.Drawing.Size(26, 18);
+            this.lblSucursal.TabIndex = 4;
+            this.lblSucursal.Text = "00";
+            // 
+            // lblCaja
+            // 
+            this.lblCaja.AutoSize = true;
+            this.lblCaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCaja.ForeColor = System.Drawing.Color.White;
+            this.lblCaja.Location = new System.Drawing.Point(95, 11);
+            this.lblCaja.Name = "lblCaja";
+            this.lblCaja.Size = new System.Drawing.Size(26, 18);
+            this.lblCaja.TabIndex = 28;
+            this.lblCaja.Text = "00";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(0, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(90, 18);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Bienvenido";
+            // 
+            // lblNombre
+            // 
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombre.ForeColor = System.Drawing.Color.White;
+            this.lblNombre.Location = new System.Drawing.Point(89, 3);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(0, 18);
+            this.lblNombre.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(7, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Sucursal";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(67, 32);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "Caja";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(151, 40);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 12);
+            this.label9.TabIndex = 37;
+            this.label9.Text = "Respaldo";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(110, 40);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 12);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "E. Caja";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(55, 40);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 12);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "C. Usuario";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(14, 40);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 12);
+            this.label8.TabIndex = 40;
+            this.label8.Text = "Salir";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
             // FormPrincipal
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 780);
@@ -1668,7 +1897,6 @@
             this.Controls.Add(this.panelBarraTitulo);
             this.Controls.Add(this.panelMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(488, 325);
@@ -1677,21 +1905,23 @@
             this.Text = "Espartano Solutions S.A- Facturación Electrónica";
             this.Load += new System.EventHandler(this.FormPrincipal_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FormPrincipal_KeyUp);
-            this.panelMenu.ResumeLayout(false);
-            this.pnlMenuHeader.ResumeLayout(false);
-            this.flpMenuButtons.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnCierreCaja)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnRespaldo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnsalir)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCambiarUser)).EndInit();
+            this.panelMenu.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.flpMenuButtons.ResumeLayout(false);
+            this.flpMenuButtons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictImage)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.flpCatVentasBody.ResumeLayout(false);
+            this.flpCatDocumentosBody.ResumeLayout(false);
+            this.flpCatAdminBody.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panelBarraTitulo.ResumeLayout(false);
@@ -1711,6 +1941,14 @@
             this.mnuConsultas.ResumeLayout(false);
             this.mnuProcesos.ResumeLayout(false);
             this.mnuEmpresa.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.panel8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1718,11 +1956,15 @@
         #endregion
         private System.Windows.Forms.Panel panelformularios;
         private System.Windows.Forms.Panel panelMenu;
-        private System.Windows.Forms.Panel pnlMenuHeader;
         private System.Windows.Forms.FlowLayoutPanel flpMenuButtons;
+        private System.Windows.Forms.Button btnCatVentas;
+        private System.Windows.Forms.FlowLayoutPanel flpCatVentasBody;
+        private System.Windows.Forms.Button btnCatDocumentos;
+        private System.Windows.Forms.FlowLayoutPanel flpCatDocumentosBody;
+        private System.Windows.Forms.Button btnCatAdmin;
+        private System.Windows.Forms.FlowLayoutPanel flpCatAdminBody;
         private System.Windows.Forms.Panel panelBarraTitulo;
         private System.Windows.Forms.ComboBox cboActividades;
-        private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.PictureBox pictImage;
         private System.Windows.Forms.Label lblEmpresa;
         private Microsoft.Reporting.Map.WebForms.VirtualEarth.ImageryService imageryService1;
@@ -1737,12 +1979,9 @@
         private System.Windows.Forms.Button btnFacturacion;
         private System.Windows.Forms.Button btnClientes;
         private System.Windows.Forms.Button btnDashboard;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox btnMenu;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lblCaja;
-        private System.Windows.Forms.Label lblSucursal;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox btnSalirEsq;
@@ -1835,10 +2074,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuEmpresas;
         private System.Windows.Forms.ToolStripMenuItem mnuParametros;
         private System.Windows.Forms.ToolStripMenuItem mnuProductosFechas;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblCierreCaja;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox btnCierreCaja;
         private System.Windows.Forms.PictureBox btnRespaldo;
         private System.Windows.Forms.PictureBox btnsalir;
@@ -1860,6 +2095,24 @@
         private System.Windows.Forms.ToolStripMenuItem gastosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuReporteGastosFechas;
         private System.Windows.Forms.ToolStripMenuItem mnuReporteGastosXProveedor;
+        private System.Windows.Forms.ToolTip toolTipMenu;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox pictureBox8;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Label lblCaja;
+        private System.Windows.Forms.Label lblSucursal;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblNombre;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarAcompa : Form
+    public partial class frmBuscarAcompa : FormBase
     {
 
 

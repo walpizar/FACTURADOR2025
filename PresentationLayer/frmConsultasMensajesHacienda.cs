@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmConsultasMensajesHacienda : Form
+    public partial class frmConsultasMensajesHacienda : FormBase
     {
 
 

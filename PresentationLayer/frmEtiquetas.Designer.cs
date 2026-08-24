@@ -144,9 +144,10 @@ namespace PresentationLayer
             // 
             // btnLimpiarForm
             // 
+            this.btnLimpiarForm.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnLimpiarForm.BackgroundImage")));
+            this.btnLimpiarForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnLimpiarForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarForm.ForeColor = System.Drawing.Color.Transparent;
-            this.btnLimpiarForm.Image = ((System.Drawing.Image)(resources.GetObject("btnLimpiarForm.Image")));
             this.btnLimpiarForm.Location = new System.Drawing.Point(726, 62);
             this.btnLimpiarForm.Name = "btnLimpiarForm";
             this.btnLimpiarForm.Size = new System.Drawing.Size(55, 59);
@@ -157,7 +158,8 @@ namespace PresentationLayer
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
+            this.btnBuscar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscar.BackgroundImage")));
+            this.btnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscar.Location = new System.Drawing.Point(664, 62);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(56, 59);
@@ -246,9 +248,10 @@ namespace PresentationLayer
             // 
             // btnReImprimir
             // 
+            this.btnReImprimir.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnReImprimir.BackgroundImage")));
+            this.btnReImprimir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnReImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReImprimir.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnReImprimir.Image = ((System.Drawing.Image)(resources.GetObject("btnReImprimir.Image")));
             this.btnReImprimir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnReImprimir.Location = new System.Drawing.Point(714, 549);
             this.btnReImprimir.Name = "btnReImprimir";
@@ -310,6 +313,7 @@ namespace PresentationLayer
             this.Controls.Add(this.btnLimpiarForm);
             this.Controls.Add(this.lblNombreProducto);
             this.Controls.Add(this.groupBox1);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmEtiquetas";
             this.Text = "frmEtiquetas";
             this.Load += new System.EventHandler(this.frmEtiquetas_Load);

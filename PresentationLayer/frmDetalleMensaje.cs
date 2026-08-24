@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmDetalleMensaje : Form
+    public partial class frmDetalleMensaje : FormBase
     {
         private tbReporteHacienda reporte;
         public frmDetalleMensaje()

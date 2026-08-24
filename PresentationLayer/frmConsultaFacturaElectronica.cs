@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmConsultaFacturaElectronica : Form
+    public partial class frmConsultaFacturaElectronica : FormBase
     {
         BFacturacion facturacion = new BFacturacion();
         public string clave { get; set; }

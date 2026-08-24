@@ -20,7 +20,7 @@ using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
-    public partial class frmGastos : Form
+    public partial class frmGastos : FormBase
     {
         List<tbCompras> listaCompras = new List<tbCompras>();
         BFacturacion facturaIns = new BFacturacion();

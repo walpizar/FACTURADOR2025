@@ -11,7 +11,7 @@ namespace PresentationLayer
 
 
 
-    public partial class frmModificarInventario : Form
+    public partial class frmModificarInventario : FormBase
     {
 
 

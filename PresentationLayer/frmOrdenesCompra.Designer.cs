@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrdenesCompra));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrdenesCompra));
             this.gbxCompras = new System.Windows.Forms.GroupBox();
+            this.btnImportar = new System.Windows.Forms.Button();
             this.gbxDetalleCompra = new System.Windows.Forms.GroupBox();
             this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
@@ -81,7 +82,6 @@
             this.colEliminar = new System.Windows.Forms.DataGridViewLinkColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
-            this.btnImportar = new System.Windows.Forms.Button();
             this.gbxCompras.SuspendLayout();
             this.gbxDetalleCompra.SuspendLayout();
             this.gbxCompra.SuspendLayout();
@@ -100,6 +100,20 @@
             this.gbxCompras.TabIndex = 115;
             this.gbxCompras.TabStop = false;
             this.gbxCompras.Text = "Orden de Compra";
+            // 
+            // btnImportar
+            // 
+            this.btnImportar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportar.BackgroundImage")));
+            this.btnImportar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnImportar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImportar.Location = new System.Drawing.Point(871, 27);
+            this.btnImportar.Name = "btnImportar";
+            this.btnImportar.Size = new System.Drawing.Size(95, 62);
+            this.btnImportar.TabIndex = 112;
+            this.btnImportar.Text = "Importar Documento";
+            this.btnImportar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnImportar.UseVisualStyleBackColor = true;
+            this.btnImportar.Click += new System.EventHandler(this.btnImportar_Click);
             // 
             // gbxDetalleCompra
             // 
@@ -273,7 +287,8 @@
             // 
             // btnBuscarProveedor
             // 
-            this.btnBuscarProveedor.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarProveedor.Image")));
+            this.btnBuscarProveedor.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarProveedor.BackgroundImage")));
+            this.btnBuscarProveedor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarProveedor.Location = new System.Drawing.Point(411, 10);
             this.btnBuscarProveedor.Name = "btnBuscarProveedor";
             this.btnBuscarProveedor.Size = new System.Drawing.Size(33, 33);
@@ -475,7 +490,7 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -573,7 +588,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(727, 676);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(137, 16);
+            this.label2.Size = new System.Drawing.Size(136, 16);
             this.label2.TabIndex = 124;
             this.label2.Text = "Total de Proforma:";
             // 
@@ -587,20 +602,6 @@
             this.txtTotal.Size = new System.Drawing.Size(206, 22);
             this.txtTotal.TabIndex = 123;
             // 
-            // btnImportar
-            // 
-            this.btnImportar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnImportar.BackgroundImage")));
-            this.btnImportar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnImportar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImportar.Location = new System.Drawing.Point(871, 27);
-            this.btnImportar.Name = "btnImportar";
-            this.btnImportar.Size = new System.Drawing.Size(95, 62);
-            this.btnImportar.TabIndex = 112;
-            this.btnImportar.Text = "Importar Documento";
-            this.btnImportar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnImportar.UseVisualStyleBackColor = true;
-            this.btnImportar.Click += new System.EventHandler(this.btnImportar_Click);
-            // 
             // frmOrdenesCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -612,6 +613,7 @@
             this.Controls.Add(this.tlsMenu);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.gbxCompras);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.KeyPreview = true;
             this.Name = "frmOrdenesCompra";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

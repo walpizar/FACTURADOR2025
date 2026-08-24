@@ -113,7 +113,8 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
+            this.btnBuscar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscar.BackgroundImage")));
+            this.btnBuscar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscar.Location = new System.Drawing.Point(354, 21);
             this.btnBuscar.Margin = new System.Windows.Forms.Padding(2);
             this.btnBuscar.Name = "btnBuscar";
@@ -137,6 +138,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.btnCancelar);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmFechasInicioFinProducto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

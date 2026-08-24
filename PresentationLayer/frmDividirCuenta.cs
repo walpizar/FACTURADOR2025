@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmDividirCuenta : Form
+    public partial class frmDividirCuenta : FormBase
     {
 
         public delegate void pasarDatos(tbDocumento documento);

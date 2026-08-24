@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmEmpresa : Form
+    public partial class frmEmpresa : FormBase
     {
         BActividadesEconomicas actIns = new BActividadesEconomicas();
         BEmpresa empresaIns = new BEmpresa();

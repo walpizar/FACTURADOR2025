@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmMovimientoDeDinero : Form
+    public partial class frmMovimientoDeDinero : FormBase
     {
         //BMovimientoDeDinero moviDineInst = new BMovimientoDeDinero();
         BMovimiento moviDineInst = new BMovimiento();

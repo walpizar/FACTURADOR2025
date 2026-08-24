@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFacturacion : Form
+    public partial class frmFacturacion : FormBase
     {
       
         List<tbCategoriaProducto> listaCategorias;
@@ -988,7 +988,7 @@ namespace PresentationLayer
                     {
                         cargarActividades(cliente);
                         cboActividadEconomica.Enabled = true;
-                        button1.Enabled = true;
+                        //button1.Enabled = true;
                     }
                     else
                     {
@@ -996,7 +996,7 @@ namespace PresentationLayer
                         cboActividadEconomica.Items.Clear();
 
                         cboActividadEconomica.Enabled = false;
-                        button1.Enabled = false;
+                      //  button1.Enabled = false;
 
                     }
 

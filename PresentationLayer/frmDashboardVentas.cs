@@ -9,7 +9,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PresentationLayer
 {
-    public partial class frmDashboardVentas : Form
+    public partial class frmDashboardVentas : FormBase
     {
         // Paleta consistente: verde = positivo, naranja = atencion, azul = neutro/tendencia.
         private static readonly Color ColorVerde = Color.FromArgb(29, 158, 117);

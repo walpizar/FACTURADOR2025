@@ -326,14 +326,14 @@
             // 
             // btnBuscarCliente
             // 
-            this.btnBuscarCliente.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.Image")));
+            this.btnBuscarCliente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.BackgroundImage")));
+            this.btnBuscarCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarCliente.Location = new System.Drawing.Point(348, 40);
             this.btnBuscarCliente.Margin = new System.Windows.Forms.Padding(2);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
             this.btnBuscarCliente.Size = new System.Drawing.Size(27, 28);
             this.btnBuscarCliente.TabIndex = 72;
             this.btnBuscarCliente.UseVisualStyleBackColor = true;
-
             // 
             // cboBarrios
             // 
@@ -729,6 +729,7 @@
             this.ClientSize = new System.Drawing.Size(679, 646);
             this.Controls.Add(this.gbxProveedor);
             this.Controls.Add(this.tlsMenu);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmProveedores2";
             this.Text = "Mantenimiento: Proveedores";

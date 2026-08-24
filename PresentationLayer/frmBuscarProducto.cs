@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarProducto : Form
+    public partial class frmBuscarProducto : FormBase
     {
 
         BCategoriaProducto CatProductosIns = new BCategoriaProducto();

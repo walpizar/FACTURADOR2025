@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace PresentationLayer
 {
 
-    public partial class FrmBuscar : Form
+    public partial class FrmBuscar : FormBase
     {
 
         Bcliente clienteIns = new Bcliente();

@@ -17,7 +17,7 @@ using static CommonLayer.Enums;
 
 namespace PresentationLayer
 {
-    public partial class frmClientes : Form
+    public partial class frmClientes : FormBase
     {
         int bandera = 1;
         tbClientes clienteGlobal;

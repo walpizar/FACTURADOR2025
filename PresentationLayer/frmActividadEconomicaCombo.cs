@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmActividadEconomicaCombo : Form
+    public partial class frmActividadEconomicaCombo : FormBase
     {
         BActividadesEconomicas actINs = new BActividadesEconomicas();
 

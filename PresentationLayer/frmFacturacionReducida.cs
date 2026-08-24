@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFacturacionReducida : Form
+    public partial class frmFacturacionReducida : FormBase
     {
 
         List<tbCategoriaProducto> listaCategorias;

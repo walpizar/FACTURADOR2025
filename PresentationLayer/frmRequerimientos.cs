@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmRequerimientos : Form
+    public partial class frmRequerimientos : FormBase
     {
         BRequerimientos requeriInsB = new BRequerimientos();
 

@@ -2,7 +2,7 @@
 
 namespace PresentationLayer
 {
-    public partial class ProgressBar : Form
+    public partial class ProgressBar : FormBase
     {
         public ProgressBar()
         {

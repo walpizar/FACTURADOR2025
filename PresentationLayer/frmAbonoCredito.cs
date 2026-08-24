@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmAbonoCredito : Form
+    public partial class frmAbonoCredito : FormBase
     {
 
         public tbClientes clienteGlobal = new tbClientes();//para buscar clientes

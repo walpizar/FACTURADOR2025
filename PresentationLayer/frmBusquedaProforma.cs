@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBusquedaProforma : Form
+    public partial class frmBusquedaProforma : FormBase
     {
         public delegate void pasaDatos(tbDocumento entity);
         public event pasaDatos pasarDatosEvent;

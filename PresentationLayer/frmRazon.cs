@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmRazon : Form
+    public partial class frmRazon : FormBase
     {
         public tbDocumento _doc { get; set; }
         public delegate void pasaDatos(clsDetalleNC detalle);

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmCompras : Form
+    public partial class frmCompras : FormBase
     {
         ComboBox combo;
         Bcliente clienteInst = new Bcliente();

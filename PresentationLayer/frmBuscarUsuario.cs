@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmBuscarUsuario : Form
+    public partial class frmBuscarUsuario : FormBase
     {
         BUsuario usuarioIns = new BUsuario();
         List<tbUsuarios> listaUsuario = new List<tbUsuarios>();

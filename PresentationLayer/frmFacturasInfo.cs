@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFacturasInfo : Form
+    public partial class frmFacturasInfo : FormBase
     {
         public frmFacturasInfo()
         {

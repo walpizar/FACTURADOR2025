@@ -212,8 +212,6 @@
             // 
             // cboActividadEconomica
             // 
-            // Solo lectura: la selección de actividades se hace en frmBuscarActividadEconomica.
-            // Este combo únicamente refleja el resultado (principal primero) que devuelve esa pantalla.
             this.cboActividadEconomica.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboActividadEconomica.Enabled = false;
             this.cboActividadEconomica.FormattingEnabled = true;
@@ -233,7 +231,8 @@
             // 
             // buscarActividad
             // 
-            this.buscarActividad.Image = ((System.Drawing.Image)(resources.GetObject("buscarActividad.Image")));
+            this.buscarActividad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buscarActividad.BackgroundImage")));
+            this.buscarActividad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.buscarActividad.Location = new System.Drawing.Point(573, 11);
             this.buscarActividad.Margin = new System.Windows.Forms.Padding(2);
             this.buscarActividad.Name = "buscarActividad";
@@ -368,7 +367,8 @@
             // 
             // btnObtnerExo
             // 
-            this.btnObtnerExo.Image = ((System.Drawing.Image)(resources.GetObject("btnObtnerExo.Image")));
+            this.btnObtnerExo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnObtnerExo.BackgroundImage")));
+            this.btnObtnerExo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnObtnerExo.Location = new System.Drawing.Point(283, 13);
             this.btnObtnerExo.Margin = new System.Windows.Forms.Padding(2);
             this.btnObtnerExo.Name = "btnObtnerExo";
@@ -475,7 +475,8 @@
             // 
             // btnBuscarCliente
             // 
-            this.btnBuscarCliente.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.Image")));
+            this.btnBuscarCliente.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBuscarCliente.BackgroundImage")));
+            this.btnBuscarCliente.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnBuscarCliente.Location = new System.Drawing.Point(347, 63);
             this.btnBuscarCliente.Margin = new System.Windows.Forms.Padding(2);
             this.btnBuscarCliente.Name = "btnBuscarCliente";
@@ -1125,6 +1126,7 @@
             this.ClientSize = new System.Drawing.Size(713, 737);
             this.Controls.Add(this.tlsMenu);
             this.Controls.Add(this.gbxCliente);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Name = "frmClientes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mantenimiento: Clientes";

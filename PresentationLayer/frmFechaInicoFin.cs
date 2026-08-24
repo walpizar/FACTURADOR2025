@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmFechaInicoFin : Form
+    public partial class frmFechaInicoFin : FormBase
     {
         public delegate void pasaDatos(DateTime fechaInicio, DateTime fechaFin);
         public event pasaDatos pasarDatosEvent;

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer
 {
-    public partial class frmProforma : Form
+    public partial class frmProforma : FormBase
     {
 
         public tbDocumento facturaGlobal = new tbDocumento();
